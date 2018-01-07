@@ -18,8 +18,10 @@ public class Mail {
 	private Integer id;
 	
 	private Integer version;
-    private String from;
-    private String to;
+	@Column(name ="from_email")
+    private String fromEmail;
+	@Column(name ="to_email")
+    private String toEmail;
     private String subject;
     private String content;
     private String attachment;
@@ -50,22 +52,22 @@ public class Mail {
 
 
 	public String getFrom() {
-		return from;
+		return fromEmail;
 	}
 
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setFrom(String fromEmail) {
+		this.fromEmail = fromEmail;
 	}
 
 
 	public String getTo() {
-		return to;
+		return toEmail;
 	}
 
 
-	public void setTo(String to) {
-		this.to = to;
+	public void setTo(String toEmail) {
+		this.toEmail = toEmail;
 	}
 
 
@@ -111,8 +113,8 @@ public class Mail {
 	 @Override
 	    public String toString() {
 	        return "Mail{" +
-	                "from='" + from + '\'' +
-	                ", to='" + to + '\'' +
+	                "from='" + fromEmail + '\'' +
+	                ", to='" + toEmail + '\'' +
 	                ", subject='" + subject + '\'' +
 	                ", content='" + content + '\'' +
 	                '}';
