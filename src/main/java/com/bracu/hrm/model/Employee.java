@@ -105,7 +105,7 @@ public class Employee {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = Employee.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "reported_employee")
 	private Employee reportedEmployee;
 	

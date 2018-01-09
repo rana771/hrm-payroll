@@ -7,7 +7,7 @@
 	<groupId>hrm-master</groupId>
 	<artifactId>hrm-master</artifactId>
 	<version>1.0.0</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<name>hrm-master</name>
 	<description>Human Resource Management System</description>
 
@@ -80,4 +80,7 @@
         <artifactId>spring-boot-devtools</artifactId>
     </dependency>
 	</dependencies>
+	<modules>
+		<module>payroll</module>
+	</modules>
 </project>
