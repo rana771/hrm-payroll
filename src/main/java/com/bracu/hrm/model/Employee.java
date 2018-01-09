@@ -105,12 +105,26 @@ public class Employee {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "reported_employee")
+	private Employee reportedEmployee;
 	
 	
 	
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "created_user_id")
+	private User userCreated;
+	
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "updated_user_id")
+	private User userLastUpdated;
 	
 	
+	@Column(name = "date_created")
+	private Date dateCreated;
 	
+	@Column(name = "date_updated")
+	private Date dateLastUpdated;
 	
 	
 	
@@ -333,6 +347,56 @@ public class Employee {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+
+	public Employee getReportedEmployee() {
+		return reportedEmployee;
+	}
+
+
+	public void setReportedEmployee(Employee reportedEmployee) {
+		this.reportedEmployee = reportedEmployee;
+	}
+
+
+	public User getUserCreated() {
+		return userCreated;
+	}
+
+
+	public void setUserCreated(User userCreated) {
+		this.userCreated = userCreated;
+	}
+
+
+	public User getUserLastUpdated() {
+		return userLastUpdated;
+	}
+
+
+	public void setUserLastUpdated(User userLastUpdated) {
+		this.userLastUpdated = userLastUpdated;
+	}
+
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+
+	public Date getDateLastUpdated() {
+		return dateLastUpdated;
+	}
+
+
+	public void setDateLastUpdated(Date dateLastUpdated) {
+		this.dateLastUpdated = dateLastUpdated;
 	}
 	
 	
