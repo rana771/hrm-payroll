@@ -31,4 +31,9 @@
 	<definition name="employee/profile" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/employee/profile.jsp" />
 	</definition>
+	
+	<definition name="leavetype/create" extends="layout.main">
+		<put-attribute name="body" value="/WEB-INF/pages/leavetype/create.jsp" />
+	</definition>
+
 </tiles-definitions>

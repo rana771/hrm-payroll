@@ -10,17 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bracu.hrm.model.BaseEntity;
 import com.bracu.hrm.model.util.HrYear;
 
 @Entity
 @Table(name = "hr_leave")
-public class Leave {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	private Integer version;
+public class Leave extends BaseEntity {
 	
 	@ManyToOne(targetEntity=HrYear.class,fetch=FetchType.LAZY,cascade= CascadeType.DETACH)
 	@JoinColumn(name="hr_year_id")

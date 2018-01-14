@@ -158,8 +158,32 @@
     <script type="text/javascript" src="../../static/js-core/modernizr.js"></script>
     <script type="text/javascript" src="../../static/js-core/jquery-cookie.js"></script>
 
+    <%--For JqGrid--%>
+    <script type="text/javascript" src="../../static/jqGrid/js/i18n/grid.locale-en.js"></script>
+    <script type="text/javascript" src="../../static/jqGrid/jquery.jqGrid.js"></script>
+    <script type="text/javascript" src="../../static/jqGrid/js/jquery.jqGrid.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script type="text/javascript" src="../../static/jqGrid/js/jquery-confirm.min.js"></script>
+    <%--<script type="text/javascript" src="../../static/js-core/jquery-ui.js"></script>--%>
+    <script type="text/javascript" src="../../static/widgets/datepicker/datepicker.js"></script>
 
-<!-- Bootstrap Datepicker -->
+    <script type="text/javascript" src="../../static/widgets/autocomplete/autocomplete.js"></script>
+    <script type="text/javascript" src="../../static/widgets/autocomplete/menu.js"></script>
+
+
+    <link rel="stylesheet" href="../../static/jqGrid/css/jqGrid.bootstrap.css">
+    <link rel="stylesheet" href="../../static/jqGrid/css/ui.jqgrid.css">
+    <link rel="stylesheet" href="../../static/jqGrid/css/jquery-ui.css">
+    <link rel="stylesheet" href="../../static/jqGrid/css/jquery-confirm.min.css">
+    <!-- jGrowl notifications -->
+
+    <!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/jgrowl-notifications/jgrowl.css">-->
+    <script type="text/javascript" src="../../static/widgets/jgrowl-notifications/jgrowl.js"></script>
+
+
+
+    <!-- Bootstrap Datepicker -->
 
 <!--<link rel="stylesheet" type="text/css" href="../../static/widgets/datepicker/datepicker.css">-->
 <script type="text/javascript" src="../../static/widgets/datepicker/datepicker.js"></script>
