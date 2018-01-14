@@ -29,13 +29,11 @@ public abstract class BaseEntity {
 	@ManyToOne(targetEntity=User.class,fetch=FetchType.LAZY,cascade= CascadeType.DETACH)
 	@JoinColumn(name="user_created_id")
 	
-	
-	
-	
     private User userCreated;
 	@ManyToOne(targetEntity=User.class,fetch=FetchType.LAZY,cascade= CascadeType.DETACH)
 	@JoinColumn(name="user_updated_id")
     private User userLastUpdated;
+	
 	
 	@Column(name = "date_created")
     private Date dateCreate;

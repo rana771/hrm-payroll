@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import com.bracu.hrm.model.BaseEntity;
 
 @Entity
-@Table(name = "lave_type")
+@Table(name = "leave_type")
 public class LeaveType extends BaseEntity {
 	
 	private String name;
