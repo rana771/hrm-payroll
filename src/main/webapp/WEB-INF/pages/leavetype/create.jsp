@@ -200,7 +200,7 @@
             type : "POST",
             contentType : "application/json",
             url : action,
-            data : JSON.stringify( $('#leaveTYpeFormId').serialize()),
+            data : JSON.stringify(leavetype),
             dataType : 'json',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('X-CSRF-TOKEN', $('#csr-token').val());
