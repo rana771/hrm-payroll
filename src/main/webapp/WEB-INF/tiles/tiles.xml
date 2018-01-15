@@ -35,5 +35,7 @@
 	<definition name="leavetype/create" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/leavetype/create.jsp" />
 	</definition>
-
+	<definition name="paySlip/paySlip" extends="layout.main">
+		<put-attribute name="body" value="/WEB-INF/pages/paySlip/paySlip.jsp" />
+	</definition>
 </tiles-definitions>
