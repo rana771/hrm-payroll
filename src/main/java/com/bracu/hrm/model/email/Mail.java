@@ -1,5 +1,7 @@
 package com.bracu.hrm.model.email;
 
+import com.bracu.hrm.model.BaseEntity;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,13 +13,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mail")
-public class Mail {
+public class Mail extends BaseEntity{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	private Integer version;
+
 	@Column(name ="from_email")
     private String fromEmail;
 	@Column(name ="to_email")
@@ -29,27 +27,6 @@ public class Mail {
     
     @Column(name ="sending_date")
     private Date sendingDate;
-
-
-	public Integer getId() {
-		return id;
-	}
-
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-
-	public Integer getVersion() {
-		return version;
-	}
-
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
 
 	public String getFrom() {
 		return fromEmail;
