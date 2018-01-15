@@ -6,18 +6,34 @@ import com.bracu.hrm.util.SQLDataSource;
 import net.sf.jasperreports.engine.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 
-import java.sql.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.text.DateFormatSymbols;
 import java.util.*;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
+
+
 
 /**
  * Created by Nahid on 07-Jan-18.
@@ -39,7 +55,7 @@ public class PaySlipController {
             monthsList.put((i+1), months[i]);
         }
         ArrayList<String> yearList = new ArrayList<String>();
-        for(int years = 2001; years<=Calendar.getInstance().get(Calendar.YEAR); years++) {
+        for(int years = 2001; years<= Calendar.getInstance().get(Calendar.YEAR); years++) {
             yearList.add(years+"");
         }
        Integer currentMonth =  Calendar.getInstance().get(Calendar.MONTH);
@@ -55,11 +71,12 @@ public class PaySlipController {
 
     @RequestMapping(value = { "/printAll/{salaryType}/{pinNo}/{salaryMonth}/{salaryYear}"}, method = RequestMethod.GET)
     public ModelAndView printAll(@PathVariable("salaryType") String salaryType
-            ,@PathVariable("pinNo") String pinNo,@PathVariable("salaryMonth") String salaryMonth
-            ,@PathVariable("salaryYear") String salaryYear){
+            , @PathVariable("pinNo") String pinNo, @PathVariable("salaryMonth") String salaryMonth
+            , @PathVariable("salaryYear") String salaryYear){
         JasperReportsPdfView view = new JasperReportsPdfView();
         Map<String, Object> params = new HashMap<>();
         try {
+            /*
             view.setUrl("classpath:reports/paySlip/paySlipMaster.jasper");
             view.setApplicationContext(appContext);
 
@@ -81,18 +98,45 @@ public class PaySlipController {
 
       //  return "";
 
-               String exportDir = System.getProperty("F:\\project\\hr-payroll\\hrm-payroll\\src\\main\\resources\\reports\\tempReports") ;
-               String exportPath = exportDir + "/paySlipMaster.pdf";
+             //  String exportDir = System.getProperty("F:\\project\\hr-payroll\\hrm-payroll\\src\\main\\resources\\reports\\tempReports") ;
+              // String exportPath = exportDir + "/paySlipMaster.pdf";
                JasperReport jasperReport = JasperCompileManager.compileReport("F:\\project\\hr-payroll\\hrm-payroll\\src\\main\\resources\\reports\\paySlip\\paySlipMaster.jasper");
-               JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JRResultSetDataSource( paySlipService.findAll(pathVariable)));
-               JasperExportManager.exportReportToPdfFile(jasperPrint, exportPath);
-               JasperExportManager.exportReportToPdfFile(jasperPrint, exportPath);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport( this.getClass().getClassLoader().getResourceAsStream("\"F:\\project\\hr-payroll\\hrm-payroll\\src\\main\\resources\\reports\\paySlip\\paySlipMaster.jasper"), null,new JRResultSetDataSource( paySlipService.findAll(pathVariable)));
+              // JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JRResultSetDataSource( paySlipService.findAll(pathVariable)));
+               //JasperExportManager.exportReportToPdfFile(jasperPrint, exportPath);
+             //  JasperExportManager.exportReportToPdfFile(jasperPrint, exportPath);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+            DataSource aAttachment =  new ByteArrayDataSource(baos.toByteArray(), "application/pdf");
+            byte[] pdfByteArray = JasperExportManager.exportReportToPdf(jasperPrint);
+            ByteArrayInputStream arrayInputStream=  new ByteArrayInputStream(pdfByteArray);
+            MimeBodyPart attachment = new MimeBodyPart(arrayInputStream);
+            attachment.setHeader("Content-Type", "application/pdf");
+           // mimeMultipart.addBodyPart(attachment);
 
 
-           }catch (Exception e)
+*/
+
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setSubject("Test message payslip");
+            helper.setText("Hello body");
+            helper.setTo("rana771@gmail.com");
+            helper.setFrom("erp@bracu.ac.bd");
+
+          //  helper.addAttachment("payslip.pdf", aAttachment);
+            emailSender.send(message);
+
+        }catch (Exception e)
            {
                e.printStackTrace();
            }
         return new ModelAndView(view, params);
     }
+
+    @Autowired
+    private JavaMailSender emailSender;
 }
