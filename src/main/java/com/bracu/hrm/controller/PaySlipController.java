@@ -129,7 +129,6 @@ public class PaySlipController {
 
           //  helper.addAttachment("payslip.pdf", aAttachment);
             emailSender.send(message);
-
         }catch (Exception e)
            {
                e.printStackTrace();
