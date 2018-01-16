@@ -4,8 +4,12 @@ import com.bracu.hrm.model.Employee;
 import com.bracu.hrm.service.payslip.PaySlipService;
 import com.bracu.hrm.util.SQLDataSource;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,9 @@ import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormatSymbols;
 import java.util.*;
@@ -76,7 +83,7 @@ public class PaySlipController {
         JasperReportsPdfView view = new JasperReportsPdfView();
         Map<String, Object> params = new HashMap<>();
         try {
-            /*
+            
             view.setUrl("classpath:reports/paySlip/paySlipMaster.jasper");
             view.setApplicationContext(appContext);
 
@@ -100,24 +107,54 @@ public class PaySlipController {
 
              //  String exportDir = System.getProperty("F:\\project\\hr-payroll\\hrm-payroll\\src\\main\\resources\\reports\\tempReports") ;
               // String exportPath = exportDir + "/paySlipMaster.pdf";
-               JasperReport jasperReport = JasperCompileManager.compileReport("F:\\project\\hr-payroll\\hrm-payroll\\src\\main\\resources\\reports\\paySlip\\paySlipMaster.jasper");
+              // JasperReport jasperReport = JasperCompileManager.compileReport("F:\\project\\hr-payroll\\hrm-payroll\\src\\main\\resources\\reports\\paySlip\\paySlipMaster.jasper");
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport( this.getClass().getClassLoader().getResourceAsStream("\"F:\\project\\hr-payroll\\hrm-payroll\\src\\main\\resources\\reports\\paySlip\\paySlipMaster.jasper"), null,new JRResultSetDataSource( paySlipService.findAll(pathVariable)));
+            //JasperPrint jasperPrint = JasperFillManager.fillReport( this.getClass().getClassLoader().getResourceAsStream("\"F:\\project\\hr-payroll\\hrm-payroll\\src\\main\\resources\\reports\\paySlip\\paySlipMaster.jasper"), null,new JRResultSetDataSource( paySlipService.findAll(pathVariable)));
               // JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JRResultSetDataSource( paySlipService.findAll(pathVariable)));
                //JasperExportManager.exportReportToPdfFile(jasperPrint, exportPath);
              //  JasperExportManager.exportReportToPdfFile(jasperPrint, exportPath);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //Resource report = new ClassPathResource("classpath:reports/paySlip/paySlipMaster.jasper");
 
-            JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
-            DataSource aAttachment =  new ByteArrayDataSource(baos.toByteArray(), "application/pdf");
-            byte[] pdfByteArray = JasperExportManager.exportReportToPdf(jasperPrint);
-            ByteArrayInputStream arrayInputStream=  new ByteArrayInputStream(pdfByteArray);
-            MimeBodyPart attachment = new MimeBodyPart(arrayInputStream);
-            attachment.setHeader("Content-Type", "application/pdf");
+       // JasperPrint jasperPrint = JasperFillManager.fillReport(report.getInputStream(), Collections.EMPTY_MAP,ds)
+           // ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+          //  JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+           // DataSource aAttachment =  new ByteArrayDataSource(baos.toByteArray(), "application/pdf");
+           // byte[] pdfByteArray = JasperExportManager.exportReportToPdf(jasperPrint);
+            //ByteArrayInputStream arrayInputStream=  new ByteArrayInputStream(pdfByteArray);
+        
+       // JRDataSource ds = new JRResultSetDataSource( paySlipService.findAll(pathVariable));
+
+        //InputStream is=this.getClass().getResourceAsStream("classpath:reports/paySlip/paySlipMaster.jrxml");
+       InputStream input = new FileInputStream(new File("/Users/rana/Works/eclipse-workspace/hrm-payroll/hrm-master/src/main/resources/reports/paySlip/paySlipMaster.jrxml"));
+
+        		JasperReport jasperReport = JasperCompileManager.compileReport(input);
+        //Resource report = new ClassPathResource(view.getUrl()
+       // JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, Collections.EMPTY_MAP,ds);
+      //  ByteArrayOutputStream baos = new ByteArrayOutputStream();
+       // JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+      //  DataSource attachment =  new ByteArrayDataSource(baos.toByteArray(), "application/pdf");
+
+        
+        
+           // MimeBodyPart attachment = new MimeBodyPart(dss);
+          //  attachment.setHeader("Content-Type", "application/pdf");
            // mimeMultipart.addBodyPart(attachment);
 
 
-*/
+     // get the JRXML template as a stream
+        //InputStream template = this.getClass().getResourceAsStream("/sampleReport.xml");
+        // compile the report from the stream
+        //JasperReport report = JasperCompileManager.compileReport(template);
+        // fill out the report into a print object, ready for export. 
+        JasperPrint print = JasperFillManager.fillReport(jasperReport, (Map)new HashMap<String, String>(),new JRResultSetDataSource( paySlipService.findAll(pathVariable)));
+        // export it!
+        File pdf = File.createTempFile("output.", ".pdf");
+        //JasperExportManager.exportReportToPdfStream(print, new FileOutputStream(pdf));
+     
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        JasperExportManager.exportReportToPdfStream(print, baos);
+         DataSource attachment =  new ByteArrayDataSource(baos.toByteArray(), "application/pdf");
 
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -127,7 +164,7 @@ public class PaySlipController {
             helper.setTo("rana771@gmail.com");
             helper.setFrom("erp@bracu.ac.bd");
 
-          //  helper.addAttachment("payslip.pdf", aAttachment);
+            helper.addAttachment("payslip.pdf", pdf);
             emailSender.send(message);
         }catch (Exception e)
            {
