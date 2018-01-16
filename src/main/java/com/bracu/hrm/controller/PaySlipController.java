@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 
 import com.bracu.hrm.service.payslip.PaySlipService;
+import com.lowagie.text.pdf.PdfWriter;
 
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -34,6 +35,12 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
+import net.sf.jasperreports.export.PdfExporterConfiguration;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 
 /**
  * Created by Nahid on 07-Jan-18.
@@ -102,13 +109,28 @@ public class PaySlipController {
 			Map parameters = new HashMap<>(params);
 			JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters,
 					new JRResultSetDataSource(paySlipService.findAll(pathVariable)));
-			// export it!
-			File pdf = File.createTempFile("output.", ".pdf");
 
+			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			JasperExportManager.exportReportToPdfStream(print, baos);
+			
+			JRPdfExporter exporter = new JRPdfExporter();
+			exporter.setExporterInput(new SimpleExporterInput(print));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+			SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
+			
+			configuration.setEncrypted(true);
+			  configuration.set128BitKey(true);
+			  configuration.setUserPassword("jasper");
+			  configuration.setOwnerPassword("reports");
+			  configuration.setPermissions(PdfWriter.ALLOW_COPY | PdfWriter.ALLOW_PRINTING);
+			exporter.setConfiguration(configuration);
+			exporter.exportReport();
+			
+			
+		
+            
 			DataSource attachment = new ByteArrayDataSource(baos.toByteArray(), "application/pdf");
-
+			
 			MimeMessage message = emailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
