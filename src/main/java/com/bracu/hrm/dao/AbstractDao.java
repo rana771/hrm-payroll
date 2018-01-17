@@ -3,11 +3,15 @@ package com.bracu.hrm.dao;
 import java.io.Serializable;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 
 public abstract class AbstractDao<PK extends Serializable, T> {
 	
@@ -44,6 +48,15 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	
 	protected Criteria createEntityCriteria(){
 		return getSession().createCriteria(persistentClass);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Query(nativeQuery = true)
+	public List executeSQL(String selectQuery){
+		Session session = sessionFactory.getCurrentSession();
+		List<Map<String,String>> result= session.createSQLQuery(selectQuery).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+		//List<Object[]> list = query.list();
+		return  result;
 	}
 
 }
