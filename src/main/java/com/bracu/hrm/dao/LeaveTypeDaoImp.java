@@ -53,30 +53,6 @@ public class LeaveTypeDaoImp extends AbstractDao<Integer, LeaveType> implements 
         return leaveTypeList;
     }
 
-    @Override
-    public boolean uniqueNameTest(Integer id, String name) {
-        Criteria crit = createEntityCriteria();
-        if (id == null) {
-            crit.add(Restrictions.eq("name",name).ignoreCase());
-            if (crit.list().size() == 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            crit.add(Restrictions.eq("id", id));
-            crit.add(Restrictions.like("name", name).ignoreCase());
-            if (crit.list().size() == 0) {
-                crit.add(Restrictions.like("name", name).ignoreCase());
-                if (crit.list().size() == 0) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        }
-    }
+
 
 }

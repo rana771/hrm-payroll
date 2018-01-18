@@ -2,7 +2,7 @@ var Server = {
 
     save:function (headerValue,data,url,formId)
     {
-        console.log(url);
+        console.log(data);
     jQuery.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
@@ -12,11 +12,11 @@ var Server = {
         dataType: "json",
         headers:header,
         success: function (result) {
-            $('#jqGrid').trigger('reloadGrid');
+            $('#'+formId).find("#jqGrid").trigger('reloadGrid');
             //resetForm()
         },
         error: function (result) {
-            document.getElementById("leaveTYpeFormId").reset();
+           // document.getElementById("#"+formId).reset();
             Server.getMessage(1, result.responseText, "Leave type information");
             $('#jqGrid').trigger('reloadGrid');
             Server.resetForm(formId);
@@ -124,12 +124,12 @@ var Server = {
             altRows:true,
             //shrinkToFit: false,
             scrollOffset: 0,
-            onSelectRow: function() {
+            /*onSelectRow: function() {
                 var myGrid = $('#jqGrid'),
                     selectedRowId = myGrid.jqGrid ('getGridParam', 'selrow'),
                     cellValue = myGrid.jqGrid ('getCell', selectedRowId, 'id');
                 edit(cellValue);
-            }
+            }*/
         });
         $('#'+formId).find("#jqGrid").jqGrid("setLabel", "rn", "SL.");
         $(window).bind('resize', function() {

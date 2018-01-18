@@ -27,6 +27,9 @@
 	<definition name="employee/createEmployee" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/employee/createEmployee.jsp" />
 	</definition>
+	<definition name="employee/createEmployee" extends="layout.main">
+		<put-attribute name="body" value="/WEB-INF/pages/employee/employeeList.jsp" />
+	</definition>
 	
 	<definition name="employee/profile" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/employee/profile.jsp" />
@@ -37,5 +40,8 @@
 	</definition>
 	<definition name="paySlip/paySlip" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/paySlip/paySlip.jsp" />
+	</definition>
+	<definition name="hryear/create" extends="layout.main">
+		<put-attribute name="body" value="/WEB-INF/pages/hryear/create.jsp" />
 	</definition>
 </tiles-definitions>

@@ -1,17 +1,14 @@
 package com.bracu.hrm.dao;
 
-import java.util.List;
-
+import com.bracu.hrm.model.Employee;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.bracu.hrm.model.Employee;
-import com.bracu.hrm.model.User;
+import java.util.List;
 
 
 
@@ -41,9 +38,9 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 
 	@SuppressWarnings("unchecked")
 	public List<Employee> findAllEmployees() {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("pin"));
+		/*Criteria criteria = createEntityCriteria().addOrder(Order.asc("pin"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
-		List<Employee> employeeList = (List<Employee>) criteria.list();
+		List<Employee> employeeList = (List<Employee>) criteria.list();*/
 		
 		// No need to fetch userProfiles since we are not showing them on list page. Let them lazy load. 
 		// Uncomment below lines for eagerly fetching of userProfiles if you want.
@@ -51,7 +48,12 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 		for(User user : users){
 			Hibernate.initialize(user.getUserProfiles());
 		}*/
-		return employeeList;
+		String sql = "SELECT \n" +
+				"id AS id,\n" +
+				"pin AS Pin,\n"+
+				"fullName AS Name,\n" +
+				"FROM employee \n" ;
+				return  executeSQL(sql);
 	}
 
 	public void save(Employee employee) {

@@ -218,4 +218,5 @@
 
 
 <script type="text/javascript" src="../../static/widgets/parsley/parsley.js"></script>
+<script type="text/javascript" src="../../static/custom/commons.js"></script>
 </head>
