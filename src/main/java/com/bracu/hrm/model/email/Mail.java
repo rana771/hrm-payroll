@@ -21,9 +21,19 @@ public class Mail extends BaseEntity{
 	@Column(name ="to_email")
     private String toEmail;
     private String subject;
+	@Column(name="content", length=1000)
     private String content;
     private String attachment;
-    
+	private boolean status;
+	@Column(name="note", length=1000)
+	private String note;
+
+	@Column(name ="salary_month")
+	private String salaryMonth;
+
+	@Column(name ="salary_year")
+	private String salaryYear;
+
     
     @Column(name ="sending_date")
     private Date sendingDate;
@@ -37,6 +47,37 @@ public class Mail extends BaseEntity{
 		this.fromEmail = fromEmail;
 	}
 
+	public boolean isStatus() {
+		return status;
+	}
+
+	public String getSalaryYear() {
+		return salaryYear;
+	}
+
+	public void setSalaryYear(String salaryYear) {
+		this.salaryYear = salaryYear;
+	}
+
+	public String getSalaryMonth() {
+		return salaryMonth;
+	}
+
+	public void setSalaryMonth(String salaryMonth) {
+		this.salaryMonth = salaryMonth;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
 
 	public String getTo() {
 		return toEmail;

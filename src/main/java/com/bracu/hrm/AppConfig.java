@@ -74,6 +74,7 @@ public class AppConfig  extends WebMvcConfigurerAdapter{
        Properties mailProperties = new Properties();
         mailProperties.put("mail.smtp.auth", true);
         mailProperties.put("mail.smtp.starttls.enable", true);
+        mailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
        // mailProperties.put("mail.properties.mail.smtp.socketFactory.port",465);
         //mailProperties.put("mail.properties.mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
         //mailProperties.put("mail.properties.mail.smtp.socketFactory.fallback",false);
@@ -91,10 +92,15 @@ public class AppConfig  extends WebMvcConfigurerAdapter{
       		  });
         mailSender.setSession(session);
         mailSender.setProtocol("smtp");
-        mailSender.setUsername("bracu.test@gmail.com");
-        mailSender.setPassword("bracu@1234");
+//        mailSender.setUsername("bracu.test@gmail.com");
+        mailSender.setUsername("BRAC University <erp@bracu.ac.bd>");
+        mailSender.setPassword("R@$@R@987987dasflkj");
+//        mailSender.setPassword("bracu@1234");
 
-        
+
+
+
+
         return mailSender;
     }
      

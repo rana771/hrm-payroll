@@ -2,8 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paySlipMaster" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.4641000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="companyLogo" class="java.lang.String"/>
+	<parameter name="Password" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select
  ISNULL(aa.id, bb.id) id,
@@ -125,7 +126,7 @@ order by pin]]>
 					<textElement>
 						<font size="10" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Total Deduction]]></text>
+					<text><![CDATA[Gross Salary]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="0" y="17" width="409" height="17"/>

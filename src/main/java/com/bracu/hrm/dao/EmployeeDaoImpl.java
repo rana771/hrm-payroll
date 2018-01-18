@@ -1,7 +1,13 @@
 package com.bracu.hrm.dao;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.bracu.hrm.util.SQLDataSource;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
@@ -63,6 +69,33 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 		crit.add(Restrictions.eq("pin", pin));
 		Employee employee = (Employee)crit.uniqueResult();
 		delete(employee);
+	}
+
+	public ResultSet getSqlServerEmployee(String pin){
+		Connection con  = new SQLDataSource().getSqlConnection();
+		ResultSet rs = null;
+		try
+		{
+			con = new SQLDataSource().getSqlConnection();
+			Statement s1 = con.createStatement();
+			String sqlString = "select * from hr_employee_t WHERE hr_employee_t.pin = '"+ pin +"'";
+			rs = s1.executeQuery(sqlString);
+
+			//allResult = Utility.convertResultSetToList(rs);
+			//con.close();
+			//String result = new result[20];
+
+		}catch (SQLException e) {
+
+
+		}catch
+				(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+
+		return rs;
 	}
 
 }

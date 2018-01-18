@@ -45,7 +45,7 @@ public class Employee {
 	private String fullName;
 
 	@NotEmpty
-	@Column(name = "email", nullable = false)
+	@Column(name = "email", nullable = true)
 	private String email;
 	
 	@Column(name = "father_name")

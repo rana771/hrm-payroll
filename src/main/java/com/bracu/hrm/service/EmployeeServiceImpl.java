@@ -1,5 +1,8 @@
 package com.bracu.hrm.service;
 
+import java.sql.ResultSet;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +33,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
 	private EntityTypeDao entityTypeDao;
+	@Autowired
+	EmployeeService employeeService;
 	
 	public Employee findById(int id) {
 		return employeeDao.findById(id);
@@ -69,6 +74,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeDao.findAllEmployees();
 	}
 
+	public ResultSet getSqlServerEmployee(String pin) {
+		return employeeDao.getSqlServerEmployee(pin);
+	}
+
 	public boolean isEmployeePinUnique(Integer id, String pin) {
 		Employee employee = findByPin(pin);
 		return ( employee == null || ((id != null) && (employee.getId() == id)));
@@ -98,5 +107,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		return listMap;
 		
+	}
+	public void prepareNewEmployeeFromPaySlip(Object object){
+		Employee employee1 = new Employee();
+		employee1.setVersion(0);
+		employee1.setPin(((HashMap) object).get("pin").toString());
+		employee1.setFullName(((HashMap) object).get("name").toString());
+		employee1.setFatherName(((HashMap) object).get("fathers_name").toString());
+		employee1.setMotherName(((HashMap) object).get("mothers_name").toString());
+		Date dob= (Date)((HashMap) object).get("date_of_birth");
+		employee1.setDateOfBirith(dob);
+		Date dateOfJoining= (Date)((HashMap) object).get("date_of_joining");
+		employee1.setDateOfJoining(dateOfJoining);
+		employee1.setEmail("nur.nahid@bracu.ac.bd");
+		employeeService.saveEmployee(employee1);
 	}
 }

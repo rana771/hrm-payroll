@@ -1,5 +1,6 @@
 package com.bracu.hrm.service;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
@@ -24,5 +25,8 @@ public interface EmployeeService {
 	boolean isEmployeePinUnique(Integer id, String pin);
 
 	Map getAllSetupEntity();
+
+	ResultSet getSqlServerEmployee(String pin);
+	void prepareNewEmployeeFromPaySlip(Object object);
 
 }
