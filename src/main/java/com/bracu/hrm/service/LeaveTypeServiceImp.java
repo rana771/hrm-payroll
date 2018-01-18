@@ -1,6 +1,7 @@
 package com.bracu.hrm.service;
 
 import com.bracu.hrm.dao.LeaveTypeDao;
+import com.bracu.hrm.dbconfig.ReadOnlyConnection;
 import com.bracu.hrm.model.leave.LeaveType;
 import com.bracu.hrm.util.JSONUtil;
 import com.google.gson.Gson;
@@ -54,6 +55,8 @@ public class LeaveTypeServiceImp implements LeaveTypeService {
         return resultJson;
     }
     @Override
+    @ReadOnlyConnection
+    @Transactional(readOnly = true)
     public String getLeaveTypeList() {
         List<LeaveType> list = leaveTypeDao.findAll();
         return JSONUtil.getJsonObject(list);
