@@ -35,6 +35,7 @@ public class EmployeeController {
 	public String listUsers(ModelMap model) {
 
 		List<Employee> employeeList = employeeService.findAllEmployees();
+		System.err.println(employeeList.size());
 		model.addAttribute("employeeList", employeeList);
 		//model.addAttribute("loggedinuser", getPrincipal());
 		return "employee/employeeList";

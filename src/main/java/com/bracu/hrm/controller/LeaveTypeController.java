@@ -4,7 +4,6 @@ import com.bracu.hrm.model.leave.LeaveType;
 import com.bracu.hrm.service.LeaveTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -31,25 +30,27 @@ public class LeaveTypeController {
         model.addAttribute("leaveType",new LeaveType());
         return "leavetype/create";
     }
+
     @ResponseBody
-    @RequestMapping(value="/save",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/save",method = RequestMethod.POST)
     public String save(@RequestBody LeaveType leaveType, BindingResult result, ModelMap model, Principal principal){
-        String unique;
-        unique="unique";
+        String message;
         if(result.hasErrors()){
             return "leavetype/create";
         }
         else{
             if(!leaveTypeService.uniqueNameCheck(leaveType.getId(), leaveType.getName())){
-                return unique;
+                message = messageSource.getMessage("non.unique.name", new String[]{"Leave Type", leaveType.getName()}, Locale.getDefault());
+                return message;
             }
             else{
                 leaveTypeService.save(leaveType,principal);
             }
 
         }
+        message = messageSource.getMessage("save.successful.message", new String[]{"Leave Type", leaveType.getName()}, Locale.getDefault());
+        return message;
 
-        return  "";
     }
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -61,28 +62,25 @@ public class LeaveTypeController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String edit(@PathVariable("id") String id, ModelMap model){
         String subGroupJson = leaveTypeService.getLeaveTypeById(Integer.parseInt(id));
+        System.err.println(subGroupJson);
         return subGroupJson ;
     }
     @ResponseBody
     @RequestMapping(value = { "/update" }, method = RequestMethod.POST)
     public String update( @RequestBody LeaveType leaveType,
                           BindingResult resultItem) {
-        LeaveType leaveType1;
-
+        System.err.println(leaveType);
         if (resultItem.hasErrors()) {
             return "leavetype/create";
         } else{
-            leaveType1= leaveTypeService.update(leaveType);
+            return leaveTypeService.update(leaveType);
         }
-        String message = messageSource.getMessage("save.updated.message", new String[]{"Leave Type", leaveType.getName()}, Locale.getDefault());
-        return message;
+
+        //return message;
     }
     @ResponseBody
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable("id") String id, ModelMap model){
-        System.err.println("********************delete Starts here*********************");
-        System.err.println(id);
-        System.err.println("********************delete ends here*********************");
         String subGroupJson = leaveTypeService.delete(Integer.parseInt(id));
         return subGroupJson ;
     }

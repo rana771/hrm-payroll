@@ -540,6 +540,7 @@
 <!-- Theme switcher -->
 
 <script type="text/javascript" src="../../static/widgets/theme-switcher/themeswitcher.js"></script>
+<%--For Common usages js: add/delete/edit--%>
 
 </div>
 </body>

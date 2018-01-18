@@ -20,7 +20,28 @@
             </span>
         </a>
     </li>
-    <li class="header"><span>Components</span></li>
+        <li class="header"><span>Setup</span></li>
+        <div class="sidebar-submenu">
+
+            <ul>
+                <li><a href="/leavetype/create" title="Leave Type"><span>Leave Type</span></a></li>
+                <li><a href="/hryear/create" title="HR Year"><span>Hr Year </span></a></li>
+
+            </ul>
+
+        </div>
+        <li class="header"><span>Hr Employee</span></li>
+        <div class="sidebar-submenu">
+
+            <ul>
+                <li><a href="/emp/create" title="Employee "><span>Create Employee </span></a></li>
+                <li><a href="/emp/create" title="Employee "><span>Employee List </span></a></li>
+
+            </ul>
+
+        </div>
+
+    <li class="header"><span>Payroll</span></li>
     <li>
         <a href="#" title="Elements">
             <i class="glyph-icon icon-linecons-diamond"></i>

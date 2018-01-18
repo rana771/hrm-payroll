@@ -15,3 +15,8 @@
 
 ## Run
 ```mvn clean spring-boot:run```
+
+##Install Lombok
+-Go to File->Settings->Plugins then Search lombok
+-Get lombok and install
+-restart intellij
