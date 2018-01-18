@@ -2,6 +2,7 @@ package com.bracu.hrm.service;
 
 import com.bracu.hrm.dao.HrYearDao;
 import com.bracu.hrm.dao.LeaveTypeDao;
+import com.bracu.hrm.dbconfig.ReadOnlyConnection;
 import com.bracu.hrm.model.leave.LeaveType;
 import com.bracu.hrm.model.util.HrYear;
 import com.bracu.hrm.util.DateUtil;
@@ -38,12 +39,16 @@ public class HrYearServiceImp implements HrYearService {
     }
 
     @Override
+    @ReadOnlyConnection
+    @Transactional(readOnly = true)
     public String getlist() {
         List<HrYear> list = hrYearDao.findAll();
         return JSONUtil.getJsonObject(list);
     }
 
     @Override
+    @ReadOnlyConnection
+    @Transactional(readOnly = true)
     public String getEntityById(int i) {
         HrYear hrYear = hrYearDao.findById(i);
         return JSONUtil.getJsonObject(hrYear);

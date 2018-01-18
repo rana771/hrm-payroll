@@ -63,6 +63,8 @@ public class LeaveTypeServiceImp implements LeaveTypeService {
     }
 
     @Override
+    @ReadOnlyConnection
+    @Transactional(readOnly = true)
     public String getLeaveTypeById(int i) {
         LeaveType leaveType= leaveTypeDao.findById(i);
         return JSONUtil.getJsonObject(leaveType);
