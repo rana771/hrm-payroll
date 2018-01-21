@@ -50,8 +50,8 @@
                             	<form:errors path="email" cssclass="error"></form:errors>
                             </div>
                         </div>
-                        
-                          <div class="form-group">
+
+                    <div class="form-group">
                     <label class="col-sm-3 control-label">Gender</label>
                     <div class="col-sm-6">
                         <select name="gender.id" class="custom-select">

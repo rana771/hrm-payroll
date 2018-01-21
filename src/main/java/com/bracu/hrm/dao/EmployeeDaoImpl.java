@@ -51,8 +51,15 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 		String sql = "SELECT \n" +
 				"id AS id,\n" +
 				"pin AS Pin,\n"+
-				"fullName AS Name,\n" +
-				"FROM employee \n" ;
+				"Full_Name AS name, \n" +
+				"email  AS email, \n" +
+				"father_name AS fname, \n" +
+				"date_joining AS doj, \n" +
+				"date_confirmation AS doc, \n" +
+				"nid AS nid \n" +
+				"FROM employee \n" +
+				"OFFSET 0 \n"+
+				"LIMIT 100 \n";
 				return  executeSQL(sql);
 	}
 

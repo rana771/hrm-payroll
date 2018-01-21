@@ -34,7 +34,7 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	private Integer version;
 	
 	@NotEmpty
@@ -56,7 +56,7 @@ public class Employee {
 	@Column(name = "spouse_name")
 	private String spouseName;
 
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "MM-dd-yyyy")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_birth", nullable = false)
 	private Date dateOfBirith;

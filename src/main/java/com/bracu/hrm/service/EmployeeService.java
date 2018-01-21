@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bracu.hrm.model.Employee;
-
+import com.bracu.hrm.model.settings.SetupEntity;
 
 
 public interface EmployeeService {
@@ -19,10 +19,13 @@ public interface EmployeeService {
 	
 	void deleteEmployeeByPin(String pin);
 
-	List<Employee> findAllEmployees(); 
+	String findAllEmployees();
 	
 	boolean isEmployeePinUnique(Integer id, String pin);
 
 	Map getAllSetupEntity();
 
+	Map<String,List<SetupEntity>>  getEmployeeInfo(int i);
+
+	String update(Employee employee);
 }
