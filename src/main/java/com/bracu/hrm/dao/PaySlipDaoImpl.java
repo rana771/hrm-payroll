@@ -1,5 +1,6 @@
 package com.bracu.hrm.dao;
 
+import com.bracu.hrm.model.email.Mail;
 import com.bracu.hrm.util.SQLDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ import java.util.*;
 
 
 @Repository("PaySlipDao")
-public class PaySlipDaoImpl implements PaySlipDao {
+public class PaySlipDaoImpl extends AbstractDao<Integer, Mail>  implements PaySlipDao {
 
 	static final Logger logger = LoggerFactory.getLogger(PaySlipDaoImpl.class);
 
@@ -21,10 +22,19 @@ public class PaySlipDaoImpl implements PaySlipDao {
 	public ResultSet findAll(Map params) {
 		Connection con  = new SQLDataSource().getSqlConnection();
 		List allResult = new ArrayList();
-		String pinNo = "1=1 AND";
+		String pinNo = " 1=1 AND ";
+		String departmentId = " 1=1 AND ";
 		if(Integer.parseInt(params.get("salaryType").toString())==1){
-			pinNo = "hr_employee_t.pin =RIGHT(REPLICATE('0', 8) + '"+params.get("pinNo")+"', 8) AND";
+			pinNo = " hr_employee_t.pin =RIGHT(REPLICATE('0', 8) + '"+params.get("pinNo")+"', 8) AND ";
 		}
+		if((params.get("departmentId").toString()).equals("ALL")){
+			departmentId = " 1=1 AND ";
+		}else {
+			departmentId = " hr_employee_t.section_code ="+params.get("departmentId")+" AND ";
+
+		}
+
+
 		ResultSet rs = null;
 		try
 		{
@@ -76,7 +86,7 @@ public class PaySlipDaoImpl implements PaySlipDao {
 					"INNER JOIN pr_payment_mode_t on pr_payment_mode_t.code = pr_employee_salary_generation_parent_t.payment_mode_code\n" +
 					"INNER JOIN section_t on section_t.code = hr_employee_t.section_code\n" +
 					"\n" +
-					"WHERE "+ pinNo +" pr_employee_salary_generation_parent_t.salary_for_the_year='"+params.get("salaryYear") +"' and pr_employee_salary_generation_parent_t.salary_for_the_month='"+params.get("salaryMonth") +"'\n" +
+					"WHERE "+ departmentId + pinNo +" pr_employee_salary_generation_parent_t.salary_for_the_year='"+params.get("salaryYear") +"' and pr_employee_salary_generation_parent_t.salary_for_the_month='"+params.get("salaryMonth") +"'\n" +
 					") as aa\n" +
 					"full join (\n" +
 					"\n" +
@@ -94,7 +104,7 @@ public class PaySlipDaoImpl implements PaySlipDao {
 					"pr_employee_salary_generation_parent_t.number\n" +
 					"INNER JOIN pr_salary_deduction_breakup_t on  pr_salary_deduction_breakup_t.code =\n" +
 					"pr_employee_salary_generation_child_employee_deduction_t.salary_deduction_breakup_code\n" +
-					"WHERE "+ pinNo +" pr_employee_salary_generation_parent_t.salary_for_the_year='"+params.get("salaryYear")+"' and pr_employee_salary_generation_parent_t.salary_for_the_month='"+params.get("salaryMonth")+"'\n" +
+					"WHERE "+ departmentId + pinNo +" pr_employee_salary_generation_parent_t.salary_for_the_year='"+params.get("salaryYear")+"' and pr_employee_salary_generation_parent_t.salary_for_the_month='"+params.get("salaryMonth")+"'\n" +
 					"\n" +
 					") as bb\n" +
 					"on aa.id = bb.id and aa.serialNo = bb.serialNo\n" +
@@ -122,4 +132,20 @@ public class PaySlipDaoImpl implements PaySlipDao {
 //			return m1.get("id").compareTo(m2.get("id"));
 //		}
 //	};
+
+
+
+	public List getRequisitionList() {
+		String sql = "select \n" +
+				"mail.id,\n" +
+				"mail.content content,\n" +
+				"mail.note,\n" +
+				"case when mail.status = false then 'Failed' else 'Success' end status,\n" +
+				"concat(to_char(to_timestamp(to_char(mail.salary_month:: int, '999'), 'MM'), 'Month'), ', ' , mail.salary_year) \"monthAndYear\"\n" +
+				"  \n" +
+				"from mail order by id desc\n" +
+				"\n";
+
+		return  executeSQL(sql);
+	}
 }
