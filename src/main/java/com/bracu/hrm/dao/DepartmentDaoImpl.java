@@ -24,12 +24,14 @@ public class DepartmentDaoImpl extends AbstractDao<Integer, Department> implemen
     }
 
     @Override
-    public Department findById(int id) {
+    public Department findById(Integer id) {
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("id",id));
         Department department = (Department) criteria.uniqueResult();
         return  department;
     }
+
+
 
     @Override
     public void delete(Integer id) {
@@ -38,4 +40,7 @@ public class DepartmentDaoImpl extends AbstractDao<Integer, Department> implemen
         Department department= (Department) crit.uniqueResult();
         delete(department);
     }
+
+
+
 }

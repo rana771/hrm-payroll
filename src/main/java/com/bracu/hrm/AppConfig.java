@@ -90,6 +90,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		Properties mailProperties = new Properties();
 		mailProperties.put("mail.smtp.auth", true);
 		mailProperties.put("mail.smtp.starttls.enable", true);
+		mailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
 		// mailProperties.put("mail.properties.mail.smtp.socketFactory.port",465);
 		// mailProperties.put("mail.properties.mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
 		// mailProperties.put("mail.properties.mail.smtp.socketFactory.fallback",false);

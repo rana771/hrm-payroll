@@ -45,18 +45,13 @@
     <li>
         <a href="#" title="Elements">
             <i class="glyph-icon icon-linecons-diamond"></i>
-            <span>Elements</span>
+            <span>Pay Slip</span>
         </a>
         <div class="sidebar-submenu">
 
             <ul>
-                <li><a href="buttons.html" title="Buttons"><span>Buttons</span></a></li>
-                <li><a href="labels-badges.html" title="Labels &amp; Badges"><span>Labels &amp; Badges</span></a></li>
-                <li><a href="content-boxes.html" title="Content boxes"><span>Content boxes</span></a></li>
-                <li><a href="icons.html" title="Icons"><span>Icons</span></a></li>
-                <li><a href="nav-menus.html" title="Navigation menus"><span>Navigation menus</span></a></li>
-                <li><a href="response-messages.html" title="Response messages"><span>Response messages</span></a></li>
-                <li><a href="images.html" title="Images"><span>Images</span></a></li>
+                <li><a href="${contextPath}/payment/show" title="Buttons"><span>Pay Slip</span></a></li>
+                <li><a href="${contextPath}/payment/list" title="Labels &amp; Badges"><span>Pay Slip List</span></a></li>
             </ul>
 
         </div><!-- .sidebar-submenu -->

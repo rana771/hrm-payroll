@@ -97,6 +97,11 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
 
     @Override
+    public List<Department> findAll() {
+        return null;
+    }
+
+    @Override
     public void save(Department department, Principal principal) {
         department.setDateCreate(new Date());
         department.setVersion(0);

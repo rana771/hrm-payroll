@@ -16,6 +16,7 @@ import javax.mail.util.ByteArrayDataSource;
 
 import com.bracu.hrm.dao.SetupEntityDao;
 import com.bracu.hrm.model.Employee;
+import com.bracu.hrm.service.DepartmentService;
 import com.bracu.hrm.service.EmployeeService;
 import com.sun.jmx.snmp.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,8 @@ import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 public class PaySlipController {
 	@Autowired
 	PaySlipService paySlipService;
+	@Autowired
+	DepartmentService departmentService;
 
 
 	@RequestMapping(value = { "/show" }, method = RequestMethod.GET)
@@ -76,13 +79,15 @@ public class PaySlipController {
 		model.addAttribute("yearList", yearList);
 		model.addAttribute("currentMonth", currentMonth + 1);
 		model.addAttribute("currentYear", currentYear);
+		model.addAttribute("departmentList",departmentService.findAll());
 		// model.addAttribute("loggedinuser", getPrincipal());
 		return "paySlip/paySlip";
 	}
 
-	@RequestMapping(value = { "/printAll/{salaryType}/{pinNo}/{salaryMonth}/{salaryYear}/{printOrEmail}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/printAll/{salaryType}/{pinNo}/{salaryMonth}/{salaryYear}/{printOrEmail}/{departmentId}" }, method = RequestMethod.GET)
 	public ModelAndView printAll(@PathVariable("salaryType") String salaryType, @PathVariable("pinNo") String pinNo,
-			@PathVariable("salaryMonth") String salaryMonth, @PathVariable("salaryYear") String salaryYear, @PathVariable("printOrEmail") String printOrEmail) {
+			@PathVariable("salaryMonth") String salaryMonth, @PathVariable("salaryYear") String salaryYear,
+			@PathVariable("printOrEmail") String printOrEmail, @PathVariable("departmentId") String departmentId) {
 
 		Map criteria = new HashMap<String,String>();
 		criteria.put("salaryType",salaryType.toString());
@@ -90,9 +95,20 @@ public class PaySlipController {
 		criteria.put("salaryMonth",salaryMonth.toString());
 		criteria.put("salaryYear",salaryYear.toString());
 		criteria.put("printOrEmail",printOrEmail.toString());
+		criteria.put("departmentId",departmentId.toString());
 
 		return paySlipService.generatePaySlip(criteria);
 
+	}
+	@RequestMapping(value = { "/mailList" }, method = RequestMethod.POST)
+	public String list(ModelMap model) {
+		String subGroupJson = paySlipService.getMailList();
+		return subGroupJson ;
+	}
+
+	@RequestMapping(value = { "/list" }, method = RequestMethod.GET)
+	public String listPage(ModelMap model) {
+		return "paySlip/paySlipList";
 	}
 
 

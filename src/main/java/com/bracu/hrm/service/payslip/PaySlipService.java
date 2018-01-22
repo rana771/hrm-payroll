@@ -13,6 +13,6 @@ public interface PaySlipService {
 
 	ResultSet findAll(Map params);
 	ModelAndView generatePaySlip(Map params);
-	
+	public String getMailList();
 
 }

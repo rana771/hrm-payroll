@@ -10,6 +10,9 @@ import com.bracu.hrm.model.org.Company;
 import com.bracu.hrm.service.CompanyService;
 import com.bracu.hrm.service.EmployeeService;
 import com.bracu.hrm.service.email.EmailService;
+import com.bracu.hrm.util.SQLDataSource;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.lowagie.text.pdf.PdfWriter;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
@@ -32,6 +35,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.text.DateFormatSymbols;
@@ -109,6 +113,7 @@ public class PaySlipServiceImpl implements PaySlipService {
 			pathVariable.put("pinNo", criteria.get("pinNo").toString());
 			pathVariable.put("salaryMonth", criteria.get("salaryMonth").toString());
 			pathVariable.put("salaryYear", criteria.get("salaryYear").toString());
+			pathVariable.put("departmentId", criteria.get("departmentId").toString());
 			if(criteria.get("printOrEmail").toString().equals("print")) {
 				view.setUrl("classpath:reports/paySlip/paySlipMaster.jasper");
 				view.setApplicationContext(appContext);
@@ -151,6 +156,7 @@ public class PaySlipServiceImpl implements PaySlipService {
 							pathVariable.put("pinNo", pin);
 							pathVariable.put("salaryMonth", criteria.get("salaryMonth").toString());
 							pathVariable.put("salaryYear", criteria.get("salaryYear").toString());
+							pathVariable.put("departmentId", criteria.get("departmentId").toString());
 							InputStream input = new FileInputStream(new File(
 									"F:/project/hr-payroll/hrm-payroll/src/main/resources/reports/paySlip/paySlipMaster.jrxml"));
 
@@ -222,10 +228,29 @@ public class PaySlipServiceImpl implements PaySlipService {
 				}
 
 			}
+			Connection con  = new SQLDataSource().getSqlConnection();
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return 	new ModelAndView(view, params);
+	}
+
+	public String getMailList() {
+		List list = paySlipDao.getRequisitionList();
+		String resultJson = "";
+		try {
+			Gson gson = new Gson();
+			resultJson = gson.toJson(list);
+		}catch (JsonIOException e){
+			System.out.println(e.getMessage());
+		}catch (RuntimeException e){
+			System.out.println(e.getMessage());
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+		return resultJson;
 	}
 
 }

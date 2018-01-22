@@ -22,6 +22,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4" id="departmentDiv" style="display: none;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Department</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="departmentList" id="departmentList" required="required">
+                                    <option value="ALL">All</option>
+                                    <c:forEach var="department" items="${departmentList}">
+                                        <option value="${department.id}">${department.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
 
                 </div>
@@ -97,9 +110,11 @@
             if($(this).val()==1){
                 $('#pinNo').val('');
                 $('#pinNo').attr( "disabled", false );
+                $('#departmentDiv').hide();
             }else {
                 $('#pinNo').val('');
                 $('#pinNo').attr( "disabled", true );
+                $('#departmentDiv').show();
             }
 
         });
@@ -109,6 +124,7 @@
     function printReport(val){
 
         var salaryType = $('#salaryType').val();
+        var departmentId = $('#departmentList').val();
         var pinNo = $('#pinNo').val();
 
         var salaryMonth = $('#salaryMonth').val();
@@ -118,10 +134,13 @@
                 getSuccessMessage(3,"Please Enter Valid PIN No.",'Pay Slip')
                 return false;
             }
+            departmentId = 'ALL'
         }else {
             pinNo = 'ALL'
+
+
         }
-        window.open("${contextPath}/payment/printAll/"+salaryType+"/"+pinNo+"/"+salaryMonth+"/"+salaryYear+"/"+val, '_blank',);
+        window.open("${contextPath}/payment/printAll/"+salaryType+"/"+pinNo+"/"+salaryMonth+"/"+salaryYear+"/"+val+"/"+departmentId, '_blank',);
     }
 
     function getSuccessMessage(type,msg,header ){
