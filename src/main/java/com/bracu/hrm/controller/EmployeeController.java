@@ -140,14 +140,16 @@ public class EmployeeController {
 	@RequestMapping(value = { "/update" }, method = RequestMethod.POST)
 	public String update( @RequestBody Employee employee,
 						  BindingResult resultItem) {
-		System.err.println(employee.getDateOfBirith());
 		if (resultItem.hasErrors()) {
 			return "employee/profile";
 		} else{
 			return employeeService.update(employee);
 		}
 
-		//return message;
+	}
+	@RequestMapping(value = "/settings/edit/{id}", method = RequestMethod.GET)
+	public String editUserSettings(@PathVariable("id") String id, ModelMap model){
+		return employeeService.getUserById(Integer.parseInt(id));
 	}
 	
 

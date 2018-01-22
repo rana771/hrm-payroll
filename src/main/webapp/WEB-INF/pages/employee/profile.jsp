@@ -35,7 +35,7 @@
                     </li>
                     <li class="col-md-16">
                         <a href="#tab-example-1" data-toggle="tab" class="list-group-item">
-                            <i class="glyph-icon icon-dashboard"></i>
+                            <i class="glyph-icon icon-dashboard" onclick="accountSettings()"></i>
                             Account Settings
                         </a>
                     </li>
@@ -61,16 +61,6 @@
         <div class="example-box-wrapper">
             <div class="tab-content">
                 <div class="tab-pane fade" id="tab-example-1">
-                    <div class="alert alert-close alert-success">
-                        <a href="#" title="Close" class="glyph-icon alert-close-btn icon-remove"></a>
-                        <div class="bg-green alert-icon">
-                            <i class="glyph-icon icon-check"></i>
-                        </div>
-                        <div class="alert-content">
-                            <h4 class="alert-title">Example Infobox</h4>
-                            <p>Lorem ipsum dolor sic amet dixit tu...</p>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="content-box">
@@ -598,6 +588,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="tab-pane pad0A fade active in" id="tab-example-4">
                     <div class="content-box">
                         <form:form method="POST" modelAttribute="employee" id="empbasicinfoId"
@@ -624,16 +615,6 @@
                                         <form:errors path="fullName" cssclass="error"></form:errors>
                                     </div>
                                 </div>
-                                    <%--<div class="form-group">
-                                        <label class="col-sm-3 control-label">Date of Birth</label>
-                                        <div class="col-sm-6">
-                                        <div class="form-group">
-
-                                            <div class="col-sm-6">
-                                                <input type="text" name="dateOfBirith" id="dob" value="${employee.dateOfBirith}"  class="bootstrap-datepicker form-control tempDateFrom" value="" data-date-format="mm-dd-yy">
-                                            </div>
-                                        </div>
-                                    </div>--%>
 
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Date of Birth</label>
@@ -705,26 +686,14 @@
                                                value="${employee.spouseName}">
                                     </div>
                                 </div>
-                                <!--  <div class="form-group">
-                                     <label class="col-sm-3 control-label">URL</label>
-                                     <div class="col-sm-6">
-                                         <input type="text" data-parsley-type="url" placeholder="URL address" required class="form-control">
-                                     </div>
-                                 </div> -->
-                                    <%--<div class="form-group">
+                                <div class="form-group">
                                         <label class="col-sm-3 control-label">National ID</label>
                                         <div class="col-sm-6">
                                             <input type="text" data-parsley-type="digits"
                                                    placeholder="Enter your nid number" name="nid"
                                                    value="${employee.nid}" required class="form-control">
                                         </div>
-                                    </div>--%>
-                                <!--  <div class="form-group">
-                                     <label class="col-sm-3 control-label">Alphanum</label>
-                                     <div class="col-sm-6">
-                                         <input type="text" data-parsley-type="alphanum" placeholder="Alphanumeric only" required class="form-control">
-                                     </div>
-                                 </div> -->
+                                </div>
 
                                     <%--<div class="form-group">
                                         <label class="col-sm-3 control-label">Nationality</label>
@@ -844,6 +813,27 @@
         //var data=$('#leaveTYpeFormId').serialize();
         Server.save(header, basicInfo, action, formId,caption);
         Server.resetForm(formId);
+    }
+    function accountSettings(){
+        console.log($('#id').val());
+        var action = "${contextPath}" + "/emp/update";
+        $.ajax({
+            type : "POST",
+            contentType : "application/json",
+            url : url+id,
+            data : id,
+            dataType : 'json',
+            headers:header,
+            success : function(result) {
+                callback(result);
+                $('#deleteButton').show();
+            },
+            error : function(e) {
+                alert("Error!" +e)
+            }
+        });
+
+
     }
 
 

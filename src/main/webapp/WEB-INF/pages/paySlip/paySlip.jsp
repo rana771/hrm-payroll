@@ -14,7 +14,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Salary Type</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-9">
                                 <select class="form-control" name="salaryType" id="salaryType" required="required">
                                     <option value="2">All</option>
                                     <option value="1" selected="selected">Individual</option>
@@ -23,15 +23,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Send Mail</label>
-                            <div class="col-sm-4">
-                                <input type="checkbox" class="form-control" name="sendMail" id="sendMail" />
 
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
@@ -72,8 +64,9 @@
                 </div>
 
 
-                    <input style="float: left; margin-left: 5px;" type="button" value="Print" onclick="printReport()" class="btn btn-lg btn-primary"/>
-                    <input style="float: left; margin-left: 5px;" type="button" value="Reset" onclick="resetForm()" class="btn btn-lg btn-primary"/>
+                    <input style="float: left; margin-left: 5px;" type="button" value="Print" onclick="printReport('print')" class="btn btn-lg btn-primary"/>
+                    <input style="float: left; margin-left: 5px;" type="button" value="Email" onclick="printReport('email')" class="btn btn-lg btn-primary"/>
+                    <%--<input style="float: left; margin-left: 5px;" type="button" value="Reset" onclick="resetForm()" class="btn btn-lg btn-primary"/>--%>
                     <div style="clear: both"></div>
             </form>
         </div>
@@ -113,7 +106,7 @@
 
     });
 
-    function printReport(){
+    function printReport(val){
 
         var salaryType = $('#salaryType').val();
         var pinNo = $('#pinNo').val();
@@ -128,7 +121,7 @@
         }else {
             pinNo = 'ALL'
         }
-        window.open("${contextPath}/payment/printAll/"+salaryType+"/"+pinNo+"/"+salaryMonth+"/"+salaryYear, '_blank',);
+        window.open("${contextPath}/payment/printAll/"+salaryType+"/"+pinNo+"/"+salaryMonth+"/"+salaryYear+"/"+val, '_blank',);
     }
 
     function getSuccessMessage(type,msg,header ){

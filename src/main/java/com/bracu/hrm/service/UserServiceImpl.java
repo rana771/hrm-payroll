@@ -1,12 +1,14 @@
 package com.bracu.hrm.service;
 
+import com.bracu.hrm.dbconfig.ReadOnlyConnection;
 import com.bracu.hrm.model.User;
 import com.bracu.hrm.repository.RoleRepository;
 import com.bracu.hrm.repository.UserRepository;
-
+import com.bracu.hrm.util.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 
@@ -30,4 +32,5 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
 }

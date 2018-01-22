@@ -106,8 +106,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		});
 		mailSender.setSession(session);
 		mailSender.setProtocol("smtp");
-		mailSender.setUsername("bracu.test@gmail.com");
-		mailSender.setPassword("bracu@1234");
+		mailSender.setUsername("BRAC University<erp@bracu.ac.bd>");
+		mailSender.setPassword("R@$@R@987987dasflkj");
 
 		return mailSender;
 	}

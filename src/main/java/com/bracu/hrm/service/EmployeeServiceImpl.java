@@ -1,5 +1,6 @@
 package com.bracu.hrm.service;
 
+
 import com.bracu.hrm.dao.EmployeeDao;
 import com.bracu.hrm.dao.EntityTypeDao;
 import com.bracu.hrm.dao.SetupEntityDao;
@@ -14,10 +15,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.sql.ResultSet;
+import java.util.*;
 
 
 
@@ -35,6 +34,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EntityTypeDao entityTypeDao;
 	@Autowired
 	private MessageSource messageSource;
+	EmployeeService employeeService;
+
 	
 	public Employee findById(int id) {
 		return employeeDao.findById(id);
@@ -46,6 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public void saveEmployee(Employee employee) {
+		employee.setVersion(0);
 		employeeDao.save(employee);
 	}
 
@@ -75,6 +77,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> list = employeeDao.findAllEmployees();
 		return JSONUtil.getJsonObject(list);
 
+	}
+
+	public ResultSet getSqlServerEmployee(String pin) {
+		return employeeDao.getSqlServerEmployee(pin);
 	}
 
 	public boolean isEmployeePinUnique(Integer id, String pin) {
@@ -155,4 +161,26 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 				return null;
 			}
+	public void prepareNewEmployeeFromPaySlip(Object object){
+		Employee employee1 = new Employee();
+		employee1.setVersion(0);
+		employee1.setPin(((HashMap) object).get("pin").toString());
+		employee1.setFullName(((HashMap) object).get("name").toString());
+		employee1.setFatherName(((HashMap) object).get("fathers_name").toString());
+		employee1.setMotherName(((HashMap) object).get("mothers_name").toString());
+		Date dob= (Date)((HashMap) object).get("date_of_birth");
+		employee1.setDateOfBirith(dob);
+		Date dateOfJoining= (Date)((HashMap) object).get("date_of_joining");
+		employee1.setDateOfJoining(dateOfJoining);
+		employee1.setEmail("nur.nahid@bracu.ac.bd");
+		employeeService.saveEmployee(employee1);
+	}
+	@Override
+	public String getUserById(int i) {
+		System.err.println("Hello world");
+		List<Employee> employee=employeeDao.findUserByEmployeeId(i);
+		System.err.println(employee.get(0));
+		return null;
+	}
+
 }
