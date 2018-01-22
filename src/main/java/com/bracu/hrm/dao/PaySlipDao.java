@@ -10,6 +10,7 @@ public interface PaySlipDao {
 
 
 	ResultSet findAll(Map params);
+	List getRequisitionList();
 
 }
 

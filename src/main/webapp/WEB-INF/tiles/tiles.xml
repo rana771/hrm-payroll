@@ -44,6 +44,10 @@
 	<definition name="paySlip/paySlip" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/paySlip/paySlip.jsp" />
 	</definition>
+	<definition name="paySlip/paySlipList" extends="layout.main">
+		<put-attribute name="body" value="/WEB-INF/pages/paySlip/paySlipList.jsp" />
+	</definition>
+
 	<definition name="hryear/create" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/hryear/create.jsp" />
 	</definition>
