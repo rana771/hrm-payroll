@@ -1,5 +1,8 @@
 package com.bracu.hrm.model.org;
 
+import com.bracu.hrm.model.BaseEntity;
+import lombok.Data;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,13 +16,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "department")
-public class Department {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	private Integer version;
-	
+@Data
+public class Department extends BaseEntity {
+
 	@ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "company_id" )
 	private Company company;

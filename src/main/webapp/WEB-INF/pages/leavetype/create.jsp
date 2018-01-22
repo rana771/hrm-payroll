@@ -69,7 +69,7 @@
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
         };
-        var url = '${contextPath}/leavetype/list';
+        var url = '${contextPath}/leavetype/list'   ;
         var formId = 'leaveTYpeFormId';
         var colModel = [
             {label: 'id', name: 'id', key: true, width: 75, hidden: true},

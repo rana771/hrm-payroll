@@ -1,6 +1,6 @@
 var Server = {
 
-    save:function (headerValue,data,url,formId)
+    save:function (headerValue,data,url,formId, caption)
     {
         console.log(data);
     jQuery.ajax({
@@ -17,17 +17,17 @@ var Server = {
         },
         error: function (result) {
            // document.getElementById("#"+formId).reset();
-            Server.getMessage(1, result.responseText, "Leave type information");
+            Server.getMessage(1, result.responseText, caption);
             $('#jqGrid').trigger('reloadGrid');
             Server.resetForm(formId);
 
         }
     });
 },
-    delete: function(header,url,id,formId){
+    delete: function(header,url,id,formId, content, caption){
         $.confirm({
             title: 'Confirm!',
-            content: 'Are you sure you want to delete the leave type!',
+            content: content,
             buttons: {
                 confirm: function () {
                     $.ajax({
@@ -38,7 +38,7 @@ var Server = {
                         dataType : 'json',
                         headers:header,
                         success : function(result) {
-                            Server.getMessage(1,result,"Leave type information");
+                            Server.getMessage(1,result,caption);
                             $('#jqGrid').trigger( 'reloadGrid' );
                             Server.resetForm(formId);
                         },
@@ -101,7 +101,7 @@ var Server = {
         });
 
     },
-    list:function(header,url,colModel,formId){
+    list:function(header,url,colModel,formId, caption){
         //Start JqGrid
         $('#'+formId).find('#jqGrid').jqGrid({
             url: url,
@@ -117,19 +117,19 @@ var Server = {
             rowList:[10,20,30,50,100,500],
             viewrecords: true,
             sortorder: "asc",
-            caption:"Leave Type Information",
+            caption: caption,
             autoWidth: true,
             //width:600,
             height:243,
             altRows:true,
             //shrinkToFit: false,
             scrollOffset: 0,
-            /*onSelectRow: function() {
+            onSelectRow: function() {
                 var myGrid = $('#jqGrid'),
                     selectedRowId = myGrid.jqGrid ('getGridParam', 'selrow'),
                     cellValue = myGrid.jqGrid ('getCell', selectedRowId, 'id');
                 edit(cellValue);
-            }*/
+            }
         });
         $('#'+formId).find("#jqGrid").jqGrid("setLabel", "rn", "SL.");
         $(window).bind('resize', function() {
