@@ -51,4 +51,10 @@
 	<definition name="department/departmentForm" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/department/departmentForm.jsp" />
 	</definition>
+	<definition name="employeeType/empTypeCreate" extends="layout.main">
+		<put-attribute name="body" value="/WEB-INF/pages/employeeType/empTypeCreate.jsp" />
+	</definition>
+	<definition name="jobLevel/jobLevelCreate" extends="layout.main">
+		<put-attribute name="body" value="/WEB-INF/pages/jobLevel/jobLevelCreate.jsp" />
+	</definition>
 </tiles-definitions>
