@@ -34,7 +34,7 @@ public class Holiday extends BaseEntity {
 	
 	private String description;
 	
-	private Boolean isWeekend;		// if true then insert repeated values in multiple rows
+	private Boolean isRepeated;		// if true then insert repeated values in multiple rows
 	
 	
 }
