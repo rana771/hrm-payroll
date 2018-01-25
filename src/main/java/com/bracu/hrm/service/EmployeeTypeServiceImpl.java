@@ -1,5 +1,6 @@
 package com.bracu.hrm.service;
 
+import com.bracu.hrm.cache.CacheService;
 import com.bracu.hrm.dao.EmployeeTypeDao;
 import com.bracu.hrm.model.settings.EmployeeType;
 import com.bracu.hrm.util.JSONUtil;
@@ -18,7 +19,8 @@ public class EmployeeTypeServiceImpl implements EmployeeTypeService {
 
     @Autowired
     private EmployeeTypeDao employeeTypeDao;
-
+    @Autowired
+    private CacheService cacheService;
     @Autowired
     private MessageSource messageSource;
 
@@ -26,6 +28,8 @@ public class EmployeeTypeServiceImpl implements EmployeeTypeService {
     public void save(EmployeeType employeeType) {
         employeeType.setDateCreate(new Date());
         employeeType.setVersion(0);
+        employeeType.setUserCreated(cacheService.getUser());
+        employeeType.setCompany(cacheService.getCompnay());
         employeeTypeDao.save(employeeType);
     }
 
@@ -53,6 +57,7 @@ public class EmployeeTypeServiceImpl implements EmployeeTypeService {
             currentEmptype.setNote(employeeType.getNote());
             currentEmptype.setDateLastUpdate(new Date());
             currentEmptype.setVersion(employeeType.getVersion()+1);
+            currentEmptype.setUserLastUpdated(cacheService.getUser());
             employeeTypeDao.save(currentEmptype);
             String message = messageSource.getMessage("save.updated.message", new String[]{"Employee Type Information", employeeType.getName()}, Locale.getDefault());
             return message;

@@ -1,5 +1,6 @@
 package com.bracu.hrm.service;
 
+import com.bracu.hrm.cache.CacheService;
 import com.bracu.hrm.dao.JobLevelDao;
 import com.bracu.hrm.model.settings.JobLevel;
 import com.bracu.hrm.util.JSONUtil;
@@ -20,12 +21,17 @@ public class JobLevelServiceImpl implements JobLevelService {
     private JobLevelDao jobLevelDao;
 
     @Autowired
+    private CacheService cacheService;
+
+    @Autowired
     private MessageSource messageSource;
 
     @Override
     public void save(JobLevel jobLevel) {
         jobLevel.setDateCreate(new Date());
         jobLevel.setVersion(0);
+        jobLevel.setCompany(cacheService.getCompnay());
+        jobLevel.setUserCreated(cacheService.getUser());
         jobLevelDao.save(jobLevel);
     }
 
@@ -51,7 +57,7 @@ public class JobLevelServiceImpl implements JobLevelService {
         } else {
             currentJobLevel.setVersion(jobLevel.getVersion()+1);
             currentJobLevel.setNote(jobLevel.getNote());
-
+            currentJobLevel.setUserLastUpdated(cacheService.getUser());
             currentJobLevel.setLevel(jobLevel.getLevel());
             currentJobLevel.setIntLevel(jobLevel.getIntLevel());
             currentJobLevel.setDateLastUpdate(new Date());

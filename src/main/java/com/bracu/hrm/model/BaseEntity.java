@@ -20,7 +20,6 @@ import javax.persistence.MappedSuperclass;
  * Created by HP on 1/14/2018.
  */
 @MappedSuperclass
-
 public abstract class BaseEntity {
 	
 	@Id

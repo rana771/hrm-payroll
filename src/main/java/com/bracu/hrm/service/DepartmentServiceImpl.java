@@ -1,5 +1,6 @@
 package com.bracu.hrm.service;
 
+import com.bracu.hrm.cache.CacheService;
 import com.bracu.hrm.dao.DepartmentDao;
 import com.bracu.hrm.model.org.Department;
 import com.bracu.hrm.util.JSONUtil;
@@ -26,6 +27,8 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
+    private CacheService cacheService;
 
     @Autowired
     MessageSource messageSource;
@@ -33,8 +36,9 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public void save(Department department){
         department.setVersion(0);
-//        department.setDateCreated(new Date());
-//        department.setDateLastUpdated(new Date());
+        department.setDateCreate(new Date());
+        department.setUserCreated(cacheService.getUser());
+        department.setCompany(cacheService.getCompnay());
     departmentDao.save(department);
     }
 
@@ -62,6 +66,7 @@ public class DepartmentServiceImpl implements DepartmentService{
             String message=messageSource.getMessage("update.version.change", new String[]{"Department Information", String.valueOf(department.getVersion())}, Locale.getDefault());
             return message;
         } else {
+            currentDept.setUserLastUpdated(cacheService.getUser());
             currentDept.setName(department.getName());
             currentDept.setShortName(department.getShortName());
             currentDept.setDateLastUpdate(new Date());
