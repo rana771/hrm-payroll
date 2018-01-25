@@ -54,7 +54,7 @@
     $( document ).ready(function() {
         //Start JqGrid
         $("#jqGrid").jqGrid({
-            url: '${contextPath}/paySlip/mailList',
+            url: '${contextPath}/payment/mailList',
             mtype: "POST",
             styleUI : 'Bootstrap',
             postData: { 'X-CSRF-TOKEN': $('#csr-token').val(),
