@@ -137,15 +137,7 @@ public class PaySlipDaoImpl extends AbstractDao<Integer, Mail>  implements PaySl
 
 	public List getRequisitionList() {
 		List list = new ArrayList<>();
-		String sql = "select \n" +
-				"mail.id,\n" +
-				"mail.content \"content\",\n" +
-				"mail.note,\n" +
-				"case when mail.status = false then 'Failed' else 'Success' end status,\n" +
-				"concat(to_char(to_timestamp(to_char(mail.salary_month:: int, '999'), 'MM'), 'Month'), ', ' , mail.salary_year) \"monthAndYear\"\n" +
-				"  \n" +
-				"from mail order by id desc\n" +
-				"\n";
+		String sql = "SELECT * FROM mail";
 		try {
 
 			return executeSQL(sql);

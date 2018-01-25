@@ -21,6 +21,7 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 
 import javax.activation.DataSource;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.util.ByteArrayDataSource;
 import java.io.ByteArrayOutputStream;
@@ -150,15 +152,15 @@ public class PaySlipServiceImpl implements PaySlipService {
 				for (String pin : uniquePinList) {
 					Employee employee = employeeService.findByPin(pin);
 					if(employee!=null) {
-						if(employee.getEmail()!=null) {
+						if(employee.getEmail().contains("@")) {
 							Map<String, String> emailVariable = new HashMap<String, String>();
 							pathVariable.put("salaryType", "1");
 							pathVariable.put("pinNo", pin);
 							pathVariable.put("salaryMonth", criteria.get("salaryMonth").toString());
 							pathVariable.put("salaryYear", criteria.get("salaryYear").toString());
 							pathVariable.put("departmentId", criteria.get("departmentId").toString());
-							InputStream input = new FileInputStream(new File(
-									"F:/project/hr-payroll/hrm-payroll/src/main/resources/reports/paySlip/paySlipMaster.jrxml"));
+							//InputStream input = new FileInputStream(new File("/Users/rana/Works/eclipse-workspace/hrm-payroll/src/main/resources/reports/paySlip/paySlipMaster.jrxml"));
+							InputStream input = new ClassPathResource("reports/paySlip/paySlipMaster.jrxml").getInputStream();
 
 							JasperReport jasperReport = JasperCompileManager.compileReport(input);
 
@@ -182,6 +184,8 @@ public class PaySlipServiceImpl implements PaySlipService {
 							exporter.exportReport();
 							DataSource attachment = new ByteArrayDataSource(baos.toByteArray(), "application/pdf");
 							MimeMessage message = emailSender.createMimeMessage();
+							message.setFrom(new InternetAddress("BRAC University<noreply@bracu.ac.bd>"));
+							
 							MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
 							helper.setSubject("Payslip For The Month Of "+new DateFormatSymbols().getMonths()[Integer.parseInt(criteria.get("salaryMonth").toString())-1]+", "+criteria.get("salaryYear").toString());
@@ -189,7 +193,7 @@ public class PaySlipServiceImpl implements PaySlipService {
 									", "+criteria.get("salaryYear").toString()+" as attached file. \r\n \r\n N.B. This Payslip is machine generated and" +
 									" password protected pdf file. Please use your 8 digit PIN No. to open. (e.g : 00000001).");
 							helper.setTo(employee.getEmail().toString());
-							helper.setFrom("erp@bracu.ac.bd");
+							helper.setFrom("BRAC University <noreply@bracu.ac.bd>");
 
 							helper.addAttachment(new DateFormatSymbols().getMonths()[Integer.parseInt(criteria.get("salaryMonth").toString())-1]+"_"+criteria.get("salaryYear").toString()+"_Payslip.pdf", attachment);
 							emailSender.send(message);

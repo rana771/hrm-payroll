@@ -101,15 +101,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		mailSender.setJavaMailProperties(mailProperties);
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
-
-		Session session = Session.getInstance(mailProperties, new javax.mail.Authenticator() {
+		
+	/*	Session session = Session.getInstance(mailProperties, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("erp@bracu.ac.bd", "R@$@R@987987dasflkj");
 			}
 		});
-		mailSender.setSession(session);
+		mailSender.setSession(session);*/
 		mailSender.setProtocol("smtp");
-		mailSender.setUsername("BRAC University<erp@bracu.ac.bd>");
+		mailSender.setUsername("erp@bracu.ac.bd");
+	
 		mailSender.setPassword("R@$@R@987987dasflkj");
 
 		return mailSender;

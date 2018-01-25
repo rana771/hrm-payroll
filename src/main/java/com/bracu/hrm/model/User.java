@@ -38,8 +38,8 @@ public class User implements Serializable{
 	private String email;
 	
 	
-	@ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name =  "company_id",nullable = true)
+	@ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name =  "company_id",nullable = false)
 	private Company company;
     
     
