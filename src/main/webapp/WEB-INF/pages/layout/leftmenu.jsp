@@ -26,6 +26,11 @@
             <ul>
                 <li><a href="/leavetype/create" title="Leave Type"><span>Leave Type</span></a></li>
                 <li><a href="/hryear/create" title="HR Year"><span>Hr Year </span></a></li>
+                <li><a href="/emptype/create" title="Employee Type"><span>Employee Type</span></a></li>
+                <li><a href="/dept/create" title="Department"><span>Department</span></a></li>
+                <li><a href="/joblevel/create" title="Job Level"><span>Job Level</span></a></li>
+
+
 
             </ul>
 
