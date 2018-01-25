@@ -32,6 +32,7 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
+import com.bracu.hrm.configuration.DefaultAuthenticationSuccessHandler;
 import com.bracu.hrm.dbconfig.DbType;
 import com.bracu.hrm.dbconfig.RoutingDataSource;
 
@@ -61,7 +62,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 	}
-
+	 
 	@Bean
 	public TilesConfigurer tilesConfigurer() {
 		final TilesConfigurer configurer = new TilesConfigurer();
@@ -179,5 +180,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy() {
         return new LazyConnectionDataSourceProxy(routeDataSource());
     }*/
+    
+   
 
 }

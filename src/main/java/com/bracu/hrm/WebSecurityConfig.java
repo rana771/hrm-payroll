@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.bracu.hrm.configuration.DefaultAuthenticationSuccessHandler;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,13 +31,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
 	private DataSource dataSource;
 	
+    @Autowired
+	private DefaultAuthenticationSuccessHandler successHandler;
+	
 	@Value("${spring.queries.users-query}")
 	private String usersQuery;
 	
 	@Value("${spring.queries.roles-query}")
 	private String rolesQuery;
 
-	@Override
+/*	@Override
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
 		auth.
@@ -44,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authoritiesByUsernameQuery(rolesQuery)
 				.dataSource(dataSource)
 				.passwordEncoder(bCryptPasswordEncoder());
-	}
+	}*/
 
 	
     @Override
@@ -58,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
               .antMatchers("/static/**", "/registration").permitAll()
               .anyRequest().authenticated()
               .and()
-          .formLogin()
+          .formLogin().successHandler(successHandler)
               .loginPage("/login")
               .permitAll()
               .and()

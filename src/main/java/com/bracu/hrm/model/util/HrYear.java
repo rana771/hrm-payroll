@@ -1,6 +1,8 @@
 package com.bracu.hrm.model.util;
 
 import com.bracu.hrm.model.BaseEntity;
+import com.bracu.hrm.model.org.Company;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +18,11 @@ import javax.persistence.*;
 @Setter
 @Getter
 public class HrYear extends BaseEntity {
+	
+	@ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "company_id")
+	private Company company;
+	
 	@DateTimeFormat(pattern = "MM-dd-yyyy")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_from", nullable = false)

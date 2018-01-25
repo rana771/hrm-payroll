@@ -24,13 +24,17 @@ public class Department extends BaseEntity {
 	private Company company;
 	
 	@Column(nullable =  false, unique = true)
+	private String code;
+	
+	@Column(nullable =  false, unique = true)
 	private String name;
 	
 	@Column(name = "short_name", unique  = true)
 	private String shortName;
 	
+	
 	@ManyToOne(targetEntity = Department.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name =  "parent_department_id")
+	@JoinColumn(name =  "parent_department_id",nullable = true)
 	private Department department;
 	
 	
