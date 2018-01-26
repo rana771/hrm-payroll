@@ -16,9 +16,9 @@ public Connection getSqlConnection(){
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
             String userName = "bu_it";
-            String password = "";
-            String url = "jdbc:sqlserver://";
-           
+            String password = "bracu_IT#@!";
+            String url = "jdbc:sqlserver://123.49.46.169";
+            //String url = "jdbc:sqlserver://172.16.22.2";
             con = DriverManager.getConnection(url, userName, password);
             //String result = new result[20];
 
