@@ -92,7 +92,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		mailProperties.put("mail.smtp.auth", true);
 		mailProperties.put("mail.smtp.starttls.enable", true);
 		mailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-
+		//mailProperties.put("proxySet","true");
+		//mailProperties.put("socksProxyHost","192.168.1.15");
+		//mailProperties.put("socksProxyPort","8080");
+		//Properties p = System.getProperties();
+		//p.setProperty("proxySet","true");
+		//p.setProperty("socksProxyHost","192.168.1.15");
+		//p.setProperty("socksProxyPort","8080");
 		// mailProperties.put("mail.properties.mail.smtp.socketFactory.port",465);
 		// mailProperties.put("mail.properties.mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
 		// mailProperties.put("mail.properties.mail.smtp.socketFactory.fallback",false);

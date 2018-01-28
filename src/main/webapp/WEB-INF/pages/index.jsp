@@ -1,17 +1,17 @@
 
 <!-- Flot charts -->
 
-<script type="text/javascript" src="../../static/widgets/charts/flot/flot.js"></script>
-<script type="text/javascript" src="../../static/widgets/charts/flot/flot-resize.js"></script>
-<script type="text/javascript" src="../../static/widgets/charts/flot/flot-stack.js"></script>
-<script type="text/javascript" src="../../static/widgets/charts/flot/flot-pie.js"></script>
-<script type="text/javascript" src="../../static/widgets/charts/flot/flot-tooltip.js"></script>
-<script type="text/javascript" src="../../static/widgets/charts/flot/flot-demo-1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/flot/flot.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/flot/flot-resize.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/flot/flot-stack.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/flot/flot-pie.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/flot/flot-tooltip.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/flot/flot-demo-1.js"></script>
 
 <!-- PieGage charts -->
 
-<script type="text/javascript" src="../../static/widgets/charts/piegage/piegage.js"></script>
-<script type="text/javascript" src="../../static/widgets/charts/piegage/piegage-demo.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/piegage/piegage.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/piegage/piegage-demo.js"></script>
 
 
 <div id="page-title">

@@ -125,7 +125,7 @@ public class PaySlipServiceImpl implements PaySlipService {
 				params.put("transactionDateFromDMY", "01-01-2017");
 				params.put("transactionDateToDMY", "10-01-2017");
 				params.put("title", "test");
-				params.put("companyLogo", "classpath:reports/subreports/bracu_logo.png");
+				params.put("companyLogo", getClass().getClassLoader().getResource("reports/subreports/bracu_logo.png").getFile());
 				params.put("datasource", new JRResultSetDataSource(paySlipService.findAll(pathVariable)));
 			}else {
 				view.setUrl("classpath:reports/paySlip/paySlipMaster.jasper");
@@ -138,7 +138,8 @@ public class PaySlipServiceImpl implements PaySlipService {
 				params.put("transactionDateFromDMY", "01-01-2017");
 				params.put("transactionDateToDMY", "10-01-2017");
 				params.put("title", "test");
-				params.put("companyLogo", "classpath:reports/subreports/bracu_logo.png");
+				params.put("companyLogo", getClass().getClassLoader().getResource("reports/subreports/bracu_logo.png").getFile());
+						//"classpath:reports/subreports/bracu_logo.png");
 				params.put("datasource", new JRResultSetDataSource(paySlipService.findAll(pathVariable)));
 
 				ResultSet rs = paySlipService.findAll(pathVariable);

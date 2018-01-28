@@ -28,11 +28,11 @@
         <a href="#" class="logo-content-small" title="BRAC University"></a>
     </div>
     <div id="header-logo" class="logo-bg">
-        <a href="index.html" class="logo-content-big" title="BRAC University">
+        <a href="#" class="logo-content-big" title="BRAC University">
             BRAC <i>University</i>
             <span>The perfect solution for user interfaces</span>
         </a>
-        <a href="index.html" class="logo-content-small" title="BRAC University">
+        <a href="#" class="logo-content-small" title="BRAC University">
             BRAC <i>University</i>
             <span>The perfect solution for user interfaces</span>
         </a>
@@ -43,7 +43,7 @@
     <div id="header-nav-left">
         <div class="user-account-btn dropdown">
             <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
-                <img width="28" src="../../static/image-resources/gravatar.jpg" alt="Profile image">
+                <img width="28" src="${pageContext.request.contextPath}/static/images/bracu_logo.jpg" alt="Profile image">
                 <span>${pageContext.request.userPrincipal.name}</span>
                 <i class="glyph-icon icon-angle-down"></i>
             </a>
@@ -52,12 +52,12 @@
                     <div class="login-box clearfix">
                         <div class="user-img">
                             <a href="#" title="" class="change-img">Change photo</a>
-                            <img src="../../static/image-resources/gravatar.jpg" alt="">
+                            <img src="${pageContext.request.contextPath}/static/images/bracu_logo.png" alt="">
                         </div>
                         <div class="user-info">
                             <span>
                                 ${pageContext.request.userPrincipal.name}
-                                <i>UX/UI developer</i>
+                                <i>Developed by BRACU IT</i>
                             </span>
                             <a href="#" title="Edit profile">Edit profile</a>
                             <a href="#" title="View notifications">View notifications</a>
@@ -88,7 +88,7 @@
                         </li>
                     </ul>
                     <div class="pad5A button-pane button-pane-alt text-center">
-                        <a href="#" class="btn display-block font-normal btn-danger">
+                        <a href="${pageContext.request.contextPath}/logout" class="btn display-block font-normal btn-danger" >
                             <i class="glyph-icon icon-power-off"></i>
                             Logout
                         </a>
@@ -442,8 +442,8 @@
 
 <!-- Sparklines charts -->
 
-<script type="text/javascript" src="../../static/widgets/charts/sparklines/sparklines.js"></script>
-<script type="text/javascript" src="../../static/widgets/charts/sparklines/sparklines-demo.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/sparklines/sparklines.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/sparklines/sparklines-demo.js"></script>
 
 <%-- 
  <div id="page-title">
@@ -469,7 +469,7 @@
 
     <!-- WIDGETS -->
 
-<script type="text/javascript" src="../../static/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.js"></script>
 
 <!-- Bootstrap Dropdown -->
 
@@ -485,7 +485,7 @@
 
 <!-- Bootstrap Progress Bar -->
 
-<script type="text/javascript" src="../../static/widgets/progressbar/progressbar.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/progressbar/progressbar.js"></script>
 
 <!-- Bootstrap Buttons -->
 
@@ -497,49 +497,49 @@
 
 <!-- Superclick -->
 
-<script type="text/javascript" src="../../static/widgets/superclick/superclick.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/superclick/superclick.js"></script>
 
 <!-- Input switch alternate -->
 
-<script type="text/javascript" src="../../static/widgets/input-switch/inputswitch-alt.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/input-switch/inputswitch-alt.js"></script>
 
 <!-- Slim scroll -->
 
-<script type="text/javascript" src="../../static/widgets/slimscroll/slimscroll.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/slimscroll/slimscroll.js"></script>
 
 <!-- Slidebars -->
 
-<script type="text/javascript" src="../../static/widgets/slidebars/slidebars.js"></script>
-<script type="text/javascript" src="../../static/widgets/slidebars/slidebars-demo.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/slidebars/slidebars.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/slidebars/slidebars-demo.js"></script>
 
 <!-- PieGage -->
 
-<script type="text/javascript" src="../../static/widgets/charts/piegage/piegage.js"></script>
-<script type="text/javascript" src="../../static/widgets/charts/piegage/piegage-demo.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/piegage/piegage.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/charts/piegage/piegage-demo.js"></script>
 
 <!-- Screenfull -->
 
-<script type="text/javascript" src="../../static/widgets/screenfull/screenfull.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/screenfull/screenfull.js"></script>
 
 <!-- Content box -->
 
-<script type="text/javascript" src="../../static/widgets/content-box/contentbox.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/content-box/contentbox.js"></script>
 
 <!-- Overlay -->
 
-<script type="text/javascript" src="../../static/widgets/overlay/overlay.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/overlay/overlay.js"></script>
 
 <!-- Widgets init for demo -->
 
-<script type="text/javascript" src="../../static/js-init/widgets-init.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js-init/widgets-init.js"></script>
 
 <!-- Theme layout -->
 
-<script type="text/javascript" src="../../static/themes/admin/layout.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/themes/admin/layout.js"></script>
 
 <!-- Theme switcher -->
 
-<script type="text/javascript" src="../../static/widgets/theme-switcher/themeswitcher.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/theme-switcher/themeswitcher.js"></script>
 <%--For Common usages js: add/delete/edit--%>
 
 </div>
