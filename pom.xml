@@ -7,7 +7,7 @@
     <groupId>hrm-master</groupId>
     <artifactId>hrm-master</artifactId>
     <version>1.0.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>hrm-master</name>
     <description>Human Resource Management System</description>
 
@@ -18,7 +18,9 @@
     </parent>
     <properties>
         <java.version>1.8</java.version>
+  <tomcat.version>7.0.59</tomcat.version>
     </properties>
+
 
     <dependencies>
         <dependency>
@@ -120,9 +122,29 @@
         </dependency>
 
 
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
+
+	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+
     </dependencies>
+
+ <build>
+        <plugins>
+            <!-- Package as an executable jar/war -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+  </build>
+
 </project>

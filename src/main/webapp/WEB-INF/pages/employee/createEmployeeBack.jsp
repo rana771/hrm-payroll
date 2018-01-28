@@ -547,11 +547,11 @@
     </div>
     <div id="header-logo" class="logo-bg">
         <a href="index.html" class="logo-content-big" title="MonarchUI">
-            Monarch <i>UI</i>
+            BRAC <i>University</i>
             <span>The perfect solution for user interfaces</span>
         </a>
         <a href="index.html" class="logo-content-small" title="MonarchUI">
-            Monarch <i>UI</i>
+            BRAC <i>University</i>
             <span>The perfect solution for user interfaces</span>
         </a>
         <a id="close-sidebar" href="#" title="Close sidebar">
