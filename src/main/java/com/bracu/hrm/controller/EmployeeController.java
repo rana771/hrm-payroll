@@ -1,12 +1,17 @@
 package com.bracu.hrm.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.bracu.hrm.dto.EmpEducationDto;
+import com.bracu.hrm.model.EmployeeEducation;
 import com.bracu.hrm.model.leave.LeaveType;
+import com.bracu.hrm.model.settings.SetupEntity;
+import com.bracu.hrm.util.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -18,6 +23,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bracu.hrm.model.Employee;
 import com.bracu.hrm.service.EmployeeService;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
+
+import static java.lang.System.exit;
 
 @Controller
 @RequestMapping("/emp")
@@ -124,10 +133,6 @@ public class EmployeeController {
 	}
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") String id, ModelMap model){
-		/*Employee employee =employeeService.findById(Integer.parseInt(id));
-		model.addAttribute("employee", employee);
-		return "employee/profile";
-*/
 		Map setupList =  employeeService.getEmployeeInfo(Integer.parseInt(id));
 		//System.err.println(setupList.get("genderList").);
 		model.addAttribute("employee",setupList.get("employee"));
@@ -149,8 +154,18 @@ public class EmployeeController {
 	}
 	@RequestMapping(value = "/settings/edit/{id}", method = RequestMethod.GET)
 	public String editUserSettings(@PathVariable("id") String id, ModelMap model){
-		return employeeService.getUserById(Integer.parseInt(id));
+		Employee employee =employeeService.findById(Integer.parseInt(id));
+		model.addAttribute("employee",employee);
+		return "employee/accountsettings/accountsettings";
 	}
-	
+	@RequestMapping(value = "/education/{id}", method = RequestMethod.GET)
+	public String editEmployeeEducation(@PathVariable("id") String id, ModelMap model){
+		Map setupList =  employeeService.getEmployeeInfo(Integer.parseInt(id));
+		model.addAttribute("employee",setupList.get("employee"));
+		model.addAttribute("educationalTitleList",setupList.get("educationalTitleList"));
+		return "employee/education/education";
+	}
+
+
 
 }

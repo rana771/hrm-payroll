@@ -6,6 +6,7 @@ import com.bracu.hrm.dao.EntityTypeDao;
 import com.bracu.hrm.dao.SetupEntityDao;
 import com.bracu.hrm.dbconfig.ReadOnlyConnection;
 import com.bracu.hrm.model.Employee;
+import com.bracu.hrm.model.EmployeeEducation;
 import com.bracu.hrm.model.settings.EntityType;
 import com.bracu.hrm.model.settings.SetupEntity;
 import com.bracu.hrm.util.JSONUtil;
@@ -14,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.*;
 
@@ -34,6 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EntityTypeDao entityTypeDao;
 	@Autowired
 	private MessageSource messageSource;
+	@Autowired
 	EmployeeService employeeService;
 
 	
@@ -115,11 +120,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	public Map<String,List<SetupEntity>> getEmployeeInfo(int i) {
 		HashedMap listMap =new HashedMap();
 		Employee employee=employeeDao.findById(i);
-		System.err.println(employee.getGender().getEntityType().getId());
 		listMap.put("employee",employee);
+		EntityType entityTypeEducation =entityTypeDao.findByName("Educational Title");
+		/*System.err.println(entityTypeEducation);*/
+		List<SetupEntity> educationalTitleList= setupEntityDao.findAllByEntityType(entityTypeEducation);
+		/*System.err.println(educationalTitleList.size());
+		for(SetupEntity entityType:educationalTitleList){
+			System.err.println(entityType.getColumn1());
+		}*/
+		listMap.put("educationalTitleList", educationalTitleList);
 		EntityType entityType =entityTypeDao.findByName("Gender");
 		List <SetupEntity> genderList = setupEntityDao.findAllByEntityType(entityType);
 		listMap.put("genderList", genderList);
@@ -159,7 +172,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 			}
 		}
-				return null;
+				return "";
 			}
 	public void prepareNewEmployeeFromPaySlip(Object object){
 		Employee employee1 = new Employee();
@@ -175,12 +188,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee1.setEmail("nur.nahid@bracu.ac.bd");
 		employeeService.saveEmployee(employee1);
 	}
-	@Override
-	public String getUserById(int i) {
-		System.err.println("Hello world");
-		List<Employee> employee=employeeDao.findUserByEmployeeId(i);
-		System.err.println(employee.get(0));
-		return null;
-	}
+
+
 
 }

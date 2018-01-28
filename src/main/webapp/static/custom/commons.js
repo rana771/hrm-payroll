@@ -2,7 +2,6 @@ var Server = {
 
     save:function (headerValue,data,url,formId,caption)
     {
-        console.log(data);
     jQuery.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
@@ -43,6 +42,7 @@ var Server = {
                             Server.resetForm(formId);
                         },
                         error : function(e) {
+                            $('#jqGrid').trigger( 'reloadGrid' );
                             alert("Error!" +e)
                         }
                     });
@@ -118,11 +118,11 @@ var Server = {
             viewrecords: true,
             sortorder: "asc",
             caption:caption,
-            autoWidth: true,
+           /* autoWidth: true,*/
             //width:600,
             height:243,
             altRows:true,
-            //shrinkToFit: false,
+            shrinkToFit: false,
             scrollOffset: 0,
             onSelectRow: function() {
                 var myGrid = $('#jqGrid'),

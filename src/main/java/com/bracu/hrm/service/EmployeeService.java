@@ -1,8 +1,6 @@
 package com.bracu.hrm.service;
-
 import com.bracu.hrm.model.Employee;
 import com.bracu.hrm.model.settings.SetupEntity;
-
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
@@ -22,5 +20,4 @@ public interface EmployeeService {
 	String update(Employee employee);
 	ResultSet getSqlServerEmployee(String pin);
 	void prepareNewEmployeeFromPaySlip(Object object);
-	String getUserById(int i);
 }

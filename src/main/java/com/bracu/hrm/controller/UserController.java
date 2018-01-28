@@ -1,18 +1,22 @@
 package com.bracu.hrm.controller;
 
+import com.bracu.hrm.model.Employee;
 import com.bracu.hrm.model.User;
+import com.bracu.hrm.model.leave.LeaveType;
+import com.bracu.hrm.service.EmployeeService;
 import com.bracu.hrm.service.SecurityService;
 import com.bracu.hrm.service.UserService;
 import com.bracu.hrm.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import java.security.Principal;
+import java.util.Locale;
 
 @Controller
 public class UserController {
@@ -24,6 +28,11 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private EmployeeService employeeService;
+    @Autowired
+    MessageSource messageSource;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -61,6 +70,22 @@ public class UserController {
     public String welcome(Model model) {
     	
         return "user.ndex";
+    }
+    @ResponseBody
+    @RequestMapping(value="/useracc/save",method = RequestMethod.POST,produces= MediaType.APPLICATION_JSON_VALUE)
+    public String save(@RequestBody User user, BindingResult result,ModelMap model){
+        String message;
+        if(result.hasErrors()){
+            //Employee employee =employeeService.findById(user.getId());
+            //model.addAttribute("employee",employee);
+            return "employee/accountsettings/accountsettings";
+        }
+        else{
+                userService.save(user);
+        }
+        message = messageSource.getMessage("save.successful.message", new String[]{"User Accounts Settings ", user.getFullName()}, Locale.getDefault());
+        return message;
+
     }
 
 }
