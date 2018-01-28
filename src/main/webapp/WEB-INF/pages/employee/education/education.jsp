@@ -109,7 +109,7 @@
             '${_csrf.parameterName}': $('#csr-token').val(),
         };
 
-        var url = '${contextPath}/education/list/?id='+id;
+        var url = '${contextPath}'+'/hrm/education/list/?id='+id;
         var formId = 'empEduFormId';
         var caption = 'Employee Education'
         var colModel = [
@@ -160,7 +160,7 @@
 
     });
     function edit(empEduId) {
-        var action = "${contextPath}" + "/education/edit/";
+        var action = '${contextPath}' + '/hrm/education/edit/';
         header = {
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
@@ -189,7 +189,7 @@
         var formId=$('#deleteButton').closest('form').attr('id');
         console.log("formId"+formId)
         var empEduId = $('#id').val();
-        var url = '/education/delete/';
+        var url =  '${contextPath}'+'/hrm/education/delete/';
         Server.delete(header, url, empEduId, formId);
     }
 

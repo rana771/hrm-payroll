@@ -1,47 +1,24 @@
 package com.bracu.hrm.model.settings;
 
-import java.util.Date;
+import com.bracu.hrm.model.BaseEntity;
+import com.bracu.hrm.model.org.Company;
+import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.bracu.hrm.model.User;
+import javax.persistence.*;
 
 //Employee type like Permanent, contractual etc
 
 @Entity
 @Table(name ="employee_type")
-public class EmployeeType {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	private Integer version;
-	
+@Data
+public class EmployeeType extends BaseEntity{
+
+	@ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+	@JoinColumn(name = "company_id",nullable = false)
+	private Company company;
+	@Column(unique=true)
 	private String name;
 
+	private String note;
 
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "created_user_id")
-	private User userCreated;
-	
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "updated_user_id")
-	private User userLastUpdated;
-	
-	
-	@Column(name = "date_created")
-	private Date dateCreated;
-	
-	@Column(name = "date_updated")
-	private Date dateLastUpdated;
 }

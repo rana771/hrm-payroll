@@ -65,6 +65,7 @@
             '${_csrf.parameterName}': $('#csr-token').val()
         };
         var url = '${contextPath}/emp/list2';
+        var urlmethod='POST'
         var formId = 'employeeListId';
         var colModel = [
             {label: 'id', name: 'id', key: true, width: 75, hidden: true},
@@ -77,7 +78,7 @@
             {label: 'National Id', name: 'nid', width: 150}
         ]
 
-        Server.list(header, url, colModel, formId,"Employee List");
+        Server.list(header, url, colModel, formId,"Employee List",urlmethod);
 
 
     });
@@ -85,36 +86,7 @@
         window.location.href = "${contextPath}/emp/edit/"+id;
     }
 
-    /*function saveHrYear() {
-        header = {
-            'X-CSRF-TOKEN': $('#csr-token').val(),
-            '${_csrf.parameterName}': $('#csr-token').val()
-        };
-        var formId=$('#saveButton').closest('form').attr('id');
-        var frm = $('#hrYearId');
-        frm.validate();
-        var isValid = frm.valid();
-        if (!isValid) {
-            return false;
-        }
-        var dateForm=new Date($('#dateFrom').val());
-        var dateTo=new Date($('#dateTo').val());
-        var hrYear = {
-            "id": $('#id').val(),
-            "dateFrom":dateForm ,
-            "dateTo":dateTo ,
-            "version" : $('#version').val()
-        }
-        var action = "";
-        if ($('#id').val() > 0) {
-            var action = "${contextPath}" + "/hryear/update";
-        } else {
-            var action = "${contextPath}" + "/hryear/save";
-        }
-        Server.save(header, hrYear, action, formId);
-        Server.resetForm(formId);
 
-    }*/
 
 
 </script>

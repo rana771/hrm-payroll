@@ -13,25 +13,25 @@ import java.util.List;
 @Repository("departmentDao")
 public class DepartmentDaoImpl extends AbstractDao<Integer, Department> implements DepartmentDao {
 
-	static final Logger logger = LoggerFactory.getLogger(DepartmentDaoImpl.class);
+    static final Logger logger = LoggerFactory.getLogger(DepartmentDaoImpl.class);
 
 
 
-	@SuppressWarnings("unchecked")
-	public List<Department> listAll() {
-		Criteria criteria = createEntityCriteria();//.addOrder(Order.asc("column1"));
-		//criteria.add(Restrictions.eq("entityType", entityType));
-		//criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
-		List<Department> setupEntityList = (List<Department>) criteria.list();
+    @SuppressWarnings("unchecked")
+    public List<Department> listAll() {
+        Criteria criteria = createEntityCriteria();//.addOrder(Order.asc("column1"));
+        //criteria.add(Restrictions.eq("entityType", entityType));
+        //criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<Department> setupEntityList = (List<Department>) criteria.list();
 
-		return setupEntityList;
-	}
+        return setupEntityList;
+    }
 
-	public Department findById(Integer id){
-		Criteria criteria = createEntityCriteria();//.addOrder(Order.asc("column1"));
-		criteria.add(Restrictions.eq("id", id));
-		//criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
-		Department setupEntityList = (Department) criteria.uniqueResult();
-		return setupEntityList;
-	}
+    public Department findById(Integer id){
+        Criteria criteria = createEntityCriteria();//.addOrder(Order.asc("column1"));
+        criteria.add(Restrictions.eq("id", id));
+        //criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        Department setupEntityList = (Department) criteria.uniqueResult();
+        return setupEntityList;
+    }
 }

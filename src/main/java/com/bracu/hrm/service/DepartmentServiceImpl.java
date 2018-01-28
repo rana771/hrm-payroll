@@ -44,13 +44,13 @@ import java.util.*;
 @Transactional
 public class DepartmentServiceImpl implements DepartmentService {
 
-	@Autowired
-	private DepartmentDao departmentDao;
+    @Autowired
+    private DepartmentDao departmentDao;
 
 
-	public List<Department> findAll() {
-		return departmentDao.listAll();
-	}
+    public List<Department> findAll() {
+        return departmentDao.listAll();
+    }
 
 
 

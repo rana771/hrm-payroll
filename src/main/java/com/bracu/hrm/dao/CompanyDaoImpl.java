@@ -39,7 +39,7 @@ public class CompanyDaoImpl extends AbstractDao<Integer, Company> implements Com
 
 	@SuppressWarnings("unchecked")
 	public List<Company> findAll() {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("pin"));
+		Criteria criteria = createEntityCriteria().addOrder(Order.asc("name"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
 		List<Company> companyList = (List<Company>) criteria.list();
 		

@@ -4,11 +4,17 @@ import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.bracu.hrm.model.org.Company;
+import com.bracu.hrm.model.org.Department;
+
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "app_user")
+@Data
 public class User implements Serializable{
 	
 	@Id
@@ -30,67 +36,10 @@ public class User implements Serializable{
 	@NotEmpty
 	@Column(name="EMAIL", nullable=false)
 	private String email;
-	
-	
-    
-    
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-   
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
-   
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	@ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name =  "company_id",nullable = false)
+	private Company company;
 
 }
 

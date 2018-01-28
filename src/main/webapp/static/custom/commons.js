@@ -1,8 +1,7 @@
 var Server = {
-
-    save:function (headerValue,data,url,formId,caption)
-    {
-    jQuery.ajax({
+        save:function (headerValue,data,url,formId,caption)
+        {
+      jQuery.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
         url: url,
@@ -23,10 +22,10 @@ var Server = {
         }
     });
 },
-    delete: function(header,url,id,formId){
+    delete: function(header,url,id,formId, content, caption){
         $.confirm({
             title: 'Confirm!',
-            content: 'Are you sure you want to delete the leave type!',
+            content: content,
             buttons: {
                 confirm: function () {
                     $.ajax({
@@ -37,7 +36,7 @@ var Server = {
                         dataType : 'json',
                         headers:header,
                         success : function(result) {
-                            Server.getMessage(1,result,"Leave type information");
+                            Server.getMessage(1,result,caption);
                             $('#jqGrid').trigger( 'reloadGrid' );
                             Server.resetForm(formId);
                         },
@@ -101,11 +100,13 @@ var Server = {
         });
 
     },
-    list:function(header,url,colModel,formId,caption){
+
+    list:function(header,url,colModel,formId,caption,urlmethod){
+
         //Start JqGrid
         $('#'+formId).find('#jqGrid').jqGrid({
             url: url,
-            mtype: "GET",
+            mtype: urlmethod,
             styleUI : 'Bootstrap',
             postData: header,
             contentType : "application/json",
@@ -117,8 +118,10 @@ var Server = {
             rowList:[10,20,30,50,100,500],
             viewrecords: true,
             sortorder: "asc",
-            caption:caption,
-           /* autoWidth: true,*/
+
+
+            caption: caption,
+            autoWidth: true,
             //width:600,
             height:243,
             altRows:true,

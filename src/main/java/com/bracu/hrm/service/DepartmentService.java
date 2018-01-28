@@ -11,6 +11,6 @@ import java.util.Map;
 public interface DepartmentService {
 
 
-	List<Department> findAll();
+    List<Department> findAll();
 
 }

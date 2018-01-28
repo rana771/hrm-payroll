@@ -1,8 +1,6 @@
 package com.bracu.hrm.controller;
-
-import com.bracu.hrm.model.Employee;
+import com.bracu.hrm.cache.CacheService;
 import com.bracu.hrm.model.User;
-import com.bracu.hrm.model.leave.LeaveType;
 import com.bracu.hrm.service.EmployeeService;
 import com.bracu.hrm.service.SecurityService;
 import com.bracu.hrm.service.UserService;
@@ -15,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import java.security.Principal;
+
 import java.util.Locale;
 
 @Controller
@@ -66,9 +64,14 @@ public class UserController {
         return "login";
     }
 
+    @Autowired
+    CacheService cacheService;
+    
     @RequestMapping(value = {"/", "/welcome","/index"}, method = RequestMethod.GET)
     public String welcome(Model model) {
     	
+    	System.out.println(cacheService.getUser().getFullName());
+    	System.out.println(cacheService.getCompnay().getName());
         return "user.ndex";
     }
     @ResponseBody

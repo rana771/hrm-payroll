@@ -185,7 +185,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee1.setDateOfBirith(dob);
 		Date dateOfJoining= (Date)((HashMap) object).get("date_of_joining");
 		employee1.setDateOfJoining(dateOfJoining);
-		employee1.setEmail("nur.nahid@bracu.ac.bd");
+		employee1.setEmail("N/A");
 		employeeService.saveEmployee(employee1);
 	}
 

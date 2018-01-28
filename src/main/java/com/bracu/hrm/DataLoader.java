@@ -10,9 +10,15 @@ import org.springframework.stereotype.Component;
 import com.bracu.hrm.dao.DesignationDao;
 import com.bracu.hrm.dao.EntityTypeDao;
 import com.bracu.hrm.dao.SetupEntityDao;
+import com.bracu.hrm.model.Role;
+import com.bracu.hrm.model.User;
+import com.bracu.hrm.model.org.Company;
 import com.bracu.hrm.model.org.Designation;
 import com.bracu.hrm.model.settings.EntityType;
 import com.bracu.hrm.model.settings.SetupEntity;
+import com.bracu.hrm.service.CompanyService;
+import com.bracu.hrm.service.RoleService;
+import com.bracu.hrm.service.UserService;
 
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -29,6 +35,14 @@ public class DataLoader implements ApplicationRunner {
 	@Autowired
 	SetupEntityDao setupEntityDao;
 	
+	@Autowired
+	 private CompanyService companyService;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private RoleService roleService;
     @Autowired
     public DataLoader(DesignationDao designationDao) {
         this.designationDao = designationDao;
@@ -40,7 +54,52 @@ public class DataLoader implements ApplicationRunner {
     	
     	System.out.println("Please have patient while loading default data...");
        // userRepository.save(new User());
+    
+    	Company company;
     	
+   	if(companyService.findAll().size() <=0) {
+   		 company = new Company();
+    		company.setAddress("66 Mohakhali\n" + 
+    				"Dhaka 1212\n" + 
+    				"Bangladesh");
+    		company.setEmail("info@bracu.ac.bd");
+    		company.setFax("N/A");
+    		company.setName("BRAC University");
+    		company.setPhone1("N/A");
+    		company.setPhone2("N/A");
+    		company.setShortName("BU");
+    		company.setVersion(0);
+    		company.setWebUrl("www.bracu.ac.bd");
+    		companyService.save(company);
+   		
+    	}else {
+   	
+   	
+    company = companyService.findByName("BRAC University");
+    	}
+   	
+
+   	if(roleService.findAll().size() <= 0) {
+   		Role roleAdmin = new Role();
+   		roleAdmin.setName("ROLE_ADMIN");
+   		roleService.save(roleAdmin);
+   		
+   		Role roleUser = new Role();
+   		roleUser.setName("ROLE_USER");
+   		roleService.save(roleUser);
+   	}
+   	
+   	if(userService.findAll().size() <=0) {
+   		User user = new User();
+   		user.setCompany(company);
+   		user.setEmail("rana771@gmail.com");
+   		user.setFullName("Ripon Rana");
+   		user.setPassword("12345678");
+   		user.setPasswordConfirm("12345678");
+   		user.setUsername("sadmin");
+   		userService.save(user);
+   	}
+   	
     	if(designationDao.findAll().size() <= 0){
     		Designation designationManager = new Designation();
     		designationManager.setVersion(0);

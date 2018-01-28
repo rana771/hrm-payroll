@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface DepartmentDao {
 
-	List<Department> listAll();
-	Department findById(Integer id);
+    List<Department> listAll();
+    Department findById(Integer id);
 }
+
 

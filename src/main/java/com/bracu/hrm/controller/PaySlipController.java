@@ -26,8 +26,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 
@@ -100,6 +102,7 @@ public class PaySlipController {
 		return paySlipService.generatePaySlip(criteria);
 
 	}
+	@ResponseBody
 	@RequestMapping(value = { "/mailList" }, method = RequestMethod.POST)
 	public String list(ModelMap model) {
 		String subGroupJson = paySlipService.getMailList();

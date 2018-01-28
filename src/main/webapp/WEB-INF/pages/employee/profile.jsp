@@ -306,9 +306,9 @@
             "spouseName": $('#spouseName').val(),
 
         }
-        var action = "";
-        var action = "${contextPath}" + "/emp/update";
+        var action ='/hrm/emp/update';
         //var data=$('#leaveTYpeFormId').serialize();
+        console.log(basicInfo);
         Server.save(header, basicInfo, action, formId, caption);
         Server.resetForm(formId);
     }
@@ -323,9 +323,10 @@
             '${_csrf.parameterName}': $('#csr-token').val()
         };
         var id = $('#id').val();
-        var action = "${contextPath}" + "/emp/settings/edit/";
+        var action ='${contextPath}'+'/hrm/emp/settings/edit/';
+        console.log(id)
         $.ajax({
-            type: "GET",
+            type: "POST",
             contentType: "application/json",
             url: action + id,
             data: id,
@@ -374,7 +375,7 @@
             "fullName": $('#accFullName').val()
         }
         var action = "";
-        var action = "${contextPath}" + "/useracc/save";
+        var action = '${contextPath}' + '/hrm/useracc/save';
         Server.save(header, accountsettings, action, formId, caption);
         Server.resetForm(formId);
         }
@@ -403,7 +404,7 @@
             '${_csrf.parameterName}': $('#csr-token').val()
         };
         var id = $('#id').val();
-        var action = "${contextPath}" + "/emp/education/";
+        var action = '${contextPath}' + '/hrm/emp/education/';
         //var action = "${contextPath}" + "/emp/education/edit/";
         $.ajax({
             type: "GET",
@@ -444,9 +445,9 @@
             formData.append("educationTitleId", $('#educationTitleId').val());
             var action = "";
         if ($('#id').val() > 0) {
-            var action = "${contextPath}" + "/education/update";
+            var action = '${contextPath}' + '/hrm/education/update';
         } else {
-            var action = "${contextPath}" + "/education/save";
+            var action = '${contextPath}' + '/hrm/education/save';
         }
             //var action = "${contextPath}" + "/education/save";
         //Server.save(header,formData,action,formId,caption);
@@ -484,7 +485,7 @@
             '${_csrf.parameterName}': $('#csr-token').val()
         };
         var id = $('#id').val();
-        var action = "${contextPath}" + "/emp/address/";
+        var action = '${contextPath}' + '/hrm/emp/address/';
         //var action = "${contextPath}" + "/emp/education/edit/";
         $.ajax({
             type: "GET",

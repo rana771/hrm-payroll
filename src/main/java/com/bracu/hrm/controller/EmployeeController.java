@@ -48,8 +48,9 @@ public class EmployeeController {
 		return "employee/employeeList";
 	}
 	@ResponseBody
-	@RequestMapping(value =  "/list2" , method = RequestMethod.GET)
+	@RequestMapping(value =  "/list2" , method = RequestMethod.POST)
 	public String getList(ModelMap model){
+		System.err.println("/****************************************list2");
 		String list = employeeService.findAllEmployees();
 		System.out.println(list);
 		return list ;
@@ -145,6 +146,7 @@ public class EmployeeController {
 	@RequestMapping(value = { "/update" }, method = RequestMethod.POST)
 	public String update( @RequestBody Employee employee,
 						  BindingResult resultItem) {
+		System.err.println("emp/update");
 		if (resultItem.hasErrors()) {
 			return "employee/profile";
 		} else{
@@ -152,7 +154,7 @@ public class EmployeeController {
 		}
 
 	}
-	@RequestMapping(value = "/settings/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/settings/edit/{id}", method = RequestMethod.POST)
 	public String editUserSettings(@PathVariable("id") String id, ModelMap model){
 		Employee employee =employeeService.findById(Integer.parseInt(id));
 		model.addAttribute("employee",employee);

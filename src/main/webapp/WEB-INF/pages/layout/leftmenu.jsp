@@ -24,8 +24,13 @@
         <div class="sidebar-submenu">
 
             <ul>
-                <li><a href="/leavetype/create" title="Leave Type"><span>Leave Type</span></a></li>
-                <li><a href="/hryear/create" title="HR Year"><span>Hr Year </span></a></li>
+                <li><a href="${pageContext.request.contextPath}/leavetype/create" title="Leave Type"><span>Leave Type</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/hryear/create" title="HR Year"><span>Hr Year </span></a></li>
+                <li><a href="${pageContext.request.contextPath}/emptype/create" title="Employee Type"><span>Employee Type</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/dept/create" title="Department"><span>Department</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/joblevel/create" title="Job Level"><span>Job Level</span></a></li>
+
+
 
             </ul>
 
@@ -34,8 +39,8 @@
         <div class="sidebar-submenu">
 
             <ul>
-                <li><a href="/emp/create" title="Employee "><span>Create Employee </span></a></li>
-                <li><a href="/emp/create" title="Employee "><span>Employee List </span></a></li>
+                <li><a href="${pageContext.request.contextPath}/emp/create" title="Employee "><span>Create Employee </span></a></li>
+                <li><a href="${pageContext.request.contextPath}/emp/create" title="Employee "><span>Employee List </span></a></li>
 
             </ul>
 
@@ -50,8 +55,8 @@
         <div class="sidebar-submenu">
 
             <ul>
-                <li><a href="${contextPath}/payment/show" title="Buttons"><span>Pay Slip</span></a></li>
-                <li><a href="${contextPath}/payment/list" title="Labels &amp; Badges"><span>Pay Slip List</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/payment/show" title="Buttons"><span>Pay Slip</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/payment/list" title="Labels &amp; Badges"><span>Pay Slip List</span></a></li>
             </ul>
 
         </div><!-- .sidebar-submenu -->

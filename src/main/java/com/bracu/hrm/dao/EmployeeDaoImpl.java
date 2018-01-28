@@ -3,14 +3,10 @@ package com.bracu.hrm.dao;
 import com.bracu.hrm.model.Employee;
 import com.bracu.hrm.util.SQLDataSource;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
