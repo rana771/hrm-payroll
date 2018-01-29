@@ -90,6 +90,7 @@
         {label: 'Employee Type', name: 'name', width:400},
         {label: 'Note', name: 'note' , width:400 }
          ]
+        console.log(colModel);
         Server.list(header, url, colModel, formId, caption)
     });
 

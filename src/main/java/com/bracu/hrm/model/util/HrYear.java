@@ -19,10 +19,10 @@ import javax.persistence.*;
 @Getter
 public class HrYear extends BaseEntity {
 	
-	@ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "company_id")
-	private Company company;
-	private String name;
+//	@ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+//	@JoinColumn(name = "company_id")
+//	private Company company;
+//	private String name;
 	@DateTimeFormat(pattern = "MM-dd-yyyy")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_from", nullable = false)

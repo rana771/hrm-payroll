@@ -57,4 +57,7 @@
 	<definition name="jobLevel/jobLevelCreate" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/jobLevel/jobLevelCreate.jsp" />
 	</definition>
+	<definition name="holiday/create" extends="layout.main">
+		<put-attribute name="body" value="/WEB-INF/pages/holiday/create.jsp" />
+	</definition>
 </tiles-definitions>

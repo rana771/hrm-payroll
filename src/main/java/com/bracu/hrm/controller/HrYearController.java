@@ -46,6 +46,7 @@ public class HrYearController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public String getList(ModelMap model){
         String list = hrYearService.getlist();
+        System.err.println(list);
         return list ;
     }
 
