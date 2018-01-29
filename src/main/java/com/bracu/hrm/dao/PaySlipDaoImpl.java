@@ -136,16 +136,26 @@ public class PaySlipDaoImpl extends AbstractDao<Integer, Mail>  implements PaySl
 
 
 	public List getRequisitionList() {
-		String sql = "select \n" +
-				"mail.id,\n" +
+		List list = new ArrayList<>();
+		String sql = "SELECT mail.id, mail.content, mail.note,"+
+		"case when mail.status = false then 'Failed' else 'Success' end status"+
+				",concat(to_char(to_timestamp(cast(mail.salary_month as char), 'MM'), 'Month'), ', ' , mail.salary_year) \"monthAndYear\" FROM mail";
+		String a="select \n" +
+			"mail.id,\n" +
 				"mail.content content,\n" +
-				"mail.note,\n" +
-				"case when mail.status = false then 'Failed' else 'Success' end status,\n" +
-				"concat(to_char(to_timestamp(to_char(mail.salary_month:: int, '999'), 'MM'), 'Month'), ', ' , mail.salary_year) \"monthAndYear\"\n" +
-				"  \n" +
-				"from mail order by id desc\n" +
-				"\n";
+			"mail.content \"content\",\n" +
+			"mail.note,\n" +
+			"case when mail.status = false then 'Failed' else 'Success' end status,\n" +
+			"concat(to_char(to_timestamp(to_char(mail.salary_month::int, '999'), 'MM'), 'Month'), ', ' , mail.salary_year) \"monthAndYear\"\n" +
+			"  \n" +
+			"from mail order by id desc\n" +
+			"\n";
+		try {
 
-		return  executeSQL(sql);
+			return executeSQL(sql);
+		} catch	(Exception e) {
+			e.printStackTrace();
+		}
+		return  list;
 	}
 }

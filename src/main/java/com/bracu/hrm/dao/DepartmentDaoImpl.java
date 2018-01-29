@@ -1,46 +1,37 @@
 package com.bracu.hrm.dao;
 
+import com.bracu.hrm.model.org.Department;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
-import com.bracu.hrm.model.org.Department;
 
 import java.util.List;
 
+
 @Repository("departmentDao")
-public class DepartmentDaoImpl extends AbstractDao<Integer, Department> implements  DepartmentDao{
+public class DepartmentDaoImpl extends AbstractDao<Integer, Department> implements DepartmentDao {
 
-    public void save(Department department) {
-        super.persist(department);
-    }
+    static final Logger logger = LoggerFactory.getLogger(DepartmentDaoImpl.class);
 
-    @Override
+
+
     @SuppressWarnings("unchecked")
-    public List<Department> findAll() {
+    public List<Department> listAll() {
         Criteria criteria = createEntityCriteria();//.addOrder(Order.asc("column1"));
-        List<Department> DepartmentList = (List<Department>) criteria.list();
-        return DepartmentList;
+        //criteria.add(Restrictions.eq("entityType", entityType));
+        //criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<Department> setupEntityList = (List<Department>) criteria.list();
+
+        return setupEntityList;
     }
 
-    @Override
-    public Department findById(Integer id) {
-        Criteria criteria = createEntityCriteria();
-        criteria.add(Restrictions.eq("id",id));
-        Department department = (Department) criteria.uniqueResult();
-        return  department;
+    public Department findById(Integer id){
+        Criteria criteria = createEntityCriteria();//.addOrder(Order.asc("column1"));
+        criteria.add(Restrictions.eq("id", id));
+        //criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        Department setupEntityList = (Department) criteria.uniqueResult();
+        return setupEntityList;
     }
-
-
-
-    @Override
-    public void delete(Integer id) {
-        Criteria crit = createEntityCriteria();
-        crit.add(Restrictions.eq("id", id));
-        Department department= (Department) crit.uniqueResult();
-        delete(department);
-    }
-
-
-
 }

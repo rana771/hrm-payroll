@@ -21,6 +21,8 @@ import org.springframework.stereotype.Component;
 
 import com.bracu.hrm.cache.CacheService;
 import com.bracu.hrm.model.User;
+import com.bracu.hrm.model.org.Company;
+import com.bracu.hrm.service.CompanyService;
 import com.bracu.hrm.service.UserService;
 
 @Component
@@ -29,10 +31,11 @@ public class DefaultAuthenticationSuccessHandler implements AuthenticationSucces
 	protected Log logger = LogFactory.getLog(this.getClass());
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 	@Autowired
-	CacheService cacheService;
+	private CacheService cacheService;
 	@Autowired
-	UserService userService;
-	
+	private UserService userService;
+	@Autowired
+	private CompanyService companyService;
 	 @Override
 	    public void onAuthenticationSuccess(HttpServletRequest request, 
 	      HttpServletResponse response, Authentication authentication)
@@ -40,6 +43,7 @@ public class DefaultAuthenticationSuccessHandler implements AuthenticationSucces
 		 	//System.out.print(authentication.getName());
 		 	User user = userService.findByUsername(authentication.getName());
 		 	cacheService.setUserCase(user);
+		 	//Company company =companyService.findById(user.getCompany().getId());
 		 	cacheService.setCompanyCase(user.getCompany());
 	        handle(request, response, authentication);
 	        clearAuthenticationAttributes(request);
@@ -75,13 +79,14 @@ public class DefaultAuthenticationSuccessHandler implements AuthenticationSucces
 	            }
 	        }
 	 
-	        if (isUser) {
+	      /*  if (isUser) {
 	            return "/dashboard";
 	        } else if (isAdmin) {
 	            return "/home";
 	        } else {
 	            return "/";
-	        }
+	        }*/
+	        return "/";
 	    }
 	 
 	 

@@ -92,7 +92,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		mailProperties.put("mail.smtp.auth", true);
 		mailProperties.put("mail.smtp.starttls.enable", true);
 		mailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-
+		//mailProperties.put("proxySet","true");
+		//mailProperties.put("socksProxyHost","192.168.1.15");
+		//mailProperties.put("socksProxyPort","8080");
+		//Properties p = System.getProperties();
+		//p.setProperty("proxySet","true");
+		//p.setProperty("socksProxyHost","192.168.1.15");
+		//p.setProperty("socksProxyPort","8080");
 		// mailProperties.put("mail.properties.mail.smtp.socketFactory.port",465);
 		// mailProperties.put("mail.properties.mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
 		// mailProperties.put("mail.properties.mail.smtp.socketFactory.fallback",false);
@@ -101,15 +107,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		mailSender.setJavaMailProperties(mailProperties);
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
-
-		Session session = Session.getInstance(mailProperties, new javax.mail.Authenticator() {
+		
+	/*	Session session = Session.getInstance(mailProperties, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("erp@bracu.ac.bd", "R@$@R@987987dasflkj");
 			}
 		});
-		mailSender.setSession(session);
+		mailSender.setSession(session);*/
 		mailSender.setProtocol("smtp");
-		mailSender.setUsername("BRAC University<erp@bracu.ac.bd>");
+		mailSender.setUsername("erp@bracu.ac.bd");
+	
 		mailSender.setPassword("R@$@R@987987dasflkj");
 
 		return mailSender;
