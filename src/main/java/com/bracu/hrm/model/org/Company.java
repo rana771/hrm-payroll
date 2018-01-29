@@ -9,8 +9,11 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "company")
+@Data
 public class Company {
 
 	@Id
@@ -42,76 +45,5 @@ public class Company {
 	private String address;
 	@Column(name = "company_logo")
 	byte[] companyLogo;
-	
-	
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public Integer getVersion() {
-		return version;
-	}
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getShortName() {
-		return shortName;
-	}
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
-	}
-	public String getWebUrl() {
-		return webUrl;
-	}
-	public void setWebUrl(String webUrl) {
-		this.webUrl = webUrl;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPhone1() {
-		return phone1;
-	}
-	public void setPhone1(String phone1) {
-		this.phone1 = phone1;
-	}
-	public String getPhone2() {
-		return phone2;
-	}
-	public void setPhone2(String phone2) {
-		this.phone2 = phone2;
-	}
-	public String getFax() {
-		return fax;
-	}
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public byte[] getCompanyLogo() {
-		return companyLogo;
-	}
-	public void setCompanyLogo(byte[] companyLogo) {
-		this.companyLogo = companyLogo;
-	}
-	
-	
 	
 }

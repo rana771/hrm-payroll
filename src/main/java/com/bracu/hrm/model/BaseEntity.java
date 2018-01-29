@@ -1,5 +1,8 @@
 package com.bracu.hrm.model;
 
+import com.bracu.hrm.model.util.HrYear;
+import lombok.Data;
+
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -16,7 +19,7 @@ import javax.persistence.MappedSuperclass;
 /**
  * Created by HP on 1/14/2018.
  */
-@MappedSuperclass 
+@MappedSuperclass
 public abstract class BaseEntity {
 	
 	@Id
@@ -80,5 +83,6 @@ public abstract class BaseEntity {
 		this.dateLastUpdate = dateLastUpdate;
 	}
 
-   
+
+
 }

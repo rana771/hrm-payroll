@@ -12,6 +12,6 @@ public interface LeaveTypeService {
     String delete(Integer id);
     String getLeaveTypeList();
     String getLeaveTypeById(int i);
-    LeaveType update(LeaveType leaveType);
+    String update(LeaveType leaveType);
     boolean uniqueNameCheck(Integer id, String name);
 }

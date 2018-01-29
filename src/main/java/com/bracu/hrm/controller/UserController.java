@@ -1,5 +1,6 @@
 package com.bracu.hrm.controller;
 
+import com.bracu.hrm.cache.CacheService;
 import com.bracu.hrm.model.User;
 import com.bracu.hrm.service.SecurityService;
 import com.bracu.hrm.service.UserService;
@@ -57,9 +58,14 @@ public class UserController {
         return "login";
     }
 
+    @Autowired
+    CacheService cacheService;
+    
     @RequestMapping(value = {"/", "/welcome","/index"}, method = RequestMethod.GET)
     public String welcome(Model model) {
     	
+    	System.out.println(cacheService.getUser().getFullName());
+    	System.out.println(cacheService.getCompnay().getName());
         return "user.ndex";
     }
 }

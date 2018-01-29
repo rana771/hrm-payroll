@@ -8,6 +8,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.query.parser.Part;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -52,30 +53,6 @@ public class LeaveTypeDaoImp extends AbstractDao<Integer, LeaveType> implements 
         return leaveTypeList;
     }
 
-    @Override
-    public boolean uniqueNameTest(Integer id, String name) {
-        Criteria crit = createEntityCriteria();
-        if (id == null) {
-            crit.add(Restrictions.eq("name", name));
-            if (crit.list().size() == 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            crit.add(Restrictions.eq("id", id));
-            crit.add(Restrictions.eq("name", name));
-            if (crit.list().size() == 0) {
-                crit.add(Restrictions.eq("name", name));
-                if (crit.list().size() == 0) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        }
-    }
+
 
 }

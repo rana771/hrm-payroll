@@ -1,17 +1,19 @@
 package com.bracu.hrm.dao;
 
-import java.util.List;
-
+import com.bracu.hrm.model.Employee;
+import com.bracu.hrm.util.SQLDataSource;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.bracu.hrm.model.Employee;
-import com.bracu.hrm.model.User;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
 
 
 
@@ -41,9 +43,9 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 
 	@SuppressWarnings("unchecked")
 	public List<Employee> findAllEmployees() {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("pin"));
+		/*Criteria criteria = createEntityCriteria().addOrder(Order.asc("pin"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
-		List<Employee> employeeList = (List<Employee>) criteria.list();
+		List<Employee> employeeList = (List<Employee>) criteria.list();*/
 		
 		// No need to fetch userProfiles since we are not showing them on list page. Let them lazy load. 
 		// Uncomment below lines for eagerly fetching of userProfiles if you want.
@@ -51,7 +53,12 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 		for(User user : users){
 			Hibernate.initialize(user.getUserProfiles());
 		}*/
-		return employeeList;
+		String sql = "SELECT \n" +
+				"id AS id,\n" +
+				"pin AS Pin,\n"+
+				"fullName AS Name,\n" +
+				"FROM employee \n" ;
+				return  executeSQL(sql);
 	}
 
 	public void save(Employee employee) {
@@ -63,6 +70,33 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 		crit.add(Restrictions.eq("pin", pin));
 		Employee employee = (Employee)crit.uniqueResult();
 		delete(employee);
+	}
+
+	public ResultSet getSqlServerEmployee(String pin){
+		Connection con  = new SQLDataSource().getSqlConnection();
+		ResultSet rs = null;
+		try
+		{
+			con = new SQLDataSource().getSqlConnection();
+			Statement s1 = con.createStatement();
+			String sqlString = "select * from hr_employee_t WHERE hr_employee_t.pin = '"+ pin +"'";
+			rs = s1.executeQuery(sqlString);
+
+			//allResult = Utility.convertResultSetToList(rs);
+			//con.close();
+			//String result = new result[20];
+
+		}catch (SQLException e) {
+
+
+		}catch
+				(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+
+		return rs;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.bracu.hrm.model.email;
 
+import com.bracu.hrm.model.BaseEntity;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,45 +13,30 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mail")
-public class Mail {
+public class Mail extends BaseEntity{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	private Integer version;
+
 	@Column(name ="from_email")
     private String fromEmail;
 	@Column(name ="to_email")
     private String toEmail;
     private String subject;
+	@Column(name="content", length=1000)
     private String content;
     private String attachment;
-    
+	private boolean status;
+	@Column(name="note", length=1000)
+	private String note;
+
+	@Column(name ="salary_month")
+	private String salaryMonth;
+
+	@Column(name ="salary_year")
+	private String salaryYear;
+
     
     @Column(name ="sending_date")
     private Date sendingDate;
-
-
-	public Integer getId() {
-		return id;
-	}
-
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-
-	public Integer getVersion() {
-		return version;
-	}
-
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
 
 	public String getFrom() {
 		return fromEmail;
@@ -60,6 +47,37 @@ public class Mail {
 		this.fromEmail = fromEmail;
 	}
 
+	public boolean isStatus() {
+		return status;
+	}
+
+	public String getSalaryYear() {
+		return salaryYear;
+	}
+
+	public void setSalaryYear(String salaryYear) {
+		this.salaryYear = salaryYear;
+	}
+
+	public String getSalaryMonth() {
+		return salaryMonth;
+	}
+
+	public void setSalaryMonth(String salaryMonth) {
+		this.salaryMonth = salaryMonth;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
 
 	public String getTo() {
 		return toEmail;

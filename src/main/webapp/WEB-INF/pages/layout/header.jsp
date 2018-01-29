@@ -183,6 +183,7 @@
 
 
 
+
     <!-- Bootstrap Datepicker -->
 
 <!--<link rel="stylesheet" type="text/css" href="../../static/widgets/datepicker/datepicker.css">-->
@@ -192,7 +193,8 @@
 
     $(function() { "use strict";
         $('.bootstrap-datepicker').bsdatepicker({
-            format: 'mm-dd-yyyy'
+            // format: 'mm-dd-yyyy'
+            format: 'yyyy-mm-dd'
         });
     });
 
@@ -217,4 +219,5 @@
 
 
 <script type="text/javascript" src="../../static/widgets/parsley/parsley.js"></script>
+<script type="text/javascript" src="../../static/custom/commons.js"></script>
 </head>

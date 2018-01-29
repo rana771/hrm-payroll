@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -45,7 +46,7 @@ public class Employee {
 	private String fullName;
 
 	@NotEmpty
-	@Column(name = "email", nullable = false)
+	@Column(name = "email", nullable = true)
 	private String email;
 	
 	@Column(name = "father_name")
