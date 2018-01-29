@@ -30,7 +30,6 @@ public class EmployeeAddress extends BaseEntity{
 	
 	@Column(length=5000)
 	private String address;
-	
 	private Boolean isActive;
 	
 	

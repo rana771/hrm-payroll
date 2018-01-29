@@ -40,7 +40,7 @@
 
             <ul>
                 <li><a href="${pageContext.request.contextPath}/emp/create" title="Employee "><span>Create Employee </span></a></li>
-                <li><a href="${pageContext.request.contextPath}/emp/create" title="Employee "><span>Employee List </span></a></li>
+                <li><a href="${pageContext.request.contextPath}/emp/list" title="Employee "><span>Employee List </span></a></li>
 
             </ul>
 

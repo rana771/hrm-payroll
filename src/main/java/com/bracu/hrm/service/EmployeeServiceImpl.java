@@ -126,12 +126,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee=employeeDao.findById(i);
 		listMap.put("employee",employee);
 		EntityType entityTypeEducation =entityTypeDao.findByName("Educational Title");
-		/*System.err.println(entityTypeEducation);*/
 		List<SetupEntity> educationalTitleList= setupEntityDao.findAllByEntityType(entityTypeEducation);
-		/*System.err.println(educationalTitleList.size());
-		for(SetupEntity entityType:educationalTitleList){
-			System.err.println(entityType.getColumn1());
-		}*/
 		listMap.put("educationalTitleList", educationalTitleList);
 		EntityType entityType =entityTypeDao.findByName("Gender");
 		List <SetupEntity> genderList = setupEntityDao.findAllByEntityType(entityType);

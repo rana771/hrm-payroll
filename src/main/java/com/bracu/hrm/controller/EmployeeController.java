@@ -50,9 +50,7 @@ public class EmployeeController {
 	@ResponseBody
 	@RequestMapping(value =  "/list2" , method = RequestMethod.POST)
 	public String getList(ModelMap model){
-		System.err.println("/****************************************list2");
 		String list = employeeService.findAllEmployees();
-		System.out.println(list);
 		return list ;
 	}
 	

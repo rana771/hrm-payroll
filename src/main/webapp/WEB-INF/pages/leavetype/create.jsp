@@ -71,7 +71,7 @@
         };
         var urlmethod='GET'
         var caption="leave type";
-        var url = '${contextPath}/leavetype/list'   ;
+        var url = '${contextPath}'+'/leavetype/list'   ;
         var formId = 'leaveTYpeFormId';
         var colModel = [
             {label: 'id', name: 'id', key: true, width: 75, hidden: true},

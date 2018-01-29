@@ -42,7 +42,7 @@
                     </li>
                     <li class="col-md-16">
                         <a href="#tab-example-5" data-toggle="tab" class="list-group-item">
-                            <i class="glyph-icon font-primary icon-camera" onclick="empAddress()"></i>
+                            <i class="glyph-icon font-primary icon-camera" onclick="FetchEmpAddress()"></i>
                             Address
                         </a>
                     </li>
@@ -306,7 +306,7 @@
             "spouseName": $('#spouseName').val(),
 
         }
-        var action ='/hrm/emp/update';
+        var action ="${pageContext.request.contextPath}/emp/update";
         //var data=$('#leaveTYpeFormId').serialize();
         console.log(basicInfo);
         Server.save(header, basicInfo, action, formId, caption);
@@ -323,7 +323,7 @@
             '${_csrf.parameterName}': $('#csr-token').val()
         };
         var id = $('#id').val();
-        var action ='${contextPath}'+'/hrm/emp/settings/edit/';
+        var action ="${pageContext.request.contextPath}/emp/settings/edit/";
         console.log(id)
         $.ajax({
             type: "POST",
@@ -375,7 +375,7 @@
             "fullName": $('#accFullName').val()
         }
         var action = "";
-        var action = '${contextPath}' + '/hrm/useracc/save';
+        var action = "${pageContext.request.contextPath}/useracc/save";
         Server.save(header, accountsettings, action, formId, caption);
         Server.resetForm(formId);
         }
@@ -404,7 +404,7 @@
             '${_csrf.parameterName}': $('#csr-token').val()
         };
         var id = $('#id').val();
-        var action = '${contextPath}' + '/hrm/emp/education/';
+        var action = "${pageContext.request.contextPath}/emp/education/";
         //var action = "${contextPath}" + "/emp/education/edit/";
         $.ajax({
             type: "GET",
@@ -445,9 +445,9 @@
             formData.append("educationTitleId", $('#educationTitleId').val());
             var action = "";
         if ($('#id').val() > 0) {
-            var action = '${contextPath}' + '/hrm/education/update';
+            var action = "${pageContext.request.contextPath}/education/update";
         } else {
-            var action = '${contextPath}' + '/hrm/education/save';
+            var action = "${pageContext.request.contextPath}/education/save";
         }
             //var action = "${contextPath}" + "/education/save";
         //Server.save(header,formData,action,formId,caption);
@@ -476,17 +476,16 @@
         });
 }
     /*
-     * Fetch employee Data and
-     * employee education page
+     * Fetch Employee address and address page
+     *
      * */
-    function saveEmpAddress() {
+    function FetchEmpAddress() {
         header = {
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
         };
         var id = $('#id').val();
-        var action = '${contextPath}' + '/hrm/emp/address/';
-        //var action = "${contextPath}" + "/emp/education/edit/";
+        var action = "${pageContext.request.contextPath}/emp/address/";
         $.ajax({
             type: "GET",
             contentType: "application/json",
@@ -504,6 +503,7 @@
 
 
     }
+
 
 
 

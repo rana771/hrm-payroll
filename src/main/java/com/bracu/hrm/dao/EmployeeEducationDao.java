@@ -13,4 +13,5 @@ public interface EmployeeEducationDao {
     List<EmployeeEducation> getEmpEduById(int id);
     EmployeeEducation getEmpEduObject(int id);
     void delete(EmployeeEducation employeeEducation);
+
 }
