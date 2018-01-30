@@ -22,7 +22,7 @@ import java.util.Map;
 public class EmployeeAddressController {
     @Autowired
     private EmployeeAddressService employeeAddressService;
-    @RequestMapping(value = "/emp/address/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/address/{id}", method = RequestMethod.GET)
     public String createEmpAddress(@PathVariable("id") String id, ModelMap model){
         System.err.println(id);
         Map setupList =  employeeAddressService.getEmpAddressInfo(Integer.parseInt(id));
@@ -33,11 +33,12 @@ public class EmployeeAddressController {
 
     @ResponseBody
     @RequestMapping(value = { "/employee/address/save" }, method = RequestMethod.POST)
-    public String save(@RequestBody EmpAddressDto empAddressDto, BindingResult resultItem) {
-        if (resultItem.hasErrors()) {
+    public String save(@RequestBody EmpAddressDto empAddressDto,BindingResult result) {
+        if (result.hasErrors()) {
             return "employee/address/address";
         } else{
             System.err.println(empAddressDto);
+
             return employeeAddressService.save(empAddressDto);
             //return "";
         }

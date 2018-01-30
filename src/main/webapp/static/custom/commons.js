@@ -1,5 +1,5 @@
 var Server = {
-        save:function (headerValue,data,url,formId,caption)
+        save:function (headerValue,data,url,formId,caption,gridId)
         {
       jQuery.ajax({
         type: "POST",
@@ -10,19 +10,19 @@ var Server = {
         dataType: "json",
         headers:header,
         success: function (result) {
-            $('#'+formId).find("#jqGrid").trigger('reloadGrid');
+            $('#'+formId).find('#'+gridId).trigger('reloadGrid');
             //resetForm()
         },
         error: function (result) {
            // document.getElementById("#"+formId).reset();
             Server.getMessage(1, result.responseText, caption);
-            $('#jqGrid').trigger('reloadGrid');
+            $('#'+gridId).trigger('reloadGrid');
             Server.resetForm(formId);
 
         }
     });
 },
-    delete: function(header,url,id,formId, content, caption){
+    delete: function(header,url,id,formId, content, caption,gridId){
         $.confirm({
             title: 'Confirm!',
             content: content,
@@ -37,11 +37,11 @@ var Server = {
                         headers:header,
                         success : function(result) {
                             Server.getMessage(1,result,caption);
-                            $('#jqGrid').trigger( 'reloadGrid' );
+                            $('#'+gridId).trigger( 'reloadGrid' );
                             Server.resetForm(formId);
                         },
                         error : function(e) {
-                            $('#jqGrid').trigger( 'reloadGrid' );
+                            $('#'+gridId).trigger( 'reloadGrid' );
                             alert("Error!" +e)
                         }
                     });
@@ -101,10 +101,10 @@ var Server = {
 
     },
 
-    list:function(header,url,colModel,formId,caption,urlmethod){
+    list:function(header,url,colModel,formId,caption,urlmethod,gridId){
 
         //Start JqGrid
-        $('#'+formId).find('#jqGrid').jqGrid({
+        $('#'+formId).find('#'+gridId).jqGrid({
             url: url,
             mtype: urlmethod,
             styleUI : 'Bootstrap',
@@ -118,8 +118,6 @@ var Server = {
             rowList:[10,20,30,50,100,500],
             viewrecords: true,
             sortorder: "asc",
-
-
             caption: caption,
             autoWidth: true,
             //width:600,
@@ -134,7 +132,8 @@ var Server = {
                 edit(cellValue);
             }
         });
-        $('#'+formId).find("#jqGrid").jqGrid("setLabel", "rn", "SL.");
+        console.log(colModel)
+        $('#'+formId).find('#'+gridId).jqGrid("setLabel", "rn", "SL.");
         $(window).bind('resize', function() {
             // resize the datagrid to fit the page properly:
             $('div.grid-resize').each(function() {

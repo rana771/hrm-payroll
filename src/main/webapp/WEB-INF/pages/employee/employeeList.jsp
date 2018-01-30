@@ -66,6 +66,7 @@
         };
         var url = '${contextPath}/emp/list2';
         var urlmethod='POST'
+        var gridId= "jqGrid"
         var formId = 'employeeListId';
         var colModel = [
             {label: 'id', name: 'id', key: true, width: 75, hidden: true},
@@ -78,7 +79,7 @@
             {label: 'National Id', name: 'nid', width: 150}
         ]
 
-        Server.list(header, url, colModel, formId,"Employee List",urlmethod);
+        Server.list(header, url, colModel, formId,"Employee List",urlmethod,gridId);
 
 
     });

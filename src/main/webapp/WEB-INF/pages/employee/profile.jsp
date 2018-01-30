@@ -9,6 +9,7 @@
                 <div class="panel-content image-box">
                     <div class="ribbon">
                         <div class="bg-primary">${employee.pin}</div>
+                        <input type="hidden"  id="employeeId" value="${employee.id}">
                     </div>
                     <div class="image-content font-white">
 
@@ -25,6 +26,7 @@
             </div>
         </div>
         <div class="content-box mrg15B">
+
             <div class="content-box-wrapper text-center clearfix">
 
                 <ul class="list-group row list-group-icons">
@@ -134,11 +136,12 @@
                                     <span class="add-on input-group-addon">
                                         <i class="glyph-icon icon-calendar"></i>
                                     </span>
-                                            <input type="text" name="dateOfBirith" id="dob"
+                                            <%--<input type="text" name="dateOfBirith" id="dob"
                                                    value="${employee.dateOfBirith}"
                                                    class="bootstrap-datepicker form-control tempDateFrom"
-                                                   data-date-format="mm-dd-yy">
-                                            <form:errors path="dateOfBirith" cssclass="error"></form:errors>
+                                                   data-date-format="mm-dd-yy">--%>
+                                            <input type="text" name="dateOfBirith" id="dob"  class=" form-control" value="${employee.dateOfBirith}" data-date-format="mm-dd-yy">
+                                            <%--<form:errors path="dateOfBirith" cssclass="error"></form:errors>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -269,17 +272,6 @@
 
 </style>
 <script type="text/javascript">
-
-    $(document).ready(function () {
-        $(function () {
-            "use strict";
-            $('.bootstrap-datepicker').bsdatepicker({
-                format: 'mm-dd-yyyy'
-            });
-        });
-
-    });
-
     function savePersonalInfo() {
         header = {
             'X-CSRF-TOKEN': $('#csr-token').val(),
@@ -287,15 +279,9 @@
         };
         var caption = "Employee Personal Information"
         var formId = $('#saveButton').closest('form').attr('id');
-        /*var frm = $('#empbasicinfoId');
-         frm.validate();
-         var isValid = frm.valid();
-         if (!isValid) {
-         return false;
-         }*/
         var dob = new Date($('#dob').val());
         var basicInfo = {
-            "id": $('#id').val(),
+            "id": $('#employeeId').val(),
             "fullName": $.trim($('#fullName').val()),
             "version": $('#version').val(),
             "pin": $('#pin').val(),
@@ -307,9 +293,8 @@
 
         }
         var action ="${pageContext.request.contextPath}/emp/update";
-        //var data=$('#leaveTYpeFormId').serialize();
-        console.log(basicInfo);
-        Server.save(header, basicInfo, action, formId, caption);
+        var gridId=""
+        Server.save(header, basicInfo, action, formId, caption,gridId);
         Server.resetForm(formId);
     }
 
@@ -322,7 +307,7 @@
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
         };
-        var id = $('#id').val();
+        var id = $('#employeeId').val();
         var action ="${pageContext.request.contextPath}/emp/settings/edit/";
         console.log(id)
         $.ajax({
@@ -348,14 +333,6 @@
     * */
     function saveAccountSettings() {
         var frm = $('#accountSettingformId');
-        /*frm.validate();
-        var isValid = frm.valid();
-        if (!isValid) {
-            return false;
-        }*/
-       /* if(!$('#').val().empty()){
-            return false;
-        }*/
         var newpassword = $('#newPassword').val();
         var confirmpassword = $('#repeatPassword').val();
         if (newpassword != confirmpassword) {
@@ -403,9 +380,10 @@
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
         };
-        var id = $('#id').val();
+        var id = $('#employeeId').val();
+        console.log("Employee Id Fetch Employee Education")
+        console.log(id)
         var action = "${pageContext.request.contextPath}/emp/education/";
-        //var action = "${contextPath}" + "/emp/education/edit/";
         $.ajax({
             type: "GET",
             contentType: "application/json",
@@ -415,6 +393,7 @@
             headers: header,
             success: function (result) {
                 $('#empEducationId').html(result);
+
             },
             error: function (e) {
                 alert("Error!" + e)
@@ -424,57 +403,7 @@
 
     }
 
-    function saveEmpEducation() {
-            var frm = $('#empEduFormId');
-            header = {
-                'X-CSRF-TOKEN': $('#csr-token').val(),
-                '${_csrf.parameterName}': $('#csr-token').val()
-            };
-            var caption = "Employee Education"
-            var formId = "empEduFormId";
-            var formData=new FormData;
-            var file = $("#certificate")[0].files[0];
-            formData.append("file", file);
-            formData.append("id",$('#id').val());
-            formData.append("version",$('#version').val());
-            formData.append("board",$('#board').val());
-            formData.append("institute",$('#institute').val());
-            formData.append("result",$('#result').val());
-            formData.append("passingYear",$('#passingYear').val());
-            formData.append("employeeId", $('#empId').val());
-            formData.append("educationTitleId", $('#educationTitleId').val());
-            var action = "";
-        if ($('#id').val() > 0) {
-            var action = "${pageContext.request.contextPath}/education/update";
-        } else {
-            var action = "${pageContext.request.contextPath}/education/save";
-        }
-            //var action = "${contextPath}" + "/education/save";
-        //Server.save(header,formData,action,formId,caption);
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]);
-        }
-        //console.log(formData.toString());
 
-        $.ajax({
-            url: action,
-            data: formData,
-            processData: false,
-            contentType: false,
-            type: 'POST',
-            headers:header,
-            success: function (data) {
-                Server.getMessage(1,data,"Empoyee Education");
-                $('#'+formId).find("#jqGrid").trigger('reloadGrid');
-                Server.resetForm(formId);
-               console.log(data);
-            },
-            error: function (err) {
-
-
-            }
-        });
-}
     /*
      * Fetch Employee address and address page
      *
@@ -484,8 +413,8 @@
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
         };
-        var id = $('#id').val();
-        var action = "${pageContext.request.contextPath}/emp/address/";
+        var id = $('#employeeId').val();
+        var action = "${pageContext.request.contextPath}/employee/address/";
         $.ajax({
             type: "GET",
             contentType: "application/json",

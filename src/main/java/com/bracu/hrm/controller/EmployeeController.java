@@ -1,17 +1,7 @@
 package com.bracu.hrm.controller;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.validation.Valid;
-
-import com.bracu.hrm.dto.EmpEducationDto;
-import com.bracu.hrm.model.EmployeeEducation;
-import com.bracu.hrm.model.leave.LeaveType;
-import com.bracu.hrm.model.settings.SetupEntity;
-import com.bracu.hrm.util.JSONUtil;
+import com.bracu.hrm.model.Employee;
+import com.bracu.hrm.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -21,12 +11,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import com.bracu.hrm.model.Employee;
-import com.bracu.hrm.service.EmployeeService;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MultipartFile;
-
-import static java.lang.System.exit;
+import javax.validation.Valid;
+import java.util.Locale;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/emp")

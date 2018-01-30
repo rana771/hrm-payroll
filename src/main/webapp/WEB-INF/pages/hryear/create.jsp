@@ -90,11 +90,11 @@
                 return "Closed";
         }
         Server.list(header, url, colModel, formId)
-        $(function() { "use strict";
+        /*$(function() { "use strict";
             $('.bootstrap-datepicker').bsdatepicker({
                 format: 'mm-dd-yyyy'
             });
-        });
+        });*/
 
 
     });

@@ -29,6 +29,7 @@ public class EmployeeEducation extends BaseEntity {
 	private Integer passingYear;
 	@Transient
 	private MultipartFile certificatedata;
+	@Column(nullable = true)
 	private byte[] certificate;
 
 	

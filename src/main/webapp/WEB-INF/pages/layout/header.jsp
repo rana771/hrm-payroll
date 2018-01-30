@@ -193,7 +193,7 @@
 
     $(function() { "use strict";
         $('.bootstrap-datepicker').bsdatepicker({
-            format: 'mm-dd-yyyy'
+            format: 'mm-dd-yyyy',
         });
     });
 

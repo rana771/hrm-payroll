@@ -62,8 +62,6 @@ public class EmployeeEducationServiceImpl implements EmployeeEducationService {
     @Transactional(readOnly = true)
     public String getEmpEducationList(int id) {
         List<EmployeeEducation> employeeEducationList=employeeEducationDao.getEmpEduList(id);
-        String jesonObject=JSONUtil.getJsonObject(employeeEducationList);
-        System.err.println(jesonObject);
         return JSONUtil.getJsonObject(employeeEducationList);
     }
 

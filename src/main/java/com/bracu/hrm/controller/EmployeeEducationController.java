@@ -29,7 +29,6 @@ public class EmployeeEducationController {
     @ResponseBody
     @RequestMapping(value = "/education/list", method = RequestMethod.POST)
     public String getEmpEducationList(@RequestParam("id") String id){
-        //System.err.println(id);
         String list = employeeEducationService.getEmpEducationList(Integer.parseInt(id));
         return list;
     }

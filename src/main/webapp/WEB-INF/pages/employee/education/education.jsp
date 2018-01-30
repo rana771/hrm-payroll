@@ -93,7 +93,7 @@
                 </div>
 
                 <div class="bg-default content-box text-center pad20A mrg25T grid-resize">
-                    <table id="jqGrid"></table>
+                    <table id="jqGridEdu"></table>
                     <div id="jqGridPager"></div>
                 </div>
             </form>
@@ -103,15 +103,19 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        var id= $('#empId').val();
+        var id= $('#employeeId').val();
+        var gridId="jqGridEdu";
+        console.log("Reload Employee Education Table ")
+        console.log(id);
         header = {
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val(),
         };
 
-        var url = '${contextPath}'+'/hrm/education/list/?id='+id;
+        var url = "${pageContext.request.contextPath}/education/list/?id="+id;
         var formId = 'empEduFormId';
-        var caption = 'Employee Education'
+        var caption = 'Employee Education';
+        var urlmethod='POST'
         var colModel = [
             {label: 'id', name: 'id', key: true, width: 75, hidden: true},
             {label: 'Education Title', name: 'title', width: 150},
@@ -120,47 +124,12 @@
             {label: 'Result', name: 'result', width: 100},
             {label: 'Passing Year', name: 'passing_year', width: 100},
         ]
-        $('#'+formId).find('#jqGrid').jqGrid({
-            url: url,
-            mtype: "POST",
-            styleUI : 'Bootstrap',
-            postData: header,
-            contentType : "application/json",
-            datatype: "json",
-            colModel:colModel ,
-            pager: "#jqGridPager",
-            rowNum:10,
-            rownumbers: true,
-            rowList:[10,20,30,50,100,500],
-            viewrecords: true,
-            sortorder: "asc",
-            caption:caption,
-            /* autoWidth: true,*/
-            //width:600,
-            height:243,
-            altRows:true,
-            shrinkToFit: false,
-            scrollOffset: 0,
-            onSelectRow: function() {
-                var myGrid = $('#jqGrid'),
-                        selectedRowId = myGrid.jqGrid ('getGridParam', 'selrow'),
-                        cellValue = myGrid.jqGrid ('getCell', selectedRowId, 'id');
-                edit(cellValue);
-            }
-        });
-        $('#'+formId).find("#jqGrid").jqGrid("setLabel", "rn", "SL.");
-        $(window).bind('resize', function() {
-            // resize the datagrid to fit the page properly:
-            $('div.grid-resize').each(function() {
-                $(this).width('auto');
-                $(this).find('table').width('100%');
-            });
-        });
+        Server.list(header,url,colModel,formId,caption,urlmethod,gridId);
 
 
     });
     function edit(empEduId) {
-        var action = '${contextPath}' + '/hrm/education/edit/';
+        var action = "${pageContext.request.contextPath}/education/edit/";
         header = {
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
@@ -170,7 +139,6 @@
     }
     function setDataToEdit(result) {
         console.log(result);
-        //$('#empEduFormId').find("#board").val(result.board);
         $('#id').val(result.id);
         $('#board').val(result.board);
         $('#version').val(result.version);
@@ -178,7 +146,6 @@
         $('#result').val(result.result);
         $('#passingYear').val(result.passing_year);
         $('#educationTitleId').val(result.education_title_id).prop('selected', true);
-        //$('#educationTitleId').val(result.);
         $('#saveButton').val('Update');
     }
     function deleteEmpEducation() {
@@ -186,11 +153,59 @@
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
         };
+        var gridId= "jqGridEdu"
         var formId=$('#deleteButton').closest('form').attr('id');
         console.log("formId"+formId)
         var empEduId = $('#id').val();
-        var url =  '${contextPath}'+'/hrm/education/delete/';
-        Server.delete(header, url, empEduId, formId);
+        var url =  "${pageContext.request.contextPath}/education/delete/";
+        Server.delete(header, url, empEduId, formId,gridId);
+    }
+    function saveEmpEducation() {
+        var frm = $('#empEduFormId');
+        header = {
+            'X-CSRF-TOKEN': $('#csr-token').val(),
+            '${_csrf.parameterName}': $('#csr-token').val()
+        };
+        var caption = "Employee Education"
+        var formId = "empEduFormId";
+        var formData=new FormData;
+        var file = $("#certificate")[0].files[0];
+        formData.append("file", file);
+        formData.append("id",$('#id').val());
+        formData.append("version",$('#version').val());
+        formData.append("board",$('#board').val());
+        formData.append("institute",$('#institute').val());
+        formData.append("result",$('#result').val());
+        formData.append("passingYear",$('#passingYear').val());
+        formData.append("employeeId", $('#employeeId').val());
+        formData.append("educationTitleId", $('#educationTitleId').val());
+        var action = "";
+        if ($('#id').val() > 0) {
+            var action = "${pageContext.request.contextPath}/education/update";
+        } else {
+            var action = "${pageContext.request.contextPath}/education/save";
+        }
+        for (var pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]);
+        }
+
+        $.ajax({
+            url: action,
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            headers:header,
+            success: function (data) {
+                Server.getMessage(1,data,"Empoyee Education");
+                $('#'+formId).find("#jqGridEdu").trigger('reloadGrid');
+                Server.resetForm(formId);
+            },
+            error: function (err) {
+
+
+            }
+        });
     }
 
 

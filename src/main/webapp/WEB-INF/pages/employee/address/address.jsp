@@ -6,11 +6,11 @@
         </h3>
 
         <div class="example-box-wrapper col-md-12">
-            <form class="form-horizontal bordered-row"   name="employeeAddress" id="empAddFormId" method="POST"
+            <form class="form-horizontal bordered-row"  modelAttribute="addressInfo" name="employeeAddress" id="empAddFormId" method="POST"
                   data-parsley-validate="">
                 <div class="row">
                     <input type="hidden" id="csr-token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <input type="hidden" name="id" id="id" value="${employeeAddress.id}">
+                    <input type="hidden" name="id" id="employeeAddressId" value="${employeeAddress.id}">
                     <input type="hidden" name="employee.id" id="empId" value="${employee.id}">
                     <input type="hidden" name="version" id="version" value="${employeeAddress.version}">
                     <div class="col-md-8">
@@ -61,7 +61,7 @@
                     <div style="clear: both"></div>
                 </div>
                 <div class="bg-default content-box text-center pad20A mrg25T grid-resize">
-                    <table id="jqGrid"></table>
+                    <table id="jqGridAdd"></table>
                     <div id="jqGridPager"></div>
                 </div>
             </form>
@@ -72,11 +72,11 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var id= $('#empId').val();
+        var gridId= "jqGridAdd";
         header = {
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val(),
         };
-
         var url = "${pageContext.request.contextPath}/address/list/?id="+id;
         var formId = 'empAddFormId';
         var caption = 'Employee Address Information'
@@ -88,7 +88,7 @@
             {label: 'Status', name: 'status', width: 200},
             {label: 'version', name: 'version', width: 100,hidden:true},
         ]
-        Server.list(header,url,colModel,formId,caption,urlmethod);
+        Server.list(header,url,colModel,formId,caption,urlmethod,gridId);
     });
     function edit(empAddId) {
         var action = "${pageContext.request.contextPath}/address/edit/";
@@ -102,10 +102,9 @@
     function setDataToEdit(result) {
         console.log(result);
         //$('#empEduFormId').find("#board").val(result.board);
-        $('#id').val(result.id);
+        $('#employeeAddressId').val(result.id);
         $('#address').val(result.address);
         $('#version').val(result.version);
-        //$('#active').val(result.is_active);
         $('input[name=isActive]').prop('checked',result.is_active);
         $('#addressTypeId').val(result.address_type_id).prop('selected', true);
         $('#saveButton').val('Update');
@@ -121,7 +120,7 @@
         var caption = "Employee Address"
         var url ="${pageContext.request.contextPath}/employee/address/delete/";
         var addressInfo = {
-            "id": $('#id').val(),
+            "id": $('#employeeAddressId').val(),
             "employeeId": $('#empId').val(),
             "addressTypeId": $('#addressTypeId').val(),
             "address": $('#address').val(),
@@ -142,15 +141,13 @@
                         dataType: "json",
                         headers:header,
                         success : function(result) {
-                            console.log("success")
-                            console.log(result);
                             Server.getMessage(1,result.responseText,caption);
-                            $('#jqGrid').trigger( 'reloadGrid' );
+                            $('#jqGridAdd').trigger( 'reloadGrid' );
                             Server.resetForm(formId);
                         },
                         error : function(result) {
                             Server.getMessage(1,result.responseText,caption);
-                            $('#jqGrid').trigger( 'reloadGrid' );;
+                            $('#jqGridAdd').trigger( 'reloadGrid' );
                             Server.resetForm(formId);
                         }
                     });
@@ -161,7 +158,6 @@
             }
         });
 
-        //Server.delete(header, action, empAddId, formId,caption);
     }
 
     /*
@@ -174,21 +170,22 @@
         };
         var caption = "Employee Address"
         var formId = $('#saveButton').closest('form').attr('id');
+        var gridId= "jqGridAdd";
         var addressInfo = {
-            "id": $('#id').val(),
+            "id": $('#employeeAddressId').val(),
             "employeeId": $('#empId').val(),
             "addressTypeId": $('#addressTypeId').val(),
             "address": $('#address').val(),
             "isActive" : $('#active').val(),
             "version" : $('#version').val(),
         }
-        if ($('#id').val() > 0) {
+        if ($('#employeeAddressId').val() > 0) {
             var action ="${pageContext.request.contextPath}/employee/address/update";
         } else {
             var action ="${pageContext.request.contextPath}/employee/address/save";
         }
-        console.log(addressInfo);
-        Server.save(header, addressInfo, action, formId, caption);
+
+        Server.save(header, addressInfo, action, formId, caption,gridId);
         Server.resetForm(formId);
     }
 
