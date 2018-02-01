@@ -22,7 +22,8 @@ var Server = {
         }
     });
 },
-    delete: function(header,url,id,formId, content, caption,gridId){
+    delete: function(header,url,data,formId, content, caption,gridId){
+        console.log(formId+" "+gridId)
         $.confirm({
             title: 'Confirm!',
             content: content,
@@ -31,8 +32,8 @@ var Server = {
                     $.ajax({
                         type : "POST",
                         contentType : "application/json",
-                        url : url+id,
-                        data : {id:id},
+                        url : url,
+                        data : JSON.stringify(data),
                         dataType : 'json',
                         headers:header,
                         success : function(result) {
@@ -40,9 +41,11 @@ var Server = {
                             $('#'+gridId).trigger( 'reloadGrid' );
                             Server.resetForm(formId);
                         },
-                        error : function(e) {
-                            $('#'+gridId).trigger( 'reloadGrid' );
-                            alert("Error!" +e)
+                        error : function(result) {
+                            console.log(result)
+                            Server.getMessage(1,result.responseText,caption);
+                            $('#'+formId).find('#'+gridId).trigger( 'reloadGrid' );
+                            Server.resetForm(formId);
                         }
                     });
 
@@ -126,13 +129,13 @@ var Server = {
             shrinkToFit: false,
             scrollOffset: 0,
             onSelectRow: function() {
-                var myGrid = $('#jqGrid'),
+                var myGrid = $('#'+gridId),
                     selectedRowId = myGrid.jqGrid ('getGridParam', 'selrow'),
                     cellValue = myGrid.jqGrid ('getCell', selectedRowId, 'id');
+                console.log(selectedRowId)
                 edit(cellValue);
             }
         });
-        console.log(colModel)
         $('#'+formId).find('#'+gridId).jqGrid("setLabel", "rn", "SL.");
         $(window).bind('resize', function() {
             // resize the datagrid to fit the page properly:

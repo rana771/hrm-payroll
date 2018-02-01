@@ -53,16 +53,12 @@ public class EmployeeAddressServiceImpl implements EmployeeAddressService {
 
     @Override
     @Transactional
-    public String save(EmpAddressDto empAddressDto) {
-        EmployeeAddress employeeAddress=new EmployeeAddress();
+    public String save(EmployeeAddress employeeAddress) {
+
         employeeAddress.setVersion(0);
         employeeAddress.setDateCreate(new Date());
-        employeeAddress.setAddress(empAddressDto.getAddress());
-        Employee employee= employeeDao.findById(empAddressDto.getEmployeeId());
-        employeeAddress.setEmployee(employee);
-        SetupEntity setupEntity=setupEntityDao.findById(empAddressDto.getAddressTypeId());
-        employeeAddress.setAddressType(setupEntity);
-        employeeAddress.setIsActive(empAddressDto.getIsActive().equals("true")?true:false);
+
+        //employeeAddress.setIsActive(employeeAddress.getIsActive().equals(null)?false:true);
         employeeAddressDao.save(employeeAddress);
         String message = messageSource.getMessage("save.successful.message", new String[]{"Employee Address Information", employeeAddress.getAddress()}, Locale.getDefault());
         return message;
@@ -84,22 +80,23 @@ public class EmployeeAddressServiceImpl implements EmployeeAddressService {
 
     @Override
     @Transactional
-    public String update(EmpAddressDto addressDto) {
+    public String update(EmployeeAddress employeeAddress) {
 
-        EmployeeAddress employeeAddress=employeeAddressDao.getEmployeeAddressById(addressDto.getId());
-        if(employeeAddress.getVersion()>addressDto.getVersion()){
-            String message = messageSource.getMessage("update.version.change", new String[]{"Employee Address Information", String.valueOf(addressDto.getVersion())}, Locale.getDefault());
+        EmployeeAddress currentEmpAddress=employeeAddressDao.getEmployeeAddressById(employeeAddress.getId());
+        if(currentEmpAddress.getVersion()>employeeAddress.getVersion()){
+            String message = messageSource.getMessage("update.version.change", new String[]{"Employee Address Information", String.valueOf(employeeAddress.getVersion())}, Locale.getDefault());
             return message;
         }else{
-            employeeAddress.setDateLastUpdate(new Date());
-            employeeAddress.setAddress(addressDto.getAddress());
-            Employee employee= employeeDao.findById(addressDto.getEmployeeId());
-            employeeAddress.setEmployee(employee);
-            SetupEntity setupEntity=setupEntityDao.findById(addressDto.getAddressTypeId());
-            employeeAddress.setAddressType(setupEntity);
-            employeeAddress.setIsActive(addressDto.getIsActive().equals("true")?true:false);
-            employeeAddress.setVersion(addressDto.getVersion()+1);
-            employeeAddressDao.save(employeeAddress);
+            currentEmpAddress.setDateLastUpdate(new Date());
+            currentEmpAddress.setAddress(employeeAddress.getAddress());
+            Employee employee= employeeDao.findById(employeeAddress.getEmployee().getId());
+            currentEmpAddress.setEmployee(employee);
+            SetupEntity setupEntity=setupEntityDao.findById(employeeAddress.getAddressType().getId());
+            currentEmpAddress.setAddressType(setupEntity);
+            currentEmpAddress.setIsActive(employeeAddress.getIsActive());
+            if(employeeAddress.getVersion()!=null)
+                currentEmpAddress.setVersion(employeeAddress.getVersion()+1);
+            employeeAddressDao.save(currentEmpAddress);
             String message = messageSource.getMessage("save.updated.message", new String[]{"Employee Address Information", employeeAddress.getAddress()}, Locale.getDefault());
             return message;
         }
@@ -108,14 +105,14 @@ public class EmployeeAddressServiceImpl implements EmployeeAddressService {
 
     @Override
     @Transactional
-    public String delete(EmpAddressDto empAddressDto) {
-        EmployeeAddress employeeAddress=employeeAddressDao.getEmployeeAddressById(empAddressDto.getId());
-        if(!empAddressDto.getVersion().equals(employeeAddress.getVersion())||employeeAddress==null){
-            String message = messageSource.getMessage("delete.version.message", new String[]{"Employee Address Information", String.valueOf(employeeAddress.getVersion())}, Locale.getDefault());
+    public String delete(EmployeeAddress employeeAddress) {
+        EmployeeAddress currentEmployeeAddress=employeeAddressDao.getEmployeeAddressById(employeeAddress.getId());
+        if(!currentEmployeeAddress.getVersion().equals(employeeAddress.getVersion())||employeeAddress==null){
+            String message = messageSource.getMessage("delete.version.message", new String[]{"Employee Address Information", String.valueOf(currentEmployeeAddress.getVersion())}, Locale.getDefault());
             return message;
         }else{
-            employeeAddressDao.delete(employeeAddress);
-            String message = messageSource.getMessage("delete.success.message", new String[]{"Employee Address Information", String.valueOf(employeeAddress.getVersion())}, Locale.getDefault());
+            employeeAddressDao.delete(currentEmployeeAddress);
+            String message = messageSource.getMessage("delete.success.message", new String[]{"Employee Address Information", String.valueOf(currentEmployeeAddress.getVersion())}, Locale.getDefault());
             return message;
 
         }

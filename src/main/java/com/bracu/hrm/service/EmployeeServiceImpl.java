@@ -141,34 +141,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	public String update(Employee employee) {
-		Employee entity = employeeDao.findById(employee.getId());
+		Employee currentEmployee= employeeDao.findById(employee.getId());
 		String message;
-
-		if (entity != null) {
-
-			if (employee.getVersion() < entity.getVersion()) {
-
-
+		if (currentEmployee != null) {
+			if (employee.getVersion() < currentEmployee.getVersion()) {
 			} else {
 				System.err.println(employee.getFatherName());
-				entity.setPin(employee.getPin());
-				entity.setFullName(employee.getFullName());
-				entity.setEmail(employee.getEmail());
-				entity.setDateOfBirith(employee.getDateOfBirith());
-				entity.setVersion(employee.getVersion() + 1);
-				entity.setDateLastUpdated(new Date());
-				entity.setFatherName(employee.getFatherName());
-				entity.setMotherName(employee.getMotherName());
-				entity.setSpouseName(employee.getSpouseName());
-				employeeDao.save(entity);
+				currentEmployee.setPin(employee.getPin());
+				currentEmployee.setFullName(employee.getFullName());
+				currentEmployee.setEmail(employee.getEmail());
+				currentEmployee.setDateOfBirith(employee.getDateOfBirith());
+				currentEmployee.setVersion(employee.getVersion() + 1);
+				currentEmployee.setDateLastUpdated(new Date());
+				currentEmployee.setFatherName(employee.getFatherName());
+				currentEmployee.setMotherName(employee.getMotherName());
+				currentEmployee.setSpouseName(employee.getSpouseName());
+				employeeDao.save(currentEmployee);
 				message = messageSource.getMessage("save.updated.message", new String[]{"Employee Basic Informaiton ", employee.getFullName()}, Locale.getDefault());
 				return message;
 
 			}
 		}
 				return "";
-			}
+	}
 	public void prepareNewEmployeeFromPaySlip(Object object){
 		Employee employee1 = new Employee();
 		employee1.setVersion(0);

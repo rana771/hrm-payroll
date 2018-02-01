@@ -542,7 +542,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/widgets/theme-switcher/themeswitcher.js"></script>
 <%--For Common usages js: add/delete/edit--%>
 
-</div>
+
+    </div>
 </body>
 
 </html>

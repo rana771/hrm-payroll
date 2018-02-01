@@ -23,6 +23,8 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 	
 	public Employee findById(int id) {
 		Employee employee = getByKey(id);
+
+
 		/*if(employee!=null){
 			Hibernate.initialize(employee.getUserProfiles());
 		}*/
@@ -114,8 +116,21 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 				"app_user.email\n"+
 				"FROM employee ,app_user\n"+
 				"WHERE employee.id  = id \n";
+		/*String sql="SELECT \n"+
+				"emp.id as emp_Id,\n"+
+				"emp.pin as emp_pin,\n"+
+				"emp.full_Name as fullName,\n"+
+				"emp.email as email,\n"+
+				"app_us.id as user_id\n"+
+				"FROM\n"+
+				"employee as emp\n"+
+				"INNER JOIN\n"+
+				"app_user as app_us\n"+
+				"ON emp.user_id=app_us.id\n"+
+				"WHERE\n"+
+				" emp.id="+id;*/
+		return executeSQL(sql);
 
-		return  executeSQL(sql);
 
 
 	}

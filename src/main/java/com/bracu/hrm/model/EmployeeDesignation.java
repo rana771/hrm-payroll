@@ -15,16 +15,12 @@ import javax.persistence.Table;
 
 import com.bracu.hrm.model.org.Designation;
 import com.bracu.hrm.model.settings.SetupEntity;
+import lombok.Data;
 
 @Entity
 @Table(name = "employee_designation")
-public class EmployeeDesignation {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	private Integer version;
+@Data
+public class EmployeeDesignation extends BaseEntity{
 	
 	@ManyToOne(targetEntity=Employee.class,fetch=FetchType.LAZY,cascade= CascadeType.DETACH)
 	@JoinColumn(name="empoyee_id")

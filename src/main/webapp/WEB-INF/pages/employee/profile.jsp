@@ -10,6 +10,7 @@
                     <div class="ribbon">
                         <div class="bg-primary">${employee.pin}</div>
                         <input type="hidden"  id="employeeId" value="${employee.id}">
+                        <input type="hidden" id="csr-token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </div>
                     <div class="image-content font-white">
 
@@ -104,9 +105,8 @@
 
                 <div class="tab-pane pad0A fade active in" id="tab-example-4">
                     <div class="content-box">
-                        <form:form method="POST" modelAttribute="employee" id="empbasicinfoId"
+                        <form method="POST" modelAttribute="employee" id="empbasicinfoId"
                                    class="form-horizontal bordered-row" data-parsley-validate="">
-                            <input type="hidden" id="csr-token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <input type="hidden" name="id" id="id" value="${employee.id}">
                             <input type="hidden" name="version" id="version" value="${employee.version}">
 
@@ -140,7 +140,7 @@
                                                    value="${employee.dateOfBirith}"
                                                    class="bootstrap-datepicker form-control tempDateFrom"
                                                    data-date-format="mm-dd-yy">--%>
-                                            <input type="text" name="dateOfBirith" id="dob"  class=" form-control" value="${employee.dateOfBirith}" data-date-format="mm-dd-yy">
+                                            <input type="text" name="dateOfBirith" id="dob"  class=" bootstrap-datepicker form-control" value="${employee.dateOfBirith}" data-date-format="mm-dd-yy">
                                             <%--<form:errors path="dateOfBirith" cssclass="error"></form:errors>--%>
                                         </div>
                                     </div>
@@ -242,7 +242,7 @@
                                        onclick="Server.resetForm('leaveTYpeFormId')" class="btn btn-lg btn-primary"/>
                                 <div style="clear: both"></div>
                             </div>
-                        </form:form>
+                        </form>
 
 
                     </div>
@@ -280,21 +280,10 @@
         var caption = "Employee Personal Information"
         var formId = $('#saveButton').closest('form').attr('id');
         var dob = new Date($('#dob').val());
-        var basicInfo = {
-            "id": $('#employeeId').val(),
-            "fullName": $.trim($('#fullName').val()),
-            "version": $('#version').val(),
-            "pin": $('#pin').val(),
-            "dateOfBirith": dob,
-            "email": $('#email').val(),
-            "fatherName": $('#fatherName').val(),
-            "motherName": $('#motherName').val(),
-            "spouseName": $('#spouseName').val(),
-
-        }
+        var _form_values = $('#empbasicinfoId').serializeJSON();
         var action ="${pageContext.request.contextPath}/emp/update";
         var gridId=""
-        Server.save(header, basicInfo, action, formId, caption,gridId);
+        Server.save(header, _form_values, action, formId, caption,gridId);
         Server.resetForm(formId);
     }
 
@@ -344,16 +333,18 @@
         };
         var caption = "Employee Account Information"
         var formId = "accountSettingformId";
-        var accountsettings = {
+        var _form_values = $('#accountSettingformId').serializeJSON();
+        /*var accountsettings = {
             "id": $('#userid').val(),
             "username": $.trim($('#accusername').val()),
             "email": $('#accemail').val(),
             "password": $('#newPassword').val(),
             "fullName": $('#accFullName').val()
-        }
+        }*/
         var action = "";
+        var gridId=""
         var action = "${pageContext.request.contextPath}/useracc/save";
-        Server.save(header, accountsettings, action, formId, caption);
+        Server.save(header, _form_values, action, formId, caption,gridId);
         Server.resetForm(formId);
         }
 

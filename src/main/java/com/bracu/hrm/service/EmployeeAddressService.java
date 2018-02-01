@@ -10,9 +10,9 @@ import java.util.Map;
  */
 public interface EmployeeAddressService {
     Map getEmpAddressInfo(int id);
-    String save(EmpAddressDto empAddressDto);
+    String save(EmployeeAddress employeeAddress);
     String getEmpAddressList(int id);
     String getEmpAddressById(int id);
-    String update(EmpAddressDto addressDto);
-    String delete(EmpAddressDto empAddressDto);
+    String update(EmployeeAddress employeeAddress);
+    String delete(EmployeeAddress employeeAddress);
 }

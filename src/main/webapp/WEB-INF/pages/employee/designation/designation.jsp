@@ -30,13 +30,13 @@
                     <div class="row">
 
                         <div class="col-md-8">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Address:</label>
-                            <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Address:</label>
+                                <div class="col-sm-8">
                                 <textarea type="text" name="address" id="address" path="address" placeholder="Address" value="${employeeAddress.address}"
-                                       required class="form-control"></textarea>
+                                          required class="form-control"></textarea>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
 
@@ -125,7 +125,7 @@
     }
 
     /*
-       *save Employee Address
+     *save Employee Address
      */
     function saveEmpAddress() {
         header = {

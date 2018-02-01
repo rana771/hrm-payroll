@@ -146,10 +146,15 @@
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/helpers/responsive-elements.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/helpers/admin-responsive.css">
+    <!--Jquery.Js-->
+    <%--<script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery/jquery.min.js"></script>--%>
+    <!--Serialize.json-->
+
 
     <!-- JS Core -->
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js-core/jquery-core.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/custom/jquery.serializejson.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js-core/jquery-ui-core.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js-core/jquery-ui-widget.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js-core/jquery-ui-mouse.js"></script>

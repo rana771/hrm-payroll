@@ -13,14 +13,14 @@
                     </div>
                 </h3>
                 <div class="content-box-wrapper pad0T clearfix">
-                    <form:form method="POST" modelAttribute="employee" id="accountSettingformId"
+                    <form method="POST" modelAttribute="employee" id="accountSettingformId"
                                class="form-horizontal bordered-row" data-parsley-validate="">
                         <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-sm-3 control-label" style="text-align: left">PIN:</label>
                             <div class="col-sm-6">
                                 <input type="text" id="accpin" name="pin" required class="form-control" value="${employee.pin}" placeholder="pin">
-                                <input type="hidden" id="userid" name="id" required class="form-control" value="">
+                                <input type="hidden" id="userid" name="id" required class="form-control" value="${employee.user.id}">
                             </div>
                         </div>
                         <div class="form-group">

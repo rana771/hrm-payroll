@@ -1,5 +1,6 @@
 package com.bracu.hrm.controller;
 import com.bracu.hrm.cache.CacheService;
+import com.bracu.hrm.model.Employee;
 import com.bracu.hrm.model.User;
 import com.bracu.hrm.service.EmployeeService;
 import com.bracu.hrm.service.SecurityService;
@@ -75,12 +76,10 @@ public class UserController {
         return "user.ndex";
     }
     @ResponseBody
-    @RequestMapping(value="/useracc/save",method = RequestMethod.POST,produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/useracc/save",method = RequestMethod.POST,consumes = { MediaType.APPLICATION_JSON_VALUE })
     public String save(@RequestBody User user, BindingResult result,ModelMap model){
         String message;
         if(result.hasErrors()){
-            //Employee employee =employeeService.findById(user.getId());
-            //model.addAttribute("employee",employee);
             return "employee/accountsettings/accountsettings";
         }
         else{
@@ -89,6 +88,12 @@ public class UserController {
         message = messageSource.getMessage("save.successful.message", new String[]{"User Accounts Settings ", user.getFullName()}, Locale.getDefault());
         return message;
 
+    }
+    @RequestMapping(value = "/emp/settings/edit/{id}", method = RequestMethod.POST)
+    public String editUserSettings(@PathVariable("id") String id, ModelMap model){
+        Employee employee =employeeService.findById(Integer.parseInt(id));
+        model.addAttribute("employee",employee);
+        return "employee/accountsettings/accountsettings";
     }
 
 }

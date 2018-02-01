@@ -4,6 +4,7 @@ import com.bracu.hrm.model.Employee;
 import com.bracu.hrm.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -128,10 +129,8 @@ public class EmployeeController {
 		return "employee/profile";
 	}
 	@ResponseBody
-	@RequestMapping(value = { "/update" }, method = RequestMethod.POST)
-	public String update( @RequestBody Employee employee,
-						  BindingResult resultItem) {
-		System.err.println("emp/update");
+	@RequestMapping(value = { "/update" }, method = RequestMethod.POST,consumes = { MediaType.APPLICATION_JSON_VALUE })
+	public String update( @RequestBody Employee employee, BindingResult resultItem) {
 		if (resultItem.hasErrors()) {
 			return "employee/profile";
 		} else{
@@ -139,12 +138,7 @@ public class EmployeeController {
 		}
 
 	}
-	@RequestMapping(value = "/settings/edit/{id}", method = RequestMethod.POST)
-	public String editUserSettings(@PathVariable("id") String id, ModelMap model){
-		Employee employee =employeeService.findById(Integer.parseInt(id));
-		model.addAttribute("employee",employee);
-		return "employee/accountsettings/accountsettings";
-	}
+
 	@RequestMapping(value = "/education/{id}", method = RequestMethod.GET)
 	public String editEmployeeEducation(@PathVariable("id") String id, ModelMap model){
 		Map setupList =  employeeService.getEmployeeInfo(Integer.parseInt(id));

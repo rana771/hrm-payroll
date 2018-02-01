@@ -17,14 +17,7 @@ import com.bracu.hrm.model.settings.SetupEntity;
 
 @Entity
 @Table(name = "employee_experience")
-public class EmployeeExperience {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	private Integer version;
-	
+public class EmployeeExperience extends BaseEntity {
 	@ManyToOne(targetEntity=Employee.class,fetch=FetchType.LAZY,cascade= CascadeType.DETACH)
 	@JoinColumn(name ="empoyee_id")
 	private Employee employee;
