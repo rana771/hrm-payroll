@@ -56,9 +56,21 @@
                         </a>
                     </li>
                     <li class="col-md-16">
+                        <a href="#tab-example-6" data-toggle="tab" class="list-group-item">
+                            <i class="glyph-icon font-primary icon-camera" onclick="fetchDesignation()"></i>
+                            Designation
+                        </a>
+                    </li>
+                    <li class="col-md-16">
                         <a href="#tab-example-3" data-toggle="tab" class="list-group-item">
                             <i class="glyph-icon font-blue-alt icon-globe"></i>
                             Training
+                        </a>
+                    </li>
+                    <li class="col-md-16">
+                        <a href="#tab-example-7" data-toggle="tab" class="list-group-item">
+                            <i class="glyph-icon font-blue-alt icon-globe" onclick="fetchContact()"></i>
+                            Contact
                         </a>
                     </li>
 
@@ -94,12 +106,27 @@
                     </div>
                     <%--Emloyee Education End --%>
                 </div>
+                <div class="tab-pane fade" id="tab-example-6">
+                    <%--Employee Education--%>
+                    <div id="empdesignationId">
+
+                    </div>
+                    <%--Emloyee Education End --%>
+                </div>
                 <div class="tab-pane fade" id="tab-example-3">
                     <%--Employee Training Start--%>
                     <div id="traingId">
 
                     </div>
                     <%--Employee Training End--%>
+
+                </div>
+                <div class="tab-pane fade" id="tab-example-7">
+                    <%--Employee Contact  Start--%>
+                    <div id="empContactId">
+
+                    </div>
+                    <%--Employee Contact End--%>
 
                 </div>
 
@@ -334,13 +361,6 @@
         var caption = "Employee Account Information"
         var formId = "accountSettingformId";
         var _form_values = $('#accountSettingformId').serializeJSON();
-        /*var accountsettings = {
-            "id": $('#userid').val(),
-            "username": $.trim($('#accusername').val()),
-            "email": $('#accemail').val(),
-            "password": $('#newPassword').val(),
-            "fullName": $('#accFullName').val()
-        }*/
         var action = "";
         var gridId=""
         var action = "${pageContext.request.contextPath}/useracc/save";
@@ -415,6 +435,63 @@
             headers: header,
             success: function (result) {
                 $('#empAddressId').html(result);
+            },
+            error: function (e) {
+                alert("Error!" + e)
+            }
+        });
+
+
+    }
+
+    /*
+     * Fetch Employee Designation page
+     *
+     * */
+    function fetchDesignation() {
+        header = {
+            'X-CSRF-TOKEN': $('#csr-token').val(),
+            '${_csrf.parameterName}': $('#csr-token').val()
+        };
+        var id = $('#employeeId').val();
+        var action = "${pageContext.request.contextPath}/emp/designation/";
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: action + id,
+            data: id,
+            dataType: 'html',
+            headers: header,
+            success: function (result) {
+                $('#empdesignationId').html(result);
+            },
+            error: function (e) {
+                alert("Error!" + e)
+            }
+        });
+
+
+    }
+    /*
+     * Fetch Employee Contact page
+     *
+     * */
+    function fetchContact() {
+        header = {
+            'X-CSRF-TOKEN': $('#csr-token').val(),
+            '${_csrf.parameterName}': $('#csr-token').val()
+        };
+        var id = $('#employeeId').val();
+        var action = "${pageContext.request.contextPath}/emp/contact/";
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: action + id,
+            data: id,
+            dataType: 'html',
+            headers: header,
+            success: function (result) {
+                $('#empContactId').html(result);
             },
             error: function (e) {
                 alert("Error!" + e)

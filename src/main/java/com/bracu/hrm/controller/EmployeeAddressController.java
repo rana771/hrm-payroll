@@ -1,6 +1,5 @@
 package com.bracu.hrm.controller;
 
-import com.bracu.hrm.dto.EmpAddressDto;
 import com.bracu.hrm.model.EmployeeAddress;
 import com.bracu.hrm.service.EmployeeAddressService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,15 +2,12 @@ package com.bracu.hrm.model.util;
 
 import com.bracu.hrm.model.BaseEntity;
 import com.bracu.hrm.model.org.Company;
-
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
-
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity

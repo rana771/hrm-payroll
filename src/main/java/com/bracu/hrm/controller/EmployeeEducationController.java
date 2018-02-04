@@ -2,6 +2,7 @@ package com.bracu.hrm.controller;
 
 import com.bracu.hrm.model.EmployeeEducation;
 import com.bracu.hrm.service.EmployeeEducationService;
+import com.bracu.hrm.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.ws.rs.QueryParam;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by HP on 1/24/2018.
@@ -19,6 +21,15 @@ import java.io.IOException;
 public class EmployeeEducationController {
     @Autowired
     private EmployeeEducationService employeeEducationService;
+    @Autowired
+    private EmployeeService employeeService;
+    @RequestMapping(value = "/emp/education/{id}", method = RequestMethod.GET)
+    public String editEmployeeEducation(@PathVariable("id") String id, ModelMap model){
+        Map setupList =  employeeService.getEmployeeInfo(Integer.parseInt(id));
+        model.addAttribute("employee",setupList.get("employee"));
+        model.addAttribute("educationalTitleList",setupList.get("educationalTitleList"));
+        return "employee/education/education";
+    }
     @ResponseBody
     @RequestMapping(value = { "/education/save" }, method = RequestMethod.POST)
     public String saveEmpEducation(@RequestParam("file") MultipartFile multipartFile, WebRequest webRequest) throws IOException {

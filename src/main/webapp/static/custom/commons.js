@@ -94,6 +94,7 @@ var Server = {
             dataType : 'json',
             headers:header,
             success : function(result) {
+                console.log(result)
                 callback(result);
                 $('#deleteButton').show();
             },

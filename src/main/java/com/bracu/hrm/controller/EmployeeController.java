@@ -139,13 +139,7 @@ public class EmployeeController {
 
 	}
 
-	@RequestMapping(value = "/education/{id}", method = RequestMethod.GET)
-	public String editEmployeeEducation(@PathVariable("id") String id, ModelMap model){
-		Map setupList =  employeeService.getEmployeeInfo(Integer.parseInt(id));
-		model.addAttribute("employee",setupList.get("employee"));
-		model.addAttribute("educationalTitleList",setupList.get("educationalTitleList"));
-		return "employee/education/education";
-	}
+
 
 
 

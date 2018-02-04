@@ -1,17 +1,9 @@
 package com.bracu.hrm.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.bracu.hrm.model.settings.SetupEntity;
 import lombok.Data;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "employee_contact")

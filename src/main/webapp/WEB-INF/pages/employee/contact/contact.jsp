@@ -3,25 +3,24 @@
     <div class="panel-body">
         <input type="hidden" id="csr-token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <h3 class="title-hero">
-            Employee Designation
+            Employee Contact
         </h3>
 
         <div class="example-box-wrapper col-md-12">
-            <form class="form-horizontal bordered-row"  modelAttribute="employeeDesignation" name="employeeDesignation" id="employeeDesignationId" method="POST"
+            <form class="form-horizontal bordered-row"  modelAttribute="employeeContact" name="employeeContact" id="empConFormId" method="POST"
                   data-parsley-validate="">
                 <div class="row">
-
-                    <input type="hidden" name="id" id="empdesId" value="${employeeDesingation.id}">
+                    <input type="hidden" name="id" id="empConId" value="${employeeContact.id}">
                     <input type="hidden" name="employee[id]" id="empId" value="${employee.id}">
-                    <input type="hidden" name="version" id="version" value="${employeeDesignation.version}">
-                    <div class="col-md-6">
+                    <input type="hidden" name="version" id="version" value="${employeeContact.version}">
+                    <div class="col-md-8">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Designation</label>
+                            <label class="col-sm-4 control-label">Contact Type</label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="designation[id]" id="designationId" required>
+                                <select class="form-control" name="contactType[id]" id="contactTypeId" required>
                                     <option value=""> Select </option>
-                                    <c:forEach var="designation" items="${designationList}">
-                                        <option value="${designation.id}">${designation.name}</option>
+                                    <c:forEach var="contactType" items="${contactTypeList}">
+                                        <option value="${contactType.id}">${contactType.column1}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -29,23 +28,49 @@
                     </div>
                 </div>
                 <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">From Date</label>
-                                <div class="col-sm-6">
-                                    <input type="text" name="startDate:strDate" id="dateFrom"  class="bootstrap-datepicker form-control tempDateFrom" value="" data-date-format="mm-dd-yy">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">To Date</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="endDate:edate" id="endDate"  class="bootstrap-datepicker form-control tempDateFrom " value="" data-date-format="mm-dd-yy">
-                                </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Phone</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="phone" id="phone" path="phone" placeholder="Phone" value="${employeeContact.phone}"
+                                          required class="form-control"/>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Mobile</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="mobile" id="mobile" path="mobile" placeholder="Mobile" value="${employeeContact.mobile}"
+                                       required class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Email</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="email" id="email" path="email" placeholder="Email" value="${employeeContact.email}"
+                                       required class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Fax</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="fax" id="fax" path="fax" placeholder="Fax" value="${employeeContact.fax}"
+                                       required class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -60,14 +85,14 @@
                 </div>
                 <div class="bg-default content-box text-center pad20A mrg10T">
                     <input id="saveButton" style="float: left; margin-left: 5px;" type="button" value="Save"
-                           onclick="saveEmpDesignation()" class="btn btn-lg btn-primary"/>
+                           onclick="saveEmpContact()" class="btn btn-lg btn-primary"/>
                     <input id="deleteButton" style="float: left; margin-left: 5px; display: none;" type="button"
                            value="Delete" onclick="deleteDesignation()" class="btn btn-lg btn-primary"/>
                     <input style="float: left; margin-left: 5px;" type="button" value="Cancel" onclick="Server.resetForm('employeeDesignationId')" class="btn btn-lg btn-primary"/>
                     <div style="clear: both"></div>
                 </div>
                 <div class="bg-default content-box text-center pad20A mrg25T grid-resize">
-                    <table id="jqGridDes"></table>
+                    <table id="jqGridContact"></table>
                     <div id="jqGridPager"></div>
                 </div>
             </form>
@@ -151,34 +176,23 @@
     /*
      *save Employee Address
      */
-    function saveEmpDesignation() {
+    function saveEmpContact() {
         header = {
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
         };
-        var caption = "Employee Designation"
+        var caption = "Employee Contact"
         var formId = $('#saveButton').closest('form').attr('id');
-        var gridId= "jqGridDes";
-        var _form_values =$('#employeeDesignationId').serializeJSON({
-        checkboxUncheckedValue: "false" ,
-        customTypes: {
-                strDate: function(str) { // value is always a string
-                    var strdate=new Date($('#dateFrom').val());
-                    return new Date(strdate);
-                },
-                edate: function(str) {
-                    var endDate=new Date($('#endDate').val());
-                    return new Date(endDate);
-                },
-
-            }
+        var gridId= "jqGridContact";
+        var _form_values =$('#empConFormId').serializeJSON({
+            checkboxUncheckedValue: "true"
         });
         //var _form_values = $('#employeeDesignationId').serializeJSON();
         console.log(_form_values);
-        if ($('#empdesId').val() > 0) {
-            var action ="${pageContext.request.contextPath}/designation/update";
+        if ($('#empConFormId').val() > 0) {
+            var action ="${pageContext.request.contextPath}/emp/contact/update";
         } else {
-            var action ="${pageContext.request.contextPath}/designation/save";
+            var action ="${pageContext.request.contextPath}/emp/contact/save";
         }
 
         Server.save(header, _form_values, action, formId, caption,gridId);
