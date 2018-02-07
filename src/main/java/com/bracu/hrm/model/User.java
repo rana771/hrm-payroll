@@ -22,7 +22,6 @@ public class User implements Serializable{
     private Integer id;
     private String username;
     private String password;
-    
     @Transient
     private String passwordConfirm;
     
@@ -36,12 +35,10 @@ public class User implements Serializable{
 	@NotEmpty
 	@Column(name="EMAIL", nullable=false)
 	private String email;
-	
-	
+
 	@ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name =  "company_id",nullable = false)
 	private Company company;
-    
-    
+
 }
 

@@ -20,6 +20,7 @@ public interface EmployeeDao {
 	List<Employee> findAllEmployees();
 
 	ResultSet getSqlServerEmployee(String pin);
+	List<Employee> findUserByEmployeeId(Integer id);
 
 }
 

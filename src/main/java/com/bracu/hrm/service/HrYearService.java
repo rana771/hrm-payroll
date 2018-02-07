@@ -7,9 +7,7 @@ import com.bracu.hrm.model.util.HrYear;
  */
 public interface HrYearService {
     void save(HrYear hrYear);
-
     String getlist();
-
     String getEntityById(int i);
 
 }

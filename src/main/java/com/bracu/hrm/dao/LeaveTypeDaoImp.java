@@ -37,7 +37,7 @@ public class LeaveTypeDaoImp extends AbstractDao<Integer, LeaveType> implements 
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("id", id));
         LeaveType leaveType= (LeaveType) crit.uniqueResult();

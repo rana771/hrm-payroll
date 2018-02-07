@@ -2,6 +2,7 @@ package com.bracu.hrm.dao;
 
 import java.util.List;
 
+import com.bracu.hrm.model.EmployeeAddress;
 import com.bracu.hrm.model.org.Company;
 import com.bracu.hrm.model.org.Designation;
 

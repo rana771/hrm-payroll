@@ -9,9 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 public interface HolidayService {
     boolean uniqueNameCheck(Integer id, String name);
 
-    void save(Holiday holiday);
+    String save(Holiday holiday);
 
     String update(Holiday holiday);
 
     String getHolidayList();
+
+    String getHolidayById(Integer id);
+
+    String delete(Holiday holiday);
 }

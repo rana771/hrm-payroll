@@ -9,10 +9,11 @@
         </h3>
 
         <div class="example-box-wrapper">
+            <input type="hidden" id="csr-token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <form class="form-horizontal bordered-row" name="holiday" id="holidayFormId" method="post">
                 <div class="row">
-                    <input type="hidden" id="csr-token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <input type="hidden" name="id" id="id" value="">
+
+                    <input type="hidden" name="id" id="holidayId" value="">
                     <input type="hidden" name="version" id="version" value="">
 
 
@@ -36,9 +37,7 @@
                                     <span class="add-on input-group-addon">
                                         <i class="glyph-icon icon-calendar"></i>
                                     </span>
-                                    <input type="text" name="date" id="hdate" value="01-01-2018"
-                                           class="bootstrap-datepicker form-control" required
-                                           data-date-format="mm-dd-yy">
+                                    <input type="text" name="date:strDate" id="holidayDate"  class="bootstrap-datepicker form-control tempDateFrom" value="" data-date-format="mm-dd-yy">
                                     <form:errors path="date" cssclass="error"></form:errors>
                                 </div>
                             </div>
@@ -83,8 +82,8 @@
                 </div>
 
                 <div class="bg-default content-box text-center pad20A mrg25T grid-resize">
-                    <table id="jqGrid"></table>
-                    <div id="jqGridPager"></div>
+                <table id="jqGridHoliday" ></table>
+                <div id="jqGridPager"></div>
                 </div>
             </form>
         </div>
@@ -109,123 +108,131 @@
 </style>
 
 <script type="text/javascript" src="../../static/custom/commons.js"></script>
-<script type="text/javascript">
-    <%--$(document).ready(function () {--%>
-        <%--header = {--%>
-            <%--'X-CSRF-TOKEN': $('#csr-token').val(),--%>
-            <%--'${_csrf.parameterName}': $('#csr-token').val()--%>
-        <%--};--%>
-        <%--var caption = 'Holiday Information';--%>
-        <%--var formId = 'holidayFormId';--%>
-        <%--var url = '${contextPath}/holiday/list';--%>
-        <%--var colModel = [--%>
-            <%--{label: 'id', name: 'id', key: true, width: 75, hidden: true},--%>
-            <%--// {label: 'Holiday', name: 'name', width:400},--%>
-            <%--// {label: 'Date', name: 'description' , width:400 }--%>
-        <%--]--%>
-        <%--console.log(url);--%>
-        <%--console.log(formId);--%>
-        <%--console.log(colModel);--%>
-        <%--Server.list(header, url, colModel, formId, caption)--%>
-    <%--});--%>
+<script>
 
+</script>
+
+<script type="text/javascript">
     $(document).ready(function () {
+        $(function() { "use strict";
+            $('.bootstrap-datepicker').bsdatepicker({
+                format: 'mm-dd-yyyy',
+            });
+        });
+
+        var id= $('#empId').val();
+        var gridId= "jqGridHoliday";
+        header = {
+            'X-CSRF-TOKEN': $('#csr-token').val(),
+            '${_csrf.parameterName}': $('#csr-token').val(),
+        };
+        var url = "${pageContext.request.contextPath}/holiday/list/?id="+id;
+        var formId = 'holidayFormId';
+        var caption = 'Holiday Information'
+        var urlmethod='POST'
+        var colModel = [
+            {label: 'id', name: 'id', key: true, hidden: true},
+            {label: 'Name', name: 'name',width:150},
+            {label: 'Date', name: 'date',width:150},
+            {label: 'Description', name: 'description',width:150},
+        ]
+
+        Server.list(header,url,colModel,formId,caption,urlmethod,gridId);
+    });
+
+    function edit(holidayId) {
+        // console.log("Id : "+holidayId);
+        var action = "${pageContext.request.contextPath}/holiday/edit/";
         header = {
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
         };
-        var url = '${contextPath}/holiday/list';
-        var formId = 'holidayFormId';
-        var caption = 'Holiday Information';
-        var colModel = [
-            {label: 'id', name: 'id', key: true, width: 75, hidden: true},
-            {label: 'Date', name: 'date', width: 250},
-            {label: 'Description', name: 'description', width: 250}
-            // {label: 'Status', name: 'isOpen', width: 250, editable: true, formatter:statusFomatter},
-        ];
-        console.log(formId);
 
-        Server.list(header, url, colModel, formId, caption);
+        Server.edit(header, action, holidayId,setDataToEdit);
 
-    });
+    }
 
-    <%--function deleteHoliday() {--%>
-        <%--header = {--%>
-            <%--'X-CSRF-TOKEN': $('#csr-token').val(),--%>
-            <%--'${_csrf.parameterName}': $('#csr-token').val()--%>
-        <%--};--%>
-        <%--var formId=$('#deleteButton').closest('form').attr('id');--%>
-        <%--var content = 'Are you sure you want to delete the Holiday ?';--%>
-        <%--var caption = "Holiday Information";--%>
-        <%--var holidayId = $('#id').val();--%>
-        <%--var url = '/holiday/delete/';--%>
-        <%--Server.delete(header, url, holidayId, formId, content, caption);--%>
-    <%--}--%>
+    function setDataToEdit(result) {
+        Server.resetForm('holidayFormId');
+        $('#holidayId').val(result.id);
+        $('#holidayName').val(result.name);
+        $('#version').val(result.version);
+        $('#isRepeated').prop('checked',result.isRepeated);
+        $('#holidayDate').val(result.date);
+        $('#description').val(result.description);
+        $('#saveButton').val('Update');
+        // console.log(result.id);
+    }
 
-    <%--function edit(holidayId) {--%>
-        <%--var action = "${contextPath}" + "/holiday/edit/";--%>
-        <%--header = {--%>
-            <%--'X-CSRF-TOKEN': $('#csr-token').val(),--%>
-            <%--'${_csrf.parameterName}': $('#csr-token').val()--%>
-        <%--};--%>
-        <%--// console.log();--%>
-        <%--Server.edit(header, action, holidayId, setDataToEdit);--%>
 
-    <%--}--%>
+    function deleteHoliday() {
+        header = {
+            'X-CSRF-TOKEN': $('#csr-token').val(),
+            '${_csrf.parameterName}': $('#csr-token').val()
+        };
+        var content = 'Are you sure you want to delete this Holiday?';
+        var formId=$('#deleteButton').closest('form').attr('id');
+        var caption = "Holiday Information"
+        var url ="${pageContext.request.contextPath}/holiday/delete/";
+        var gridId="jqGridHoliday"
 
-    <%--function setDataToEdit(result) {--%>
-        <%--// console.log(result);--%>
-        <%--$('#id').val(result.id);--%>
-        <%--$('#hdate').val(result.date);--%>
-        <%--$('#holidayName').val(result.name);--%>
-        <%--$('#isRepeated').val(result.isRepeated);--%>
-        <%--$('#description').val(result.description);--%>
-        <%--$('#version').val(result.version);--%>
-        <%--$('#saveButton').val('Update');--%>
-    <%--}--%>
+        var _form_values =$('#holidayFormId').serializeJSON({
+            checkboxUncheckedValue: "false" ,
+            customTypes: {
+                strDate: function(str) { // value is always a string
+                    var strdate=new Date($('#holidayDate').val());
+                    return new Date(strdate);
+                },
 
-    <%--function saveHoliday() {--%>
-        <%--header = {--%>
-            <%--'X-CSRF-TOKEN': $('#csr-token').val(),--%>
-            <%--'${_csrf.parameterName}': $('#csr-token').val()--%>
-        <%--};--%>
+            }
+        });
+        console.log(_form_values);
+        Server.delete(header,url,_form_values,formId,content,caption,gridId);
+        console.log(_form_values);
+    }
 
-        <%--var formId = $('#saveButton').closest('form').attr('id');--%>
-        <%--var caption = "Holiday Information";--%>
-        <%--var frm = $('#holidayFormId');--%>
-        <%--frm.validate();--%>
-        <%--var isValid = frm.valid();--%>
-            <%--if(!isValid) {--%>
-                <%--return false;--%>
-            <%--}--%>
 
-        <%--var isRepeated = $('#isRepeated').val();--%>
+
+
+
+    <%--var isRepeated = $('#isRepeated').val();--%>
         <%--if ($('#isRepeated').is(":checked")){--%>
             <%--isRepeated = true;--%>
         <%--} else {--%>
             <%--isRepeated = false;--%>
         <%--}--%>
-       <%--// console.log(dateForm);--%>
+       <%--console.log(isRepeated);--%>
 
-        <%--var date =new Date($('#hdate').val());--%>
-        <%--var holiday= {--%>
-            <%--"id": $('#id').val(),--%>
-            <%--"date": date,--%>
-            <%--"isRepeated": isRepeated,--%>
-            <%--"name": $.trim($('#holidayName').val()),--%>
-            <%--"description": $('#description').val(),--%>
-            <%--"version": $('#version').val()--%>
-        <%--}--%>
-            <%--// console.log(holiday);--%>
-        <%--var action = "";--%>
-        <%--if ($('#id').val() > 0) {--%>
-            <%--var action = "${contextPath}" + "/holiday/update";--%>
-        <%--} else {--%>
-            <%--var action = "${contextPath}" + "/holiday/save";--%>
-        <%--}--%>
-        <%--console.log(action);--%>
-        <%--Server.save(header, holiday, action, formId, caption);--%>
-        <%--Server.resetForm(formId);--%>
-    <%--}--%>
+
+    function saveHoliday() {
+        header = {
+            'X-CSRF-TOKEN': $('#csr-token').val(),
+            '${_csrf.parameterName}': $('#csr-token').val()
+        };
+        var caption = "Holiday Information"
+        var formId = $('#saveButton').closest('form').attr('id');
+        var gridId= "jqGridHoliday";
+        // console.log($('#holidayDate').val())
+        var _form_values =$('#holidayFormId').serializeJSON({
+            checkboxUncheckedValue: "false" ,
+            customTypes: {
+                strDate: function(str) { // value is always a string
+                    var strdate=new Date($('#holidayDate').val());
+                    return new Date(strdate);
+                },
+
+            }
+        });
+
+        // console.log(_form_values);
+        if ($('#holidayId').val() > 0) {
+            var action ="${pageContext.request.contextPath}/holiday/update";
+        } else {
+            var action ="${pageContext.request.contextPath}/holiday/save";
+        }
+
+        Server.save(header, _form_values, action, formId, caption,gridId);
+        Server.resetForm(formId);
+    }
 
 </script>

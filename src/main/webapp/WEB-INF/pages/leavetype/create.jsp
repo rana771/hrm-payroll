@@ -62,20 +62,22 @@
 
 </style>
 
-<script type="text/javascript" src="../../static/custom/commons.js"></script>
+<%--<script type="text/javascript" src="../../static/custom/commons.js"></script>--%>
 <script type="text/javascript">
     $(document).ready(function () {
         header = {
             'X-CSRF-TOKEN': $('#csr-token').val(),
             '${_csrf.parameterName}': $('#csr-token').val()
         };
-        var url = '${contextPath}/leavetype/list'   ;
+        var urlmethod='GET'
+        var caption="leave type";
+        var url = '${contextPath}'+'/leavetype/list'   ;
         var formId = 'leaveTYpeFormId';
         var colModel = [
             {label: 'id', name: 'id', key: true, width: 75, hidden: true},
             {label: 'Leave Type', name: 'name', width: 800},
         ]
-        Server.list(header, url, colModel, formId)
+        Server.list(header, url, colModel, formId,caption,urlmethod)
 
 
     });
@@ -88,7 +90,7 @@
         };
         var formId=$('#deleteButton').closest('form').attr('id');
         var leaveTypeId = $('#id').val();
-        var url = '/leavetype/delete/';
+        var url = "${contextPath}"+"/leavetype/delete/";
         Server.delete(header, url, leaveTypeId, formId);
     }
 

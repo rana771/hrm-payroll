@@ -27,12 +27,15 @@
 	<definition name="employee/createEmployee" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/employee/createEmployee.jsp" />
 	</definition>
-	<definition name="employee/createEmployeel" extends="layout.main">
+	<definition name="employee/employeeList" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/employee/employeeList.jsp" />
 	</definition>
 	
 	<definition name="employee/profile" extends="layout.main">
 		<put-attribute name="body" value="/WEB-INF/pages/employee/profile.jsp" />
+	</definition>
+	<definition name="employee/empEdit" extends="layout.main">
+		<put-attribute name="body" value="/WEB-INF/pages/employee/empEdit.jsp" />
 	</definition>
 	
 	<definition name="leavetype/create" extends="layout.main">

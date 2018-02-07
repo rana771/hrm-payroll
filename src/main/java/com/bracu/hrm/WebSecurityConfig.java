@@ -40,7 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${spring.queries.roles-query}")
 	private String rolesQuery;
 
-/*	@Override
+
+	/*@Override
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
 		auth.

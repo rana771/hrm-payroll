@@ -53,7 +53,7 @@ public class LeaveTypeController {
 
     }
     @ResponseBody
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String getLeaveTypeList(ModelMap model){
         String subGroupJson = leaveTypeService.getLeaveTypeList();
         return subGroupJson ;

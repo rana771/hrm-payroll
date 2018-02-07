@@ -1,23 +1,26 @@
 package com.bracu.hrm.service;
 
-import java.sql.ResultSet;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.collections.map.HashedMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.bracu.hrm.dao.EmployeeDao;
 import com.bracu.hrm.dao.EntityTypeDao;
 import com.bracu.hrm.dao.SetupEntityDao;
+import com.bracu.hrm.dbconfig.ReadOnlyConnection;
 import com.bracu.hrm.model.Employee;
+import com.bracu.hrm.model.EmployeeEducation;
 import com.bracu.hrm.model.settings.EntityType;
 import com.bracu.hrm.model.settings.SetupEntity;
+import com.bracu.hrm.util.JSONUtil;
+import org.apache.commons.collections.map.HashedMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.util.*;
 
 
 
@@ -34,7 +37,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EntityTypeDao entityTypeDao;
 	@Autowired
+	private MessageSource messageSource;
+	@Autowired
 	EmployeeService employeeService;
+
 	
 	public Employee findById(int id) {
 		return employeeDao.findById(id);
@@ -46,6 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public void saveEmployee(Employee employee) {
+		employee.setVersion(0);
 		employeeDao.save(employee);
 	}
 
@@ -58,7 +65,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee entity = employeeDao.findById(employee.getId());
 		if(entity!=null){
 			entity.setPin(employee.getPin());
-
 			entity.setFullName(employee.getFullName());
 			entity.setEmail(employee.getEmail());
 			entity.setDateOfBirith(employee.getDateOfBirith());
@@ -69,9 +75,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void deleteEmployeeByPin(String pin) {
 		employeeDao.deleteByPin(pin);
 	}
+	@Override
+	@ReadOnlyConnection
+	@Transactional(readOnly = true)
+	public String findAllEmployees() {
+		List<Employee> list = employeeDao.findAllEmployees();
+		return JSONUtil.getJsonObject(list);
 
-	public List<Employee> findAllEmployees() {
-		return employeeDao.findAllEmployees();
 	}
 
 	public ResultSet getSqlServerEmployee(String pin) {
@@ -108,6 +118,54 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return listMap;
 		
 	}
+
+	@Override
+	@Transactional
+	public Map<String,List<SetupEntity>> getEmployeeInfo(int i) {
+		HashedMap listMap =new HashedMap();
+		Employee employee=employeeDao.findById(i);
+		listMap.put("employee",employee);
+		EntityType entityTypeEducation =entityTypeDao.findByName("Educational Title");
+		List<SetupEntity> educationalTitleList= setupEntityDao.findAllByEntityType(entityTypeEducation);
+		listMap.put("educationalTitleList", educationalTitleList);
+		EntityType entityType =entityTypeDao.findByName("Gender");
+		List <SetupEntity> genderList = setupEntityDao.findAllByEntityType(entityType);
+		listMap.put("genderList", genderList);
+		EntityType entityTypeMarritalStatus =entityTypeDao.findByName("Marrital Status");
+		List <SetupEntity> marritalStatusList = setupEntityDao.findAllByEntityType(entityTypeMarritalStatus);
+		listMap.put("marritalStatusList", marritalStatusList);
+		EntityType entityTypeNationality =entityTypeDao.findByName("Nationality");
+		List <SetupEntity> nationalityList = setupEntityDao.findAllByEntityType(entityTypeNationality);
+		listMap.put("nationalityList", nationalityList);
+		return listMap;
+	}
+
+	@Override
+	@Transactional
+	public String update(Employee employee) {
+		Employee currentEmployee= employeeDao.findById(employee.getId());
+		String message;
+		if (currentEmployee != null) {
+			if (employee.getVersion() < currentEmployee.getVersion()) {
+			} else {
+				System.err.println(employee.getFatherName());
+				currentEmployee.setPin(employee.getPin());
+				currentEmployee.setFullName(employee.getFullName());
+				currentEmployee.setEmail(employee.getEmail());
+				currentEmployee.setDateOfBirith(employee.getDateOfBirith());
+				currentEmployee.setVersion(employee.getVersion() + 1);
+				currentEmployee.setDateLastUpdated(new Date());
+				currentEmployee.setFatherName(employee.getFatherName());
+				currentEmployee.setMotherName(employee.getMotherName());
+				currentEmployee.setSpouseName(employee.getSpouseName());
+				employeeDao.save(currentEmployee);
+				message = messageSource.getMessage("save.updated.message", new String[]{"Employee Basic Informaiton ", employee.getFullName()}, Locale.getDefault());
+				return message;
+
+			}
+		}
+				return "";
+	}
 	public void prepareNewEmployeeFromPaySlip(Object object){
 		Employee employee1 = new Employee();
 		employee1.setVersion(0);
@@ -122,4 +180,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee1.setEmail("N/A");
 		employeeService.saveEmployee(employee1);
 	}
+
+
+
 }

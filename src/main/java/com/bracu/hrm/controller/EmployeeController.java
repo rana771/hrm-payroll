@@ -1,25 +1,20 @@
 package com.bracu.hrm.controller;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.validation.Valid;
-
+import com.bracu.hrm.model.Employee;
+import com.bracu.hrm.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-import com.bracu.hrm.model.Employee;
-import com.bracu.hrm.service.EmployeeService;
+import javax.validation.Valid;
+import java.util.Locale;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/emp")
@@ -30,15 +25,21 @@ public class EmployeeController {
 	
 	@Autowired
 	MessageSource messageSource;
-		
 	@RequestMapping(value = { "/employeeList", "/list" }, method = RequestMethod.GET)
 	public String listUsers(ModelMap model) {
 
-		List<Employee> employeeList = employeeService.findAllEmployees();
-		System.err.println(employeeList.size());
-		model.addAttribute("employeeList", employeeList);
+		//List<Employee> employeeList = employeeService.findAllEmployees();
+		//System.err.println(employeeList.size());
+		//String list = employeeService.findAllEmployees();
+		//model.addAttribute("employeeList", list);
 		//model.addAttribute("loggedinuser", getPrincipal());
 		return "employee/employeeList";
+	}
+	@ResponseBody
+	@RequestMapping(value =  "/list2" , method = RequestMethod.POST)
+	public String getList(ModelMap model){
+		String list = employeeService.findAllEmployees();
+		return list ;
 	}
 	
 	
@@ -117,6 +118,29 @@ public class EmployeeController {
 		model.addAttribute("employee", employee);
 		return "employee/profile";
 	}
-	
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String edit(@PathVariable("id") String id, ModelMap model){
+		Map setupList =  employeeService.getEmployeeInfo(Integer.parseInt(id));
+		//System.err.println(setupList.get("genderList").);
+		model.addAttribute("employee",setupList.get("employee"));
+		model.addAttribute("genderList",setupList.get("genderList"));
+		model.addAttribute("marritalStatusList",setupList.get("marritalStatusList"));
+		model.addAttribute("nationalityList",setupList.get("nationalityList"));
+		return "employee/profile";
+	}
+	@ResponseBody
+	@RequestMapping(value = { "/update" }, method = RequestMethod.POST,consumes = { MediaType.APPLICATION_JSON_VALUE })
+	public String update( @RequestBody Employee employee, BindingResult resultItem) {
+		if (resultItem.hasErrors()) {
+			return "employee/profile";
+		} else{
+			return employeeService.update(employee);
+		}
+
+	}
+
+
+
+
 
 }

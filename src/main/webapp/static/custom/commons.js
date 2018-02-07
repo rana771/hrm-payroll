@@ -1,9 +1,7 @@
 var Server = {
-
-    save:function (headerValue,data,url,formId, caption)
-    {
-        console.log(data);
-    jQuery.ajax({
+        save:function (headerValue,data,url,formId,caption,gridId)
+        {
+      jQuery.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
         url: url,
@@ -12,19 +10,20 @@ var Server = {
         dataType: "json",
         headers:header,
         success: function (result) {
-            $('#'+formId).find("#jqGrid").trigger('reloadGrid');
+            $('#'+formId).find('#'+gridId).trigger('reloadGrid');
             //resetForm()
         },
         error: function (result) {
            // document.getElementById("#"+formId).reset();
             Server.getMessage(1, result.responseText, caption);
-            $('#jqGrid').trigger('reloadGrid');
+            $('#'+gridId).trigger('reloadGrid');
             Server.resetForm(formId);
 
         }
     });
 },
-    delete: function(header,url,id,formId, content, caption){
+    delete: function(header,url,data,formId, content, caption,gridId){
+        console.log(formId+" "+gridId)
         $.confirm({
             title: 'Confirm!',
             content: content,
@@ -33,17 +32,20 @@ var Server = {
                     $.ajax({
                         type : "POST",
                         contentType : "application/json",
-                        url : url+id,
-                        data : {id:id},
+                        url : url,
+                        data : JSON.stringify(data),
                         dataType : 'json',
                         headers:header,
                         success : function(result) {
                             Server.getMessage(1,result,caption);
-                            $('#jqGrid').trigger( 'reloadGrid' );
+                            $('#'+gridId).trigger( 'reloadGrid' );
                             Server.resetForm(formId);
                         },
-                        error : function(e) {
-                            alert("Error!" +e)
+                        error : function(result) {
+                            console.log(result)
+                            Server.getMessage(1,result.responseText,caption);
+                            $('#'+formId).find('#'+gridId).trigger( 'reloadGrid' );
+                            Server.resetForm(formId);
                         }
                     });
 
@@ -92,6 +94,7 @@ var Server = {
             dataType : 'json',
             headers:header,
             success : function(result) {
+                console.log(result)
                 callback(result);
                 $('#deleteButton').show();
             },
@@ -101,11 +104,13 @@ var Server = {
         });
 
     },
-    list:function(header,url,colModel,formId, caption){
+
+    list:function(header,url,colModel,formId,caption,urlmethod,gridId){
+
         //Start JqGrid
-        $('#'+formId).find('#jqGrid').jqGrid({
+        $('#'+formId).find('#'+gridId).jqGrid({
             url: url,
-            mtype: "POST",
+            mtype: urlmethod,
             styleUI : 'Bootstrap',
             postData: header,
             contentType : "application/json",
@@ -122,22 +127,27 @@ var Server = {
             //width:600,
             height:243,
             altRows:true,
-            //shrinkToFit: false,
+            shrinkToFit: false,
             scrollOffset: 0,
             onSelectRow: function() {
-                var myGrid = $('#jqGrid'),
+                var myGrid = $('#'+gridId),
                     selectedRowId = myGrid.jqGrid ('getGridParam', 'selrow'),
                     cellValue = myGrid.jqGrid ('getCell', selectedRowId, 'id');
+                console.log(selectedRowId)
                 edit(cellValue);
             }
         });
-        $('#'+formId).find("#jqGrid").jqGrid("setLabel", "rn", "SL.");
-        $(window).bind('resize', function() {
-            // resize the datagrid to fit the page properly:
-            $('div.grid-resize').each(function() {
-                $(this).width('auto');
-                $(this).find('table').width('100%');
-            });
+        // $('#'+formId).find('#'+gridId).jqGrid("setLabel", "rn", "SL.");
+        // $(window).bind('resize', function() {
+        //     // resize the datagrid to fit the page properly:
+        //     $('div.grid-resize').each(function() {
+        //         $(this).width('auto');
+        //         $(this).find('table').width('100%');
+        //     });
+        // });
+        $(window).on("resize", function () {
+            var newWidth = $("#"+gridId).closest(".ui-jqgrid").parent().width();
+            $('#'+formId).find('#'+gridId).jqGrid("setGridWidth", newWidth, true);
         });
 
     }

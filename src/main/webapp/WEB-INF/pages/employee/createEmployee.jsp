@@ -37,7 +37,7 @@
                                     <span class="add-on input-group-addon">
                                         <i class="glyph-icon icon-calendar"></i>
                                     </span>
-                                    <input type="text" name="dateOfBirith" value ="31-12-2017" class="bootstrap-datepicker form-control" required data-date-format="dd-MM-yyyy">
+                                    <input type="text" name="dateOfBirith" value ="12-31-2017" class="bootstrap-datepicker form-control" required data-date-format="MM-dd-yyyy">
                                 	<form:errors path="dateOfBirith" cssclass="error"></form:errors>
                                 </div>
                             </div>
@@ -50,8 +50,8 @@
                             	<form:errors path="email" cssclass="error"></form:errors>
                             </div>
                         </div>
-                        
-                          <div class="form-group">
+
+                    <div class="form-group">
                     <label class="col-sm-3 control-label">Gender</label>
                     <div class="col-sm-6">
                         <select name="gender.id" class="custom-select">

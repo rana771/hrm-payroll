@@ -3,7 +3,6 @@ package com.bracu.hrm.dao;
 import com.bracu.hrm.model.Employee;
 import com.bracu.hrm.util.SQLDataSource;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +23,8 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 	
 	public Employee findById(int id) {
 		Employee employee = getByKey(id);
+
+
 		/*if(employee!=null){
 			Hibernate.initialize(employee.getUserProfiles());
 		}*/
@@ -56,8 +57,15 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 		String sql = "SELECT \n" +
 				"id AS id,\n" +
 				"pin AS Pin,\n"+
-				"fullName AS Name,\n" +
-				"FROM employee \n" ;
+				"Full_Name AS name, \n" +
+				"email  AS email, \n" +
+				"father_name AS fname, \n" +
+				"date_joining AS doj, \n" +
+				"date_confirmation AS doc, \n" +
+				"nid AS nid \n" +
+				"FROM employee \n" +
+				"OFFSET 0 \n"+
+				"LIMIT 100 \n";
 				return  executeSQL(sql);
 	}
 
@@ -97,6 +105,34 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 
 
 		return rs;
+	}
+
+	@Override
+	public List<Employee> findUserByEmployeeId(Integer id) {
+		String sql = "SELECT \n" +
+				"employee.id,\n"+
+				"app_user.id,\n"+
+				"app_user.username,\n"+
+				"app_user.email\n"+
+				"FROM employee ,app_user\n"+
+				"WHERE employee.id  = id \n";
+		/*String sql="SELECT \n"+
+				"emp.id as emp_Id,\n"+
+				"emp.pin as emp_pin,\n"+
+				"emp.full_Name as fullName,\n"+
+				"emp.email as email,\n"+
+				"app_us.id as user_id\n"+
+				"FROM\n"+
+				"employee as emp\n"+
+				"INNER JOIN\n"+
+				"app_user as app_us\n"+
+				"ON emp.user_id=app_us.id\n"+
+				"WHERE\n"+
+				" emp.id="+id;*/
+		return executeSQL(sql);
+
+
+
 	}
 
 }

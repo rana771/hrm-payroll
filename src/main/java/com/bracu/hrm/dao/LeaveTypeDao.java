@@ -12,7 +12,7 @@ import java.util.List;
 public interface LeaveTypeDao {
     LeaveType findById(int id);
     void save(LeaveType leaveType);
-    void delete(int id);
+    void delete(Integer id);
     List<LeaveType> findAll();
     boolean uniqueNameTest(Integer id, String name);
 
